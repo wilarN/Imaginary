@@ -35,27 +35,30 @@ def generate_people():
 
 
 def search():
-    clear()
-    tab_down()
-    print(f"+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
-          f"-     Identity Search     -\n"
-          f"+                         +\n"
-          f"-      [ E/e(Exit) ]      -\n"
-          f"+-+-+-+-+-+-+-+-+-+-+-+-+-+")
-    tab_down()
-    usr_sel = input(" Name >> ")
-    usr_sel = usr_sel.strip(" ").capitalize()
-    name_query = {"first_name": f"{usr_sel}"}
-    curs = mycol.find(name_query)
-    tab_down()
-    line()
-    for i in curs:
-        print(
-            f"{i.get('first_name')} {i.get('last_name')}, {i.get('age')} y/o, {i.get('height')}cm, {i.get('nationality')}, ({i.get('personal_identification_number')})")
-        line()
-    del curs
-    enter_to_continue()
-    clear()
+    while True:
+        clear()
+        tab_down()
+        print(f"+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
+              f"-     Identity Search     -\n"
+              f"+                         +\n"
+              f"-      [ E/e(Exit) ]      -\n"
+              f"+-+-+-+-+-+-+-+-+-+-+-+-+-+")
+        tab_down()
+        usr_sel = input(" Name >> ")
+        usr_sel = usr_sel.strip(" ").capitalize()
+        if usr_sel.lower().strip(" ") == "e":
+            break
+        else:
+            name_query = {"first_name": f"{usr_sel}"}
+            curs = mycol.find(name_query)
+            tab_down()
+            line()
+            for i in curs:
+                print(
+                    f"{i.get('first_name')} {i.get('last_name')}, {i.get('age')} y/o, {i.get('height')}cm, {i.get('nationality')}, ({i.get('personal_identification_number')})")
+                line()
+            del curs
+            enter_to_continue()
 
 
 def line():
