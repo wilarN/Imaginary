@@ -38,7 +38,7 @@ SEX = ["Male", "Female"]
 
 
 def get_random_height():
-    return random.randint(130, 210)
+    return random.randint(130, 205)
 
 
 def get_random_nationality():
@@ -122,6 +122,6 @@ class personMaster:
     def print_information(self):
         print(self.__dict__)
 
-
-person = personMaster()
-person.print_information()
+#
+# person = personMaster()
+# person.print_information()
