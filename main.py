@@ -17,6 +17,7 @@ def enter_to_continue():
     print("", flush=True)
     input("Press enter to continue...")
 
+
 def styled_coloured_print_centered(text, colour=None, instant=False):
     if colour is not None:
         col = colour
@@ -63,6 +64,7 @@ def styled_coloured_print_centered(text, colour=None, instant=False):
         ps.Write.Print(text=ps.Center.XCenter(text), color=col, interval=time_delay)
     print("", flush=True)
 
+
 def generate_people():
     while True:
         tab_down()
@@ -82,13 +84,6 @@ def generate_people():
     time.sleep(2)
 
 
-def fuzzy_matching():
-    res = mycol.find({"$text": {"$search": "Thoma"}})
-    print(list(res))
-
-fuzzy_matching()
-
-
 def search():
     global dbCurs
     clear()
@@ -106,23 +101,22 @@ def search():
     """, instant=True, colour="yellow")
     enter_to_continue()
 
-
     while True:
         clear()
         tab_down()
         styled_coloured_print_centered(text=f"+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
-              f"-  |   Identity Search  | -\n"
-              f"+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
-              f"-    [1]- First Name      -\n"
-              f"+    [2]- Last Name       +\n"
-              f"-    [3]- P'IdentNum      -\n"
-              f"+    [4]- Eye Colour      +\n"
-              f"-    [5]- Height          -\n"
-              f"+    [6]- Nationality     +\n"
-              f"-                         -\n"
-              f"+                         +\n"
-              f"-      [ E/e(Exit) ]      -\n"
-              f"+-+-+-+-+-+-+-+-+-+-+-+-+-+", instant=True, colour="blue")
+                                            f"-  |   Identity Search  | -\n"
+                                            f"+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
+                                            f"-    [1]- First Name      -\n"
+                                            f"+    [2]- Last Name       +\n"
+                                            f"-    [3]- P'IdentNum      -\n"
+                                            f"+    [4]- Eye Colour      +\n"
+                                            f"-    [5]- Height          -\n"
+                                            f"+    [6]- Nationality     +\n"
+                                            f"-                         -\n"
+                                            f"+                         +\n"
+                                            f"-      [ E/e(Exit) ]      -\n"
+                                            f"+-+-+-+-+-+-+-+-+-+-+-+-+-+", instant=True, colour="blue")
         tab_down()
         usr_sel = input(" >> ")
         if usr_sel.lower().strip(" ") == "e":
@@ -257,16 +251,16 @@ def main():
     while True:
         clear()
         styled_coloured_print_centered(text=
-              f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
-              f"-       G/g(Generate People) - (Admin)      -\n"
-              f"+       L/l(List Register) - (DB_Heavy)     +\n"
-              f"-       S/s(Search) - (General)             -\n"
-              f"+                                           +\n"
-              f"-                                           -\n"
-              f"+          [ E/e(Exit) ]                    +\n"
-              f"-                                           -\n"
-              f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
-              f"In register:{get_statistics(1)}", instant=True, colour="orange")
+                                       f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
+                                       f"-       G/g(Generate People) - (Admin)      -\n"
+                                       f"+       L/l(List Register) - (DB_Heavy)     +\n"
+                                       f"-       S/s(Search) - (General)             -\n"
+                                       f"+                                           +\n"
+                                       f"-                                           -\n"
+                                       f"+          [ E/e(Exit) ]                    +\n"
+                                       f"-                                           -\n"
+                                       f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
+                                       f"In register:{get_statistics(1)}", instant=True, colour="orange")
         tab_down()
         usr_sel = input(" >> ")
         usr_sel = usr_sel.lower().strip(" ")
