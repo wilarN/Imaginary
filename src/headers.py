@@ -2,6 +2,8 @@ import time
 import pymongo
 import os
 import pystyle as ps
+from src import searches
+from src.misc import carMaster
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["imaginaryMaster"]
@@ -9,8 +11,6 @@ global mycol
 mycol = mydb["people"]
 global dbCurs
 dbCurs = mycol.find({})
-import misc
-
 
 def enter_to_continue():
     print("", flush=True)

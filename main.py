@@ -1,5 +1,7 @@
 import src.searches
+
 from src.headers import *
+
 
 
 def generate_people():
@@ -10,7 +12,7 @@ def generate_people():
             usr_sel = int(usr_sel)
 
             for person in range(0, usr_sel):
-                person = misc.personMaster()
+                person = src.misc.personMaster()
                 mycol.insert_one(person.__dict__)
             print(
                 f"Generated '{usr_sel}' identities and successfully inserted those to the register and external "
@@ -32,7 +34,7 @@ def generate_vehicle():
             usr_sel = int(usr_sel)
 
             for vehicle in range(0, usr_sel):
-                vehicle = misc.carMaster()
+                vehicle = carMaster()
                 mycol.insert_one(vehicle.__dict__)
             print(
                 f"Generated '{usr_sel}' vehicles and successfully inserted those to the register and external "
