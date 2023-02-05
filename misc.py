@@ -41,7 +41,8 @@ NUMS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 
 SEX = ["Male", "Female"]
 
-CAR_COLOURS = ["Black", "Blue", "Green", "Purple", "Yellow", "Silver", "Red", "Pink", "Grey", "Orange", "White", "Brown", "Cyan"]
+CAR_COLOURS = ["Black", "Blue", "Green", "Purple", "Yellow", "Silver", "Red", "Pink", "Grey", "Orange", "White",
+               "Brown", "Cyan"]
 
 
 def get_random_height():
@@ -157,7 +158,7 @@ def get_random_car_model():
 
 
 def get_random_car_colour():
-    return CAR_COLOURS[random.randint(0, len(CAR_COLOURS)-1)]
+    return CAR_COLOURS[random.randint(0, len(CAR_COLOURS) - 1)]
 
 
 def get_random_annotations():
@@ -181,7 +182,7 @@ def get_random_car_plate(car_object):
 
 
 class carMaster:
-    def __init__(self):
+    def __init__(self, owner = None):
         data = get_car_data()
         self.model = data[1]
         self.manufacturer = data[2]
@@ -190,6 +191,11 @@ class carMaster:
         self.annotations = None
         self.car_body = data[3]
         self.plate = get_random_car_plate(self)
+        if owner is None:
+            # self.owner = get_ownership()
+            pass
+        else:
+            self.owner = owner
 
     def print_self(self):
         print(self.__dict__)
