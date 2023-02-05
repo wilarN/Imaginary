@@ -271,6 +271,7 @@ def main():
         elif usr_sel.__contains__("l"):
             # List
             list_people()
+            enter_to_continue()
 
         elif usr_sel.__contains__("s"):
             search()
