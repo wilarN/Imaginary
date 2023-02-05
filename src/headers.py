@@ -4,13 +4,12 @@ import os
 import pystyle as ps
 from src import searches
 from src.misc import carMaster
+from src.generate import *
 
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["imaginaryMaster"]
-global mycol
-mycol = mydb["people"]
-global dbCurs
-dbCurs = mycol.find({})
+
+def tab_down():
+    print()
+
 
 def enter_to_continue():
     print("", flush=True)
@@ -63,13 +62,12 @@ def styled_coloured_print_centered(text, colour=None, instant=False):
         ps.Write.Print(text=ps.Center.XCenter(text), color=col, interval=time_delay)
     print("", flush=True)
 
+
 def line():
     print("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+")
 
 
 def clear():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    # os.system('cls' if os.name == 'nt' else 'clear')
+    pass
 
-
-def tab_down():
-    print()

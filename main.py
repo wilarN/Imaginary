@@ -4,48 +4,6 @@ from src.headers import *
 
 
 
-def generate_people():
-    while True:
-        tab_down()
-        usr_sel = input(" Amount of people to generate(integer) >> ")
-        try:
-            usr_sel = int(usr_sel)
-
-            for person in range(0, usr_sel):
-                person = src.misc.personMaster()
-                mycol.insert_one(person.__dict__)
-            print(
-                f"Generated '{usr_sel}' identities and successfully inserted those to the register and external "
-                f"database.")
-            break
-        except:
-            print("Please enter a valid positive, integer number...")
-            pass
-    time.sleep(2)
-
-
-def generate_vehicle():
-    global mycol
-    mycol = mydb["vehicles"]
-    while True:
-        tab_down()
-        usr_sel = input(" Amount of vehicles to generate(integer) >> ")
-        try:
-            usr_sel = int(usr_sel)
-
-            for vehicle in range(0, usr_sel):
-                vehicle = carMaster()
-                mycol.insert_one(vehicle.__dict__)
-            print(
-                f"Generated '{usr_sel}' vehicles and successfully inserted those to the register and external "
-                f"database.")
-            break
-        except:
-            print("Please enter a valid positive, integer number...")
-            pass
-    time.sleep(2)
-
-
 def list_people():
     # List all people
     for document in dbCurs:

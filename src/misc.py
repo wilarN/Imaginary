@@ -4,9 +4,8 @@ import names
 import random
 import datetime
 
-###################################################
-######### IDENTITY SECTION ########################
-###################################################
+import src.generate
+from src.headers import *
 
 NATIONALITIES = ['Afghan', 'Albanian', 'Algerian', 'American', 'Andorran', 'Angolan', 'Antiguans', 'Argentinean',
                  'Armenian', 'Australian', 'Austrian', 'Azerbaijani', 'Bahamian', 'Bahraini', 'Bangladeshi',
@@ -45,6 +44,83 @@ CAR_COLOURS = ["Black", "Blue", "Green", "Purple", "Yellow", "Silver", "Red", "P
                "Brown", "Cyan"]
 
 
+###################################################
+######### CAR SECTION #############################
+###################################################
+
+def get_car_data():
+    with open('C:/Users/william/Desktop/gitStuff/Imaginary/src/data/2014.csv', 'r') as file:
+        reader = csv.reader(file)
+        reader = list(reader)
+
+        return_value = reader[random.randint(0, len(reader) - 1)]
+    file.close()
+    return return_value
+
+
+def get_random_car_colour():
+    return CAR_COLOURS[random.randint(0, len(CAR_COLOURS) - 1)]
+
+
+def get_random_annotations():
+    pass
+
+
+def get_random_car_plate(car_object=None):
+    letters = string.ascii_uppercase
+    first_section = ''.join(random.choice(letters) for i in range(3))
+    if car_object is not None:
+        if int(car_object.year) >= 2017:
+            # 16 februari 2017 tog regeringen beslut om att Transportstyrelsen ska få tilldela registreringsnummer där
+            # det sista tecknet blir alfanumeriskt
+            second_section = ''
+            for i in range(2):
+                second_section = second_section + str(random.randint(0, 9))
+            second_section = second_section + random.choice(letters)
+        else:
+            second_section = ''
+            for i in range(3):
+                second_section = second_section + str(random.randint(0, 9))
+    else:
+        second_section = ''
+        for i in range(2):
+            second_section = second_section + str(random.randint(0, 9))
+        second_section = second_section + random.choice(letters)
+
+    return first_section + "-" + second_section
+
+
+class carMaster:
+    def __init__(self, owner=None, spec_plate=None):
+        data = get_car_data()
+        self.model = data[1]
+        self.manufacturer = data[2]
+        self.colour = get_random_car_colour()
+        self.year = data[0]
+        self.annotations = None
+        self.car_body = data[3]
+        if spec_plate is None:
+            self.plate = get_random_car_plate(self)
+        else:
+            self.plate = spec_plate
+
+        if owner is None:
+            self.owner = None
+        else:
+            self.owner = owner
+
+    def get_plate(self):
+        return self.plate
+
+    def print_self(self):
+        print(self.__dict__)
+
+
+###################################################
+######### IDENTITY SECTION ########################
+###################################################
+
+
 def get_random_height():
     return random.randint(130, 205)
 
@@ -81,7 +157,7 @@ def generate_identification_number(years_old: int, gender, length: int = 8):
 
     cant_bother_with_luhn_number = random.randint(1, 9)
 
-    # Cmon I'm far too tired to do this the right way alright don't judge me.
+    # C'mon I'm far too tired to do this the right way alright don't judge me.
     # Anyway, this works for now even though it's utterly fucking retarded.
     # But does it look like I care? No. So let it work as long as it does.
     if gender == "Male":
@@ -113,6 +189,21 @@ def get_random_sex():
     return SEX[random.randint(0, 1)]
 
 
+def get_car(person_in_question):
+    chance = random.randint(0, 10)
+    # 50 / 50 Chance kinda-
+    if chance >= 5:
+        # Create car with plate and return plate
+
+        owned_plate = get_random_car_plate()
+        print(owned_plate)
+        generated_car = src.generate.generate_vehicle(specific_plate=str(owned_plate), ownership=(f"{person_in_question.first_name} {person_in_question.last_name}"))
+        return owned_plate
+    else:
+        # No car.
+        return False
+
+
 class personMaster:
     def __init__(self):
         self.sex = get_random_sex()
@@ -126,81 +217,12 @@ class personMaster:
         self.height = get_random_height()
         self.eye_colour = get_random_eye_colour()
         self.personal_identification_number = generate_identification_number(years_old=self.age, gender=self.sex)
+        potential_car = get_car(self)
+        if not potential_car:
+            self.cars = []
+        else:
+            self.cars = [potential_car]
 
     def print_information(self):
         print(self.__dict__)
 
-
-#
-# person = personMaster()
-# person.print_information()
-
-###################################################
-######### CAR SECTION #############################
-###################################################
-
-def get_car_data():
-    with open('data/2014.csv', 'r') as file:
-        reader = csv.reader(file)
-        reader = list(reader)
-
-        return_value = reader[random.randint(0, len(reader) - 1)]
-    file.close()
-    return return_value
-
-
-def get_random_car_model():
-    with open('data/2014.csv', 'r') as file:
-        reader = csv.reader(file)
-        reader = list(reader)
-        file.close()
-        return reader[random.randint(0, len(reader) - 1)]
-
-
-def get_random_car_colour():
-    return CAR_COLOURS[random.randint(0, len(CAR_COLOURS) - 1)]
-
-
-def get_random_annotations():
-    pass
-
-
-def get_random_car_plate(car_object):
-    letters = string.ascii_uppercase
-    first_section = ''.join(random.choice(letters) for i in range(3))
-    if int(car_object.year) >= 2017:
-        # 16 februari 2017 tog regeringen beslut om att Transportstyrelsen ska få tilldela registreringsnummer där
-        # det sista tecknet blir alfanumeriskt
-        second_section = ''
-        for i in range(2):
-            second_section = second_section + str(random.randint(0, 9))
-        second_section = second_section + random.choice(letters)
-    else:
-        second_section = ''
-        for i in range(3):
-            second_section = second_section + str(random.randint(0, 9))
-    return first_section + "-" + second_section
-
-
-class carMaster:
-    def __init__(self, owner = None):
-        data = get_car_data()
-        self.model = data[1]
-        self.manufacturer = data[2]
-        self.colour = get_random_car_colour()
-        self.year = data[0]
-        self.annotations = None
-        self.car_body = data[3]
-        self.plate = get_random_car_plate(self)
-        if owner is None:
-            # self.owner = get_ownership()
-            pass
-        else:
-            self.owner = owner
-
-    def print_self(self):
-        print(self.__dict__)
-
-
-car = carMaster()
-print(car.__dict__)
