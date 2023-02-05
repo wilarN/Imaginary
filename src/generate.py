@@ -1,7 +1,10 @@
+from pymongo import MongoClient
+
 from src.headers import *
 import src.searches
+import pymongo
 
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+myclient = MongoClient("mongodb://localhost:27017/")
 mydb = myclient["imaginaryMaster"]
 mycol = mydb["people"]
 mycolVehicle = mydb["vehicles"]

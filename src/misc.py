@@ -48,8 +48,21 @@ CAR_COLOURS = ["Black", "Blue", "Green", "Purple", "Yellow", "Silver", "Red", "P
 ######### CAR SECTION #############################
 ###################################################
 
+global_car_data_path = os.path.join(os.path.dirname(__file__), 'data\\')
+
+CAR_FILES = []
+
+for path in os.listdir(global_car_data_path):
+    # check if current path is a file
+    if os.path.isfile(os.path.join(global_car_data_path, path)):
+        CAR_FILES.append(os.path.join(os.path.dirname(__file__), 'data\\'+path))
+    # print(os.path.join(os.path.dirname(__file__), 'data\\'+path))
+# input()
+
 def get_car_data():
-    with open('C:/Users/william/Desktop/gitStuff/Imaginary/src/data/2014.csv', 'r') as file:
+    # print(global_car_data_path)
+    selected_file = CAR_FILES[random.randint(0, len(CAR_FILES)-1)]
+    with open(f"{selected_file}", 'r') as file:
         reader = csv.reader(file)
         reader = list(reader)
 
