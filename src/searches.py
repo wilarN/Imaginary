@@ -135,8 +135,14 @@ def search():
         tab_down()
         line()
         for i in dbCurs:
-            print(
-                f"{i.get('first_name')} {i.get('last_name')}, {i.get('sex')}, {i.get('age')} y/o, {i.get('height')}cm, {i.get('nationality')}, ({i.get('personal_identification_number')})")
+            print(f"""
+[Government Name]: {i.get('first_name')} {i.get('last_name')}\n
+  - [Gender]: {i.get('sex')}\n
+  - [Age]: {i.get('age')} y/o\n
+  - [Height]: {i.get('height')}cm\n
+  - [Nationality]: {i.get('nationality')}\n
+  - [Personal Identification Number]: ({i.get('personal_identification_number')})
+                """)
             line()
         enter_to_continue()
 
@@ -172,6 +178,8 @@ def vehicle_search():
                                             f"-    [5]- Annotations     -\n"
                                             f"+    [6]- Car-Body Type   +\n"
                                             f"-    [7]- Plate Number    -\n"
+                                            f"+    [8]- Ownership(Name) +\n"
+                                            f"-                         -\n"
                                             f"+                         +\n"
                                             f"-                         -\n"
                                             f"+                         +\n"
@@ -271,6 +279,21 @@ def vehicle_search():
                     filter=filter
                 )
 
+        elif usr_sel.lower().strip(" ") == "8":
+            # Car_body search
+            usr_sel = input(" Registered Vehicle Owner (ex. 'John Doe' or 'John' or 'Doe') >> ")
+            usr_sel = usr_sel.strip(" ").capitalize()
+            if usr_sel.lower().strip(" ") == "e":
+                break
+            else:
+                filter = ({
+                    'owner': re.compile(r".*" + f"{usr_sel}" + r".*")
+                })
+
+                dbCurs = mycol.find(
+                    filter=filter
+                )
+
         else:
             pass
 
@@ -278,6 +301,14 @@ def vehicle_search():
         line()
         for i in dbCurs:
             print(
-                f"{i.get('model')} {i.get('manufacturer')}, {i.get('colour')}, {i.get('year')}, {i.get('annotations')}, {i.get('car_body')}, ({i.get('plate')})")
+                f"""[Owner]: {i.get('owner')}\n
+  - [Model]: {i.get('model')}\n
+  - [Manufacturer]: {i.get('manufacturer')}\n
+  - [Colour]: {i.get('colour')}\n
+  - [Body]: {i.get('car_body')}\n
+  - [Production Year]: {i.get('year')}\n
+  - [Annotations]: {i.get('annotations')}\n
+  - [Plate]: {i.get('plate')}\n
+""")
             line()
         enter_to_continue()
