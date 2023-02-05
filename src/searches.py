@@ -130,19 +130,21 @@ def search():
                 )
 
         else:
-            pass
+            break
 
         tab_down()
         line()
         for i in dbCurs:
-            print(f"""
+            styled_coloured_print_centered(text=f"""
 [Government Name]: {i.get('first_name')} {i.get('last_name')}\n
   - [Gender]: {i.get('sex')}\n
   - [Age]: {i.get('age')} y/o\n
   - [Height]: {i.get('height')}cm\n
   - [Nationality]: {i.get('nationality')}\n
-  - [Personal Identification Number]: ({i.get('personal_identification_number')})
-                """)
+  - [Personal Identification Number]: ({i.get('personal_identification_number')})\n
+  - [Cars]:
+        {i.get('cars')}
+                """, instant=True, colour="yellow", cent=False)
             line()
         enter_to_continue()
 
@@ -295,12 +297,12 @@ def vehicle_search():
                 )
 
         else:
-            pass
+            break
 
         tab_down()
         line()
         for i in dbCurs:
-            print(
+            styled_coloured_print_centered(text=
                 f"""[Owner]: {i.get('owner')}\n
   - [Model]: {i.get('model')}\n
   - [Manufacturer]: {i.get('manufacturer')}\n
@@ -309,6 +311,6 @@ def vehicle_search():
   - [Production Year]: {i.get('year')}\n
   - [Annotations]: {i.get('annotations')}\n
   - [Plate]: {i.get('plate')}\n
-""")
+""", instant=True, colour="yellow", cent=False)
             line()
         enter_to_continue()

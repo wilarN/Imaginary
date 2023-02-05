@@ -197,7 +197,7 @@ def get_car(person_in_question):
 
         owned_plate = get_random_car_plate()
         print(owned_plate)
-        generated_car = src.generate.generate_vehicle(specific_plate=str(owned_plate), ownership=(f"{person_in_question.first_name} {person_in_question.last_name}"))
+        generated_car = src.generate.generate_vehicle(specific_plate=str(owned_plate), ownership=f"{person_in_question.first_name} {person_in_question.last_name}")
         return owned_plate
     else:
         # No car.

@@ -16,7 +16,7 @@ def enter_to_continue():
     input("Press enter to continue...")
 
 
-def styled_coloured_print_centered(text, colour=None, instant=False):
+def styled_coloured_print_centered(text, cent=True, colour=None, instant=False):
     if colour is not None:
         col = colour
     else:
@@ -38,7 +38,10 @@ def styled_coloured_print_centered(text, colour=None, instant=False):
     Default instant --> False
     '''
     if colour is None:
-        ps.Write.Print(text=ps.Center.XCenter(text), color=ps.Colors.cyan, interval=time_delay)
+        if cent:
+            ps.Write.Print(text=ps.Center.XCenter(text), color=ps.Colors.cyan, interval=time_delay)
+        else:
+            ps.Write.Print(text=text, color=ps.Colors.cyan, interval=time_delay)
     else:
         if colour == "red":
             col = ps.Colors.red
@@ -58,9 +61,12 @@ def styled_coloured_print_centered(text, colour=None, instant=False):
             col = ps.Colors.blue_to_green
         elif colour == "greenyellow":
             col = ps.Colors.green_to_yellow
-
-        ps.Write.Print(text=ps.Center.XCenter(text), color=col, interval=time_delay)
+        if cent:
+            ps.Write.Print(text=ps.Center.XCenter(text), color=col, interval=time_delay)
+        else:
+            ps.Write.Print(text=text, color=col, interval=time_delay)
     print("", flush=True)
+
 
 
 def line():

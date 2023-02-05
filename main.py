@@ -88,7 +88,7 @@ def main():
                                        f"+          [ E/e(Exit) ]                    +\n"
                                        f"-                                           -\n"
                                        f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
-                                       f"In register:{get_statistics(1)}", instant=True, colour="orange")
+                                       f"In register:{get_statistics(1)}", instant=True, colour="yellow")
         tab_down()
         usr_sel = input(" >> ")
         usr_sel = usr_sel.lower().strip(" ")
