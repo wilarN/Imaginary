@@ -68,6 +68,26 @@ def styled_coloured_print_centered(text, cent=True, colour=None, instant=False):
     print("", flush=True)
 
 
+def write_to_file(text_to_write, path_to_file, typeOfWrite):
+    try:
+        if os.path.exists(path_to_file):
+            write_file = open(path_to_file, typeOfWrite)
+            write_file.write(text_to_write)
+            write_file.close()
+    except Exception as e:
+        print(e)
+        enter_to_continue()
+
+def save_results_to_file(list_of_items):
+    usr_res = input("Save results to file?(y/n) (Enter to continue...)")
+    if usr_res.strip(" ").lower() == "y":
+        if not os.path.exists("./output"):
+            os.mkdir("./output")
+
+        for item in list_of_items:
+            write_to_file(text_to_write=str(item), path_to_file=("./output/"+"latest_logged.txt"), typeOfWrite="w+")
+    else:
+        pass
 
 def line():
     print("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+")

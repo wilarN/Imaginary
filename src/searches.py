@@ -137,15 +137,16 @@ def search():
         for i in dbCurs:
             styled_coloured_print_centered(text=f"""
 [Government Name]: {i.get('first_name')} {i.get('last_name')}\n
-  - [Gender]: {i.get('sex')}\n
-  - [Age]: {i.get('age')} y/o\n
-  - [Height]: {i.get('height')}cm\n
-  - [Nationality]: {i.get('nationality')}\n
-  - [Personal Identification Number]: ({i.get('personal_identification_number')})\n
+  - [Gender]: {i.get('sex')}
+  - [Age]: {i.get('age')} y/o
+  - [Height]: {i.get('height')}cm
+  - [Nationality]: {i.get('nationality')}
+  - [Personal Identification Number]: ({i.get('personal_identification_number')})
   - [Cars]:
         {i.get('cars')}
                 """, instant=True, colour="yellow", cent=False)
             line()
+        # save_results_to_file(dbCurs.__dict__)
         enter_to_continue()
 
 
@@ -281,10 +282,25 @@ def vehicle_search():
                     filter=filter
                 )
 
+        elif usr_sel.lower().strip(" ") == "7":
+            # Car_body search
+            usr_sel = input(" Plate (ex. XXX-99X) >> ")
+            usr_sel = usr_sel.strip(" ").capitalize()
+            if usr_sel.lower().strip(" ") == "e":
+                break
+            else:
+                filter = ({
+                    'plate': re.compile(r".*" + f"{usr_sel}" + r".*")
+                })
+
+                dbCurs = mycol.find(
+                    filter=filter
+                )
+
         elif usr_sel.lower().strip(" ") == "8":
             # Car_body search
             usr_sel = input(" Registered Vehicle Owner (ex. 'John Doe' or 'John' or 'Doe') >> ")
-            usr_sel = usr_sel.strip(" ").capitalize()
+            usr_sel = usr_sel.strip(" ").upper()
             if usr_sel.lower().strip(" ") == "e":
                 break
             else:
@@ -303,14 +319,14 @@ def vehicle_search():
         line()
         for i in dbCurs:
             styled_coloured_print_centered(text=
-                f"""[Owner]: {i.get('owner')}\n
-  - [Model]: {i.get('model')}\n
-  - [Manufacturer]: {i.get('manufacturer')}\n
-  - [Colour]: {i.get('colour')}\n
-  - [Body]: {i.get('car_body')}\n
-  - [Production Year]: {i.get('year')}\n
-  - [Annotations]: {i.get('annotations')}\n
-  - [Plate]: {i.get('plate')}\n
+                                           f"""[Owner]: {i.get('owner')}\n
+  - [Model]: {i.get('model')}
+  - [Manufacturer]: {i.get('manufacturer')}
+  - [Colour]: {i.get('colour')}
+  - [Body]: {i.get('car_body')}
+  - [Production Year]: {i.get('year')}
+  - [Annotations]: {i.get('annotations')}
+  - [Plate]: {i.get('plate')}
 """, instant=True, colour="yellow", cent=False)
             line()
         enter_to_continue()

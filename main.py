@@ -3,6 +3,9 @@ import src.searches
 from src.headers import *
 
 
+def change_windowSize():
+    cmd = "mode con: cols=200 lines=50"
+    os.system(cmd)
 
 def list_people():
     # List all people
@@ -112,4 +115,5 @@ def main():
 
 
 if __name__ == '__main__':
+    change_windowSize()
     main()
