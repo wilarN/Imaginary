@@ -1,6 +1,6 @@
 import re
 
-from headers import *
+from src.headers import *
 
 
 def search():

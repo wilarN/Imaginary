@@ -1,5 +1,5 @@
-import searches
-from headers import *
+import src.searches
+from src.headers import *
 
 
 def generate_people():

@@ -169,7 +169,8 @@ def get_random_car_plate(car_object):
     letters = string.ascii_uppercase
     first_section = ''.join(random.choice(letters) for i in range(3))
     if int(car_object.year) >= 2017:
-        # 16 februari 2017 tog regeringen beslut om att Transportstyrelsen ska få tilldela registreringsnummer där det sista tecknet blir alfanumeriskt
+        # 16 februari 2017 tog regeringen beslut om att Transportstyrelsen ska få tilldela registreringsnummer där
+        # det sista tecknet blir alfanumeriskt
         second_section = ''
         for i in range(2):
             second_section = second_section + str(random.randint(0, 9))
