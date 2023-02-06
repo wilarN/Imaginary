@@ -2,6 +2,9 @@ import re
 
 from src.headers import *
 
+def get_formatted_list(items):
+    for item in items:
+        print(f"[{item}], ", end="")
 
 def search():
     global mycol
@@ -34,8 +37,15 @@ def search():
                                             f"+    [4]- Eye Colour      +\n"
                                             f"-    [5]- Height          -\n"
                                             f"+    [6]- Nationality     +\n"
+                                            f"-    [7]- Records &       -\n"
+                                            f"+       & Annotations     +\n"
                                             f"-                         -\n"
                                             f"+                         +\n"
+                                            f"-                         -\n"
+                                            f"+                         +\n"
+                                            f"-                         -\n"
+                                            f"+                         +\n"
+                                            
                                             f"-      [ E/e(Exit) ]      -\n"
                                             f"+-+-+-+-+-+-+-+-+-+-+-+-+-+", instant=True, colour="blue")
         tab_down()
@@ -49,13 +59,8 @@ def search():
             if usr_sel.lower().strip(" ") == "e":
                 break
             else:
-                filter = ({
-                    'first_name': re.compile(r".*" + f"{usr_sel}" + r".*")
-                })
-
-                dbCurs = mycol.find(
-                    filter=filter
-                )
+                filter = {'first_name': {'$regex': f".*{usr_sel}.*"}}
+                dbCurs = mycol.find(filter=filter)
 
         elif usr_sel.lower().strip(" ") == "2":
             # Last_name search
@@ -64,13 +69,8 @@ def search():
             if usr_sel.lower().strip(" ") == "e":
                 break
             else:
-                filter = ({
-                    'last_name': re.compile(r".*" + f"{usr_sel}" + r".*")
-                })
-
-                dbCurs = mycol.find(
-                    filter=filter
-                )
+                filter = {'last_name': {'$regex': f".*{usr_sel}.*"}}
+                dbCurs = mycol.find(filter=filter)
 
         elif usr_sel.lower().strip(" ") == "3":
             # Personal Identification Number search
@@ -79,13 +79,8 @@ def search():
             if usr_sel.lower().strip(" ") == "e":
                 break
             else:
-                filter = ({
-                    'personal_identification_number': re.compile(r".*" + f"{usr_sel}" + r".*")
-                })
-
-                dbCurs = mycol.find(
-                    filter=filter
-                )
+                filter = {'personal_identification_number': {'$regex': f".*{usr_sel}.*"}}
+                dbCurs = mycol.find(filter=filter)
 
         elif usr_sel.lower().strip(" ") == "4":
             # Eye Colour Search
@@ -94,13 +89,8 @@ def search():
             if usr_sel.lower().strip(" ") == "e":
                 break
             else:
-                filter = ({
-                    'eye_colour': re.compile(r".*" + f"{usr_sel}" + r".*")
-                })
-
-                dbCurs = mycol.find(
-                    filter=filter
-                )
+                filter = {'eye_colour': {'$regex': f".*{usr_sel}.*"}}
+                dbCurs = mycol.find(filter=filter)
 
         elif usr_sel.lower().strip(" ") == "5":
             # Height Search
@@ -121,13 +111,17 @@ def search():
             if usr_sel.lower().strip(" ") == "e":
                 break
             else:
-                filter = ({
-                    'nationality': re.compile(r".*" + f"{usr_sel}" + r".*")
-                })
-
-                dbCurs = mycol.find(
-                    filter=filter
-                )
+                filter = {'nationality': {'$regex': f".*{usr_sel}.*"}}
+                dbCurs = mycol.find(filter=filter)
+        elif usr_sel.lower().strip(" ") == "7":
+            # Annotations and record search
+            usr_sel = input(" Crime // Annotation >> ")
+            usr_sel = usr_sel.strip(" ").capitalize()
+            if usr_sel.lower().strip(" ") == "e":
+                break
+            else:
+                filter = {'record_and_annotations': {'$regex': f".*{usr_sel}.*"}}
+                dbCurs = mycol.find(filter=filter)
 
         else:
             break
@@ -142,6 +136,8 @@ def search():
   - [Height]: {i.get('height')}cm
   - [Nationality]: {i.get('nationality')}
   - [Personal Identification Number]: ({i.get('personal_identification_number')})
+  - [Records & Annotations]:
+        {i.get('record_and_annotations')}
   - [Cars]:
         {i.get('cars')}
                 """, instant=True, colour="yellow", cent=False)
@@ -199,13 +195,8 @@ def vehicle_search():
             if usr_sel.lower().strip(" ") == "e":
                 break
             else:
-                filter = ({
-                    'model': re.compile(r".*" + f"{usr_sel}" + r".*")
-                })
-
-                dbCurs = mycol.find(
-                    filter=filter
-                )
+                filter = {'model': {'$regex': f".*{usr_sel}.*"}}
+                dbCurs = mycol.find(filter=filter)
 
         elif usr_sel.lower().strip(" ") == "2":
             # Manufacturer search
@@ -214,14 +205,8 @@ def vehicle_search():
             if usr_sel.lower().strip(" ") == "e":
                 break
             else:
-                filter = ({
-                    'manufacturer': re.compile(r".*" + f"{usr_sel}" + r".*")
-                })
-
-                dbCurs = mycol.find(
-                    filter=filter
-                )
-
+                filter = {'manufacturer': {'$regex': f".*{usr_sel}.*"}}
+                dbCurs = mycol.find(filter=filter)
         elif usr_sel.lower().strip(" ") == "3":
             # Colour search
             usr_sel = input(" Colour >> ")
@@ -229,13 +214,8 @@ def vehicle_search():
             if usr_sel.lower().strip(" ") == "e":
                 break
             else:
-                filter = ({
-                    'colour': re.compile(r".*" + f"{usr_sel}" + r".*")
-                })
-
-                dbCurs = mycol.find(
-                    filter=filter
-                )
+                filter = {'colour': {'$regex': f".*{usr_sel}.*"}}
+                dbCurs = mycol.find(filter=filter)
 
         elif usr_sel.lower().strip(" ") == "4":
             # Year Search
@@ -244,13 +224,8 @@ def vehicle_search():
             if usr_sel.lower().strip(" ") == "e":
                 break
             else:
-                filter = ({
-                    'year': re.compile(r".*" + f"{usr_sel}" + r".*")
-                })
-
-                dbCurs = mycol.find(
-                    filter=filter
-                )
+                filter = {'year': {'$regex': f".*{usr_sel}.*"}}
+                dbCurs = mycol.find(filter=filter)
 
         elif usr_sel.lower().strip(" ") == "5":
             # annotations Search
@@ -259,13 +234,8 @@ def vehicle_search():
             if usr_sel.lower().strip(" ") == "e":
                 break
             else:
-                filter = ({
-                    'annotations': re.compile(r".*" + f"{usr_sel}" + r".*")
-                })
-
-                dbCurs = mycol.find(
-                    filter=filter
-                )
+                filter = {'annotations': {'$regex': f".*{usr_sel}.*"}}
+                dbCurs = mycol.find(filter=filter)
 
         elif usr_sel.lower().strip(" ") == "6":
             # Car_body search
@@ -274,28 +244,18 @@ def vehicle_search():
             if usr_sel.lower().strip(" ") == "e":
                 break
             else:
-                filter = ({
-                    'car_body': re.compile(r".*" + f"{usr_sel}" + r".*")
-                })
-
-                dbCurs = mycol.find(
-                    filter=filter
-                )
+                filter = {'car_body': {'$regex': f".*{usr_sel}.*"}}
+                dbCurs = mycol.find(filter=filter)
 
         elif usr_sel.lower().strip(" ") == "7":
             # Car_body search
-            usr_sel = input(" Plate (ex. XXX-99X) >> ")
-            usr_sel = usr_sel.strip(" ").capitalize()
+            usr_sel = input("Plate (ex. XXX-99X) >> ")
+            usr_sel = usr_sel.strip(" ").upper()
             if usr_sel.lower().strip(" ") == "e":
                 break
             else:
-                filter = ({
-                    'plate': re.compile(r".*" + f"{usr_sel}" + r".*")
-                })
-
-                dbCurs = mycol.find(
-                    filter=filter
-                )
+                filter = {'plate': {'$regex': f".*{usr_sel}.*"}}
+                dbCurs = mycol.find(filter=filter)
 
         elif usr_sel.lower().strip(" ") == "8":
             # Car_body search
@@ -304,13 +264,8 @@ def vehicle_search():
             if usr_sel.lower().strip(" ") == "e":
                 break
             else:
-                filter = ({
-                    'owner': re.compile(r".*" + f"{usr_sel}" + r".*")
-                })
-
-                dbCurs = mycol.find(
-                    filter=filter
-                )
+                filter = {'owner': {'$regex': f".*{usr_sel}.*"}}
+                dbCurs = mycol.find(filter=filter)
 
         else:
             break

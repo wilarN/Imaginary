@@ -43,6 +43,13 @@ SEX = ["Male", "Female"]
 CAR_COLOURS = ["Black", "Blue", "Green", "Purple", "Yellow", "Silver", "Red", "Pink", "Grey", "Orange", "White",
                "Brown", "Cyan"]
 
+ANNOTATIONS_AND_CRIMES = ["Cybercrime", "Human Smuggling", "Human Trafficking", "Illegal Possession Of Firearms", "Cannabis Cultivation", "Fraud",
+                          "Real Estate", "Benefit Fraud", "Evasion Of Social Insurance Payments", "Crime At Travellers' Sites", "Theft",
+                          "Driving Under The Influence", "Speeding", "Red Light Violation", "Driver’s License Suspension", "Aggravated Assault", "Kidnapping",
+                          "Manslaughter: Involuntary", "Money Laundering", "Manslaughter: Voluntary", "Child Abuse", "Credit / Debit Card Fraud",
+                          "Prostitution", "Domestic Violence", "Disturbing The Peace", "Rape", "Drug Trafficking / Distribution",
+                          "Vandalism", "Wire Fraud", "Identity Theft", "Homicide", "Hate Crimes", "Harassment"]
+
 
 ###################################################
 ######### CAR SECTION #############################
@@ -216,6 +223,17 @@ def get_car(person_in_question):
         # No car.
         return False
 
+def get_record_and_annotations():
+    temp_total_records = []
+    for i in range(3):
+        chance = random.randint(0, 10)
+        if chance <= 3:
+            # Get the record from the list for this particular person.
+            temp_total_records.append(random.choice(ANNOTATIONS_AND_CRIMES))
+        else:
+            # No record for this person.
+            pass
+    return temp_total_records
 
 class personMaster:
     def __init__(self):
@@ -229,6 +247,7 @@ class personMaster:
         self.age = get_random_age()
         self.height = get_random_height()
         self.eye_colour = get_random_eye_colour()
+        self.record_and_annotations = get_record_and_annotations()
         self.personal_identification_number = generate_identification_number(years_old=self.age, gender=self.sex)
         potential_car = get_car(self)
         if not potential_car:

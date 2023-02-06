@@ -85,7 +85,7 @@ def main():
                                        f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
                                        f"-       G/g(Generate Data) - (Admin)        -\n"
                                        f"+       S/s(Search) - (General)             +\n"
-                                       f"-       L/l(List Register) - (DB_Heavy)     -\n"
+                                       f"-       SIM/sim(Simulation) - (DB_Heavy)    -\n"
                                        f"+                                           +\n"
                                        f"-                                           -\n"
                                        f"+          [ E/e(Exit) ]                    +\n"
@@ -99,9 +99,9 @@ def main():
             # Generate
             type_of_generating()
 
-        elif usr_sel.__contains__("l"):
+        elif usr_sel.__contains__("sim"):
             # List
-            list_people()
+            realism_simulation()
             enter_to_continue()
 
         elif usr_sel.__contains__("s"):
