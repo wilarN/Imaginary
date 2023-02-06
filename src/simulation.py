@@ -25,4 +25,7 @@ def realism_simulation():
         usr_sel = input(" >> ")
         usr_sel = usr_sel.lower().strip(" ")
         if usr_sel.__contains__("1"):
+            pass
 
+        elif usr_sel.__contains__("e"):
+            break
