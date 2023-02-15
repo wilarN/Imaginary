@@ -1,6 +1,8 @@
 import csv
 import hashlib
 import string
+import uuid
+
 import names
 import random
 import datetime
@@ -249,6 +251,18 @@ def get_record_and_annotations():
     return temp_total_records
 
 
+def get_bank_accounts(f_name, l_name):
+    accounts = []
+    account_num = random.randint(0, 4)
+    for i in range(account_num):
+        generated_account_num = generate_account_number(account_owner=str(f_name + l_name))
+        accounts.append(src.misc.bank_account(ownership=f_name + " " + l_name, bank_account_num=generated_account_num))
+    for i in accounts:
+        print(i.account_ownership)
+
+    return accounts
+
+
 class personMaster:
     def __init__(self):
         self.sex = get_random_sex()
@@ -268,9 +282,17 @@ class personMaster:
             self.cars = []
         else:
             self.cars = [potential_car]
+        self.bank_accounts = get_bank_accounts(f_name=self.first_name, l_name=self.last_name)
+
+    def fix_bank_account_numbers_for_insertion(self):
+        new_list = []
+        for account in self.bank_accounts:
+            new_list.append(account.account_identification)
+        self.bank_accounts = new_list
 
     def print_information(self):
         print(self.__dict__)
+
 
 
 ###################################################
@@ -278,7 +300,7 @@ class personMaster:
 ###################################################
 
 def generate_account_number(account_owner):
-    hashed = hashlib.sha256(str(account_owner + random.choice(string.ascii_uppercase)).encode('utf-8')).hexdigest()
+    hashed = hashlib.sha256(str(account_owner + uuid.uuid4().hex).encode('utf-8')).hexdigest()
     return hashed
 
 
@@ -291,8 +313,8 @@ def get_account_balance(min_amount, max_amount):
 
 
 class bank_account:
-    def __init__(self, ownership):
+    def __init__(self, ownership, bank_account_num):
         self.account_ownership = ownership
-        self.account_identification = generate_account_number(account_owner=ownership)
-        self.balance = get_account_balance(min_amount=0, max_amount=99999999)
+        self.account_identification = bank_account_num
+        self.balance = get_account_balance(min_amount=0, max_amount=999999)
         self.account_type = get_account_type()
