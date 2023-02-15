@@ -1,4 +1,5 @@
 import csv
+import hashlib
 import string
 import names
 import random
@@ -43,12 +44,20 @@ SEX = ["Male", "Female"]
 CAR_COLOURS = ["Black", "Blue", "Green", "Purple", "Yellow", "Silver", "Red", "Pink", "Grey", "Orange", "White",
                "Brown", "Cyan"]
 
-ANNOTATIONS_AND_CRIMES = ["Cybercrime", "Human Smuggling", "Human Trafficking", "Illegal Possession Of Firearms", "Cannabis Cultivation", "Fraud",
-                          "Real Estate", "Benefit Fraud", "Evasion Of Social Insurance Payments", "Crime At Travellers' Sites", "Theft",
-                          "Driving Under The Influence", "Speeding", "Red Light Violation", "Driver’s License Suspension", "Aggravated Assault", "Kidnapping",
-                          "Manslaughter: Involuntary", "Money Laundering", "Manslaughter: Voluntary", "Child Abuse", "Credit / Debit Card Fraud",
-                          "Prostitution", "Domestic Violence", "Disturbing The Peace", "Rape", "Drug Trafficking / Distribution",
+ANNOTATIONS_AND_CRIMES = ["Cybercrime", "Human Smuggling", "Human Trafficking", "Illegal Possession Of Firearms",
+                          "Cannabis Cultivation", "Fraud",
+                          "Real Estate", "Benefit Fraud", "Evasion Of Social Insurance Payments",
+                          "Crime At Travellers' Sites", "Theft",
+                          "Driving Under The Influence", "Speeding", "Red Light Violation",
+                          "Driver’s License Suspension", "Aggravated Assault", "Kidnapping",
+                          "Manslaughter: Involuntary", "Money Laundering", "Manslaughter: Voluntary", "Child Abuse",
+                          "Credit / Debit Card Fraud",
+                          "Prostitution", "Domestic Violence", "Disturbing The Peace", "Rape",
+                          "Drug Trafficking / Distribution",
                           "Vandalism", "Wire Fraud", "Identity Theft", "Homicide", "Hate Crimes", "Harassment"]
+
+BANK_ACCOUNT_TYPES = ['Checking Account', 'Savings Account', 'Money Market Account',
+                      'Certificate of Deposit', 'Individual Retirement Account', 'Credit Account']
 
 
 ###################################################
@@ -62,13 +71,15 @@ CAR_FILES = []
 for path in os.listdir(global_car_data_path):
     # check if current path is a file
     if os.path.isfile(os.path.join(global_car_data_path, path)):
-        CAR_FILES.append(os.path.join(os.path.dirname(__file__), 'data\\'+path))
+        CAR_FILES.append(os.path.join(os.path.dirname(__file__), 'data\\' + path))
     # print(os.path.join(os.path.dirname(__file__), 'data\\'+path))
+
+
 # input()
 
 def get_car_data():
     # print(global_car_data_path)
-    selected_file = CAR_FILES[random.randint(0, len(CAR_FILES)-1)]
+    selected_file = CAR_FILES[random.randint(0, len(CAR_FILES) - 1)]
     with open(f"{selected_file}", 'r') as file:
         reader = csv.reader(file)
         reader = list(reader)
@@ -217,11 +228,13 @@ def get_car(person_in_question):
 
         owned_plate = get_random_car_plate()
         print(owned_plate)
-        generated_car = src.generate.generate_vehicle(specific_plate=str(owned_plate), ownership=f"{person_in_question.first_name} {person_in_question.last_name}")
+        generated_car = src.generate.generate_vehicle(specific_plate=str(owned_plate),
+                                                      ownership=f"{person_in_question.first_name} {person_in_question.last_name}")
         return owned_plate
     else:
         # No car.
         return False
+
 
 def get_record_and_annotations():
     temp_total_records = []
@@ -234,6 +247,7 @@ def get_record_and_annotations():
             # No record for this person.
             pass
     return temp_total_records
+
 
 class personMaster:
     def __init__(self):
@@ -258,3 +272,27 @@ class personMaster:
     def print_information(self):
         print(self.__dict__)
 
+
+###################################################
+######### BANK SECTION     ########################
+###################################################
+
+def generate_account_number(account_owner):
+    hashed = hashlib.sha256(str(account_owner + random.choice(string.ascii_uppercase)).encode('utf-8')).hexdigest()
+    return hashed
+
+
+def get_account_type():
+    return random.choice(BANK_ACCOUNT_TYPES)
+
+
+def get_account_balance(min_amount, max_amount):
+    return random.randint(min_amount, max_amount)
+
+
+class bank_account:
+    def __init__(self, ownership):
+        self.account_ownership = ownership
+        self.account_identification = generate_account_number(account_owner=ownership)
+        self.balance = get_account_balance(min_amount=0, max_amount=99999999)
+        self.account_type = get_account_type()
