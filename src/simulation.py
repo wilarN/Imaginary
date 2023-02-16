@@ -3,13 +3,13 @@ from src.headers import *
 import threading
 import src.globals as glob
 from random import choice
+from src.logging import *
 
-currencies = ['United States Dollar (USD)', 'Euro (EUR)', 'Japanese Yen (JPY)', 'British Pound (GBP)', 'Swiss Franc (CHF)', 'Canadian Dollar (CAD)', 'Australian Dollar (AUD)', 'New Zealand Dollar (NZD)', 'Chinese Yuan Renminbi (CNY)', 'Hong Kong Dollar (HKD)', 'Singapore Dollar (SGD)', 'South Korean Won (KRW)', 'Indian Rupee (INR)', 'Brazilian Real (BRL)', 'Russian Ruble (RUB)', 'South African Rand (ZAR)']
 
 def money_transaction():
     # Transaction logic.
     while not stop_event.is_set():
-        time.sleep(src.headers.random.randint(0, 3))
+        time.sleep(src.headers.random.uniform(0, 1))
         # Get two random customers from the database
         customers = glob.mycol.aggregate([{"$sample": {"size": 2}}])
 
@@ -20,7 +20,7 @@ def money_transaction():
 
         sender_account = src.headers.random.choice(sender["bank_accounts"])
         # amount = 100  # Change this to the desired transaction amount
-        amount = src.headers.random.randint(2, 99999)
+        amount = src.headers.random.randint(100, 100000)
 
         receiver_account = src.headers.random.choice(receiver["bank_accounts"])
 
@@ -32,9 +32,11 @@ def money_transaction():
             glob.mycol.update_one({"_id": receiver["_id"]},
                                   {"$inc": {"bank_accounts.$[elem].balance": amount}}, array_filters=[
                     {"elem.account_identification": receiver_account["account_identification"]}])
-            src.headers.styled_coloured_print_centered(text=f"\n[TRANSACTION SUCCESSFUL] [[{sender_account['account_ownership']}]({sender_account['account_identification']}) >- [{amount} {src.headers.random.choice(currencies)}] -> [{receiver_account['account_ownership']}]({receiver_account['account_identification']})]", instant=True, colour="green")
+            # src.headers.styled_coloured_print_centered(text=f"\n[TRANSACTION SUCCESSFUL] [[{sender_account['account_ownership']}]({sender_account['account_identification']}) >- [{amount} {src.headers.random.choice(currencies)}] -> [{receiver_account['account_ownership']}]({receiver_account['account_identification']})]", instant=True, colour="green")
+            log_transaction(successful=True, sender=sender_account, reciever=receiver_account, amount=amount)
         else:
-            src.headers.styled_coloured_print_centered(text=f"\n[TRANSACTION FAILED] {sender_account['account_ownership']}'s account ({sender_account['account_identification']}) has insufficient balance to transfer {amount}", instant=True, colour="orange")
+            # src.headers.styled_coloured_print_centered(text=f"\n[TRANSACTION FAILED] {sender_account['account_ownership']}'s account ({sender_account['account_identification']}) has insufficient balance to transfer {amount}", instant=True, colour="orange")
+            log_transaction(successful=False, sender=sender_account, reciever=receiver_account, amount=amount)
 
 
 def crime_activity():

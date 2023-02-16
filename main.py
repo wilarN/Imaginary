@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import src.searches
 
 from src.headers import *
@@ -120,9 +122,26 @@ def main():
         elif usr_sel.__contains__("e"):
             # Exit
             print("Exiting...")
+            file = open(glob.settings_file_location, "a+")
+            file.write(f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
+                       f"[{datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] (EXITING...)\n"
+                       f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n")
+            file.close()
             exit(0)
+
+
+
+
+
+def generate_log_dir_files():
+    file = open(glob.settings_file_location, "a+")
+    file.write(f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
+               f"[{datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] (INITIALIZING)\n"
+               f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n")
+    file.close()
 
 
 if __name__ == '__main__':
     change_windowSize()
+    generate_log_dir_files()
     main()

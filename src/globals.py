@@ -1,3 +1,5 @@
+import os
+
 from pymongo import MongoClient
 global myclient
 myclient = MongoClient("mongodb://localhost:27017/")
@@ -11,3 +13,6 @@ global mycolBank
 mycolBank = mydb["banking"]
 global dbCurs
 dbCurs = mycol.find({})
+
+
+settings_file_location = os.path.join(os.path.dirname(__file__), "../" + 'global.log')
