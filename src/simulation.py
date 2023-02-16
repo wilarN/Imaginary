@@ -5,31 +5,32 @@ from random import choice
 def money_transaction():
     # Transaction logic.
     while not stop_event.is_set():
-        time.sleep(1)
-        print("TEST.")
+        time.sleep(2)
         # Get two random customers from the database
         customers = glob.mycol.aggregate([{"$sample": {"size": 2}}])
 
         # Perform transaction between the two customers
-        for customer in customers:
-            account = src.headers.random.choice(customer["bank_accounts"])
-            amount = 100  # Change this to the desired transaction amount
-            # Find the other customer's bank account and perform transaction
-            other_customer = glob.mycol.find_one({"_id": {"$ne": customer["_id"]}})
-            other_account = src.headers.random.choice(other_customer["bank_accounts"])
-            if account["balance"] >= amount:
-                glob.mycol.update_one({"_id": customer["_id"]},
-                                             {"$inc": {"bank_accounts.$[elem].balance": -amount}},
-                                             array_filters=[
-                                                 {"elem.account_identification": account["account_identification"]}])
-                glob.mycol.update_one({"_id": other_customer["_id"]},
-                                             {"$inc": {"bank_accounts.$[elem].balance": amount}}, array_filters=[
-                        {"elem.account_identification": other_account["account_identification"]}])
-                print(
-                    f"Transferred {amount} from {account['account_ownership']}'s account ({account['account_identification']}) to {other_account['account_ownership']}'s account ({other_account['account_identification']})")
-            else:
-                print(
-                    f"{account['account_ownership']}'s account ({account['account_identification']}) has insufficient balance to transfer {amount}")
+        customer_list = list(customers)
+        sender = customer_list[0]
+        receiver = customer_list[1]
+
+        sender_account = src.headers.random.choice(sender["bank_accounts"])
+        # amount = 100  # Change this to the desired transaction amount
+        amount = src.headers.random.randint(2, 99999)
+
+        receiver_account = src.headers.random.choice(receiver["bank_accounts"])
+
+        if sender_account["balance"] >= amount:
+            glob.mycol.update_one({"_id": sender["_id"]},
+                                         {"$inc": {"bank_accounts.$[elem].balance": -amount}},
+                                         array_filters=[                                             {"elem.account_identification": sender_account["account_identification"]}])
+            glob.mycol.update_one({"_id": receiver["_id"]},
+                                         {"$inc": {"bank_accounts.$[elem].balance": amount}}, array_filters=[                    {"elem.account_identification": receiver_account["account_identification"]}])
+            print(
+                f"\nTransferred {amount} from {sender_account['account_ownership']}'s account ({sender_account['account_identification']}) to {receiver_account['account_ownership']}'s account ({receiver_account['account_identification']})")
+        else:
+            print(
+                f"\n{sender_account['account_ownership']}'s account ({sender_account['account_identification']}) has insufficient balance to transfer {amount}")
 
 
 def crime_activity():
