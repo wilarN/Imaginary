@@ -1,18 +1,59 @@
 from src.headers import *
+import threading
+import src.globals as glob
+from random import choice
+def money_transaction():
+    # Transaction logic.
+    while not stop_event.is_set():
+        time.sleep(2)
+        # Get two random customers from the database
+        customers = glob.mycol.aggregate([{"$sample": {"size": 2}}])
+
+        # Perform transaction between the two customers
+        customer_list = list(customers)
+        sender = customer_list[0]
+        receiver = customer_list[1]
+
+        sender_account = src.headers.random.choice(sender["bank_accounts"])
+        # amount = 100  # Change this to the desired transaction amount
+        amount = src.headers.random.randint(2, 99999)
+
+        receiver_account = src.headers.random.choice(receiver["bank_accounts"])
+
+        if sender_account["balance"] >= amount:
+            glob.mycol.update_one({"_id": sender["_id"]},
+                                         {"$inc": {"bank_accounts.$[elem].balance": -amount}},
+                                         array_filters=[                                             {"elem.account_identification": sender_account["account_identification"]}])
+            glob.mycol.update_one({"_id": receiver["_id"]},
+                                         {"$inc": {"bank_accounts.$[elem].balance": amount}}, array_filters=[                    {"elem.account_identification": receiver_account["account_identification"]}])
+            print(
+                f"\nTransferred {amount} from {sender_account['account_ownership']}'s account ({sender_account['account_identification']}) to {receiver_account['account_ownership']}'s account ({receiver_account['account_identification']})")
+        else:
+            print(
+                f"\n{sender_account['account_ownership']}'s account ({sender_account['account_identification']}) has insufficient balance to transfer {amount}")
+
+
+def crime_activity():
+    # Crime logic.
+    while not stop_event.is_set():
+        pass
+
+
+stop_event = threading.Event()
 
 
 def realism_simulation():
-    styled_coloured_print_centered(text="""
+    src.headers.styled_coloured_print_centered(text="""
     ##############################################################################
     # All of the following simulations will affect and modify the stored data    #                      #
     # including database records of identities and ownerships of cars etc.       #
     # Please proceed with caution.                                               #
     ##############################################################################
     """, instant=True, colour="yellow")
-    enter_to_continue()
+    src.headers.enter_to_continue()
     while True:
-        clear()
-        styled_coloured_print_centered(text=
+        src.headers.clear()
+        src.headers.styled_coloured_print_centered(text=
                                        f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
                                        f"-       [1]- Crime Simulation               -\n"
                                        f"+       [2]- Full Simulation                +\n"
@@ -21,15 +62,28 @@ def realism_simulation():
                                        f"-                                           -\n"
                                        f"+          [ E/e(Exit) ]                    +\n"
                                        f"-                                           -\n"
-                                       f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n")
-        tab_down()
+                                       f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n", instant=True)
+        src.headers.tab_down()
         usr_sel = input(" >> ")
         usr_sel = usr_sel.lower().strip(" ")
         if usr_sel.__contains__("1"):
             pass
         if usr_sel.__contains__("2"):
             # Full simulation --> Transactions, crime, car trade, property etc.
-            pass
+            # Create a thread for the money transaction
+            money_transaction_thread = threading.Thread(target=money_transaction)
+            money_transaction_thread.start()
+
+            while True:
+                src.headers.tab_down()
+                src.headers.styled_coloured_print_centered(text="Full simulation of activities and logic started... "
+                                                                "Press enter to cancel.")
+                src.headers.enter_to_continue()
+                break
+            # Stop the thread here
+            stop_event.set()
+            money_transaction_thread.join()
+            break
 
         elif usr_sel.__contains__("e"):
             break

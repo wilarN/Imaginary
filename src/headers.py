@@ -6,6 +6,9 @@ from src import searches
 import src.misc
 from src.generate import *
 from src.simulation import realism_simulation
+import random
+
+import src.globals
 
 def tab_down():
     print()
