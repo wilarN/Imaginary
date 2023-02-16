@@ -38,6 +38,7 @@ def styled_coloured_print_centered(text, cent=True, colour=None, instant=False):
     bluegreen --> bluegreen
     purpleblue --> purple to blue gradient
     greenyellow --> greenyellow
+    green --> green
     Default instant --> False
     '''
     if colour is None:
@@ -64,6 +65,8 @@ def styled_coloured_print_centered(text, cent=True, colour=None, instant=False):
             col = ps.Colors.blue_to_green
         elif colour == "greenyellow":
             col = ps.Colors.green_to_yellow
+        elif colour == "green":
+            col = ps.Colors.green
         if cent:
             ps.Write.Print(text=ps.Center.XCenter(text), color=col, interval=time_delay)
         else:
