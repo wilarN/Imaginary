@@ -287,7 +287,7 @@ def get_record_and_annotations():
 
 def get_bank_accounts(f_name, l_name):
     accounts = []
-    account_num = random.randint(0, 4)
+    account_num = random.randint(1, 4)
     for i in range(account_num):
         generated_account_num = generate_account_number(account_owner=str(f_name + l_name))
         accounts.append(src.misc.bank_account(ownership=f_name + " " + l_name, bank_account_num=generated_account_num))

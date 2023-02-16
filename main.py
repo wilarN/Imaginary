@@ -1,6 +1,7 @@
 import src.searches
 
 from src.headers import *
+import src.globals
 
 
 def change_windowSize():
@@ -16,7 +17,7 @@ def list_people():
 
 def get_statistics(selection: int):
     if selection == 1:
-        total_in_database = mydb.command("count", "people")
+        total_in_database = src.globals.mydb.command("count", "people")
         return total_in_database
 
 
@@ -110,7 +111,6 @@ def main():
         elif usr_sel.__contains__("e"):
             # Exit
             print("Exiting...")
-            del dbCurs
             exit(0)
 
 
