@@ -14,7 +14,7 @@ purpose.
 
 
 def change_windowSize():
-    cmd = "mode con: cols=200 lines=50"
+    cmd = "mode con: cols=230 lines=50"
     os.system(cmd)
 
 def list_people():

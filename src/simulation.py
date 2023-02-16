@@ -1,11 +1,15 @@
+import src.headers
 from src.headers import *
 import threading
 import src.globals as glob
 from random import choice
+
+currencies = ['United States Dollar (USD)', 'Euro (EUR)', 'Japanese Yen (JPY)', 'British Pound (GBP)', 'Swiss Franc (CHF)', 'Canadian Dollar (CAD)', 'Australian Dollar (AUD)', 'New Zealand Dollar (NZD)', 'Chinese Yuan Renminbi (CNY)', 'Hong Kong Dollar (HKD)', 'Singapore Dollar (SGD)', 'South Korean Won (KRW)', 'Indian Rupee (INR)', 'Brazilian Real (BRL)', 'Russian Ruble (RUB)', 'South African Rand (ZAR)']
+
 def money_transaction():
     # Transaction logic.
     while not stop_event.is_set():
-        time.sleep(2)
+        time.sleep(src.headers.random.randint(0, 3))
         # Get two random customers from the database
         customers = glob.mycol.aggregate([{"$sample": {"size": 2}}])
 
@@ -22,15 +26,15 @@ def money_transaction():
 
         if sender_account["balance"] >= amount:
             glob.mycol.update_one({"_id": sender["_id"]},
-                                         {"$inc": {"bank_accounts.$[elem].balance": -amount}},
-                                         array_filters=[                                             {"elem.account_identification": sender_account["account_identification"]}])
+                                  {"$inc": {"bank_accounts.$[elem].balance": -amount}},
+                                  array_filters=[
+                                      {"elem.account_identification": sender_account["account_identification"]}])
             glob.mycol.update_one({"_id": receiver["_id"]},
-                                         {"$inc": {"bank_accounts.$[elem].balance": amount}}, array_filters=[                    {"elem.account_identification": receiver_account["account_identification"]}])
-            print(
-                f"\nTransferred {amount} from {sender_account['account_ownership']}'s account ({sender_account['account_identification']}) to {receiver_account['account_ownership']}'s account ({receiver_account['account_identification']})")
+                                  {"$inc": {"bank_accounts.$[elem].balance": amount}}, array_filters=[
+                    {"elem.account_identification": receiver_account["account_identification"]}])
+            src.headers.styled_coloured_print_centered(text=f"\n[TRANSACTION SUCCESSFUL] [[{sender_account['account_ownership']}]({sender_account['account_identification']}) >- [{amount} {src.headers.random.choice(currencies)}] -> [{receiver_account['account_ownership']}]({receiver_account['account_identification']})]", instant=True, colour="green")
         else:
-            print(
-                f"\n{sender_account['account_ownership']}'s account ({sender_account['account_identification']}) has insufficient balance to transfer {amount}")
+            src.headers.styled_coloured_print_centered(text=f"\n[TRANSACTION FAILED] {sender_account['account_ownership']}'s account ({sender_account['account_identification']}) has insufficient balance to transfer {amount}", instant=True, colour="orange")
 
 
 def crime_activity():
@@ -54,15 +58,15 @@ def realism_simulation():
     while True:
         src.headers.clear()
         src.headers.styled_coloured_print_centered(text=
-                                       f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
-                                       f"-       [1]- Crime Simulation               -\n"
-                                       f"+       [2]- Full Simulation                +\n"
-                                       f"-                                           -\n"
-                                       f"+                                           +\n"
-                                       f"-                                           -\n"
-                                       f"+          [ E/e(Exit) ]                    +\n"
-                                       f"-                                           -\n"
-                                       f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n", instant=True)
+                                                   f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
+                                                   f"-       [1]- Crime Simulation               -\n"
+                                                   f"+       [2]- Full Simulation                +\n"
+                                                   f"-                                           -\n"
+                                                   f"+                                           +\n"
+                                                   f"-                                           -\n"
+                                                   f"+          [ E/e(Exit) ]                    +\n"
+                                                   f"-                                           -\n"
+                                                   f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n", instant=True)
         src.headers.tab_down()
         usr_sel = input(" >> ")
         usr_sel = usr_sel.lower().strip(" ")
@@ -83,6 +87,7 @@ def realism_simulation():
             # Stop the thread here
             stop_event.set()
             money_transaction_thread.join()
+            stop_event.clear()
             break
 
         elif usr_sel.__contains__("e"):
