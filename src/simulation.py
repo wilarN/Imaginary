@@ -1,4 +1,5 @@
-from headers import *
+from src.headers import *
+
 
 def realism_simulation():
     styled_coloured_print_centered(text="""
@@ -14,8 +15,8 @@ def realism_simulation():
         styled_coloured_print_centered(text=
                                        f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
                                        f"-       [1]- Crime Simulation               -\n"
-                                       f"+       S/s(Search) - (General)             +\n"
-                                       f"-       SIM/sim(Simulation) - (DB_Heavy)    -\n"
+                                       f"+       [2]- Full Simulation                +\n"
+                                       f"-                                           -\n"
                                        f"+                                           +\n"
                                        f"-                                           -\n"
                                        f"+          [ E/e(Exit) ]                    +\n"
@@ -25,6 +26,9 @@ def realism_simulation():
         usr_sel = input(" >> ")
         usr_sel = usr_sel.lower().strip(" ")
         if usr_sel.__contains__("1"):
+            pass
+        if usr_sel.__contains__("2"):
+            # Full simulation --> Transactions, crime, car trade, property etc.
             pass
 
         elif usr_sel.__contains__("e"):
