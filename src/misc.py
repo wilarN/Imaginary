@@ -9,6 +9,7 @@ import datetime
 
 import src.generate
 from src.headers import *
+from faker import Faker
 
 NATIONALITIES = ['Afghan', 'Albanian', 'Algerian', 'American', 'Andorran', 'Angolan', 'Antiguans', 'Argentinean',
                  'Armenian', 'Australian', 'Austrian', 'Azerbaijani', 'Bahamian', 'Bahraini', 'Bangladeshi',
@@ -46,6 +47,25 @@ SEX = ["Male", "Female"]
 CAR_COLOURS = ["Black", "Blue", "Green", "Purple", "Yellow", "Silver", "Red", "Pink", "Grey", "Orange", "White",
                "Brown", "Cyan"]
 
+DUMMY_BANKS = [
+    {"name": "Hanshin Banking Corporation", "location": "Osaka, Japan", "postal_code": "541-8570"},
+    {"name": "Indonesia Eximbank", "location": "Jakarta, Indonesia", "postal_code": "12190"},
+    {"name": "Bank of China", "location": "Beijing, China", "postal_code": "100818"},
+    {"name": "Korea Development Bank", "location": "Seoul, South Korea", "postal_code": "04510"},
+    {"name": "KfW Bankengruppe", "location": "Frankfurt, Germany", "postal_code": "60325"},
+    {"name": "Industrial and Commercial Bank of China", "location": "Beijing, China", "postal_code": "100033"},
+    {"name": "Hua Xia Bank", "location": "Beijing, China", "postal_code": "100033"},
+    {"name": "Mitsubishi UFJ Financial Group", "location": "Tokyo, Japan", "postal_code": "100-8324"},
+    {"name": "Bank of Tokyo-Mitsubishi UFJ", "location": "Tokyo, Japan", "postal_code": "100-0005"},
+    {"name": "Mizuho Financial Group", "location": "Tokyo, Japan", "postal_code": "100-8141"},
+    {"name": "National Australia Bank", "location": "Melbourne, Australia", "postal_code": "3000"},
+    {"name": "Commonwealth Bank of Australia", "location": "Sydney, Australia", "postal_code": "2000"},
+    {"name": "Westpac Banking Corporation", "location": "Sydney, Australia", "postal_code": "2000"},
+    {"name": "National Bank of Canada", "location": "Montreal, Canada", "postal_code": "H3C 3X6"},
+    {"name": "Scotiabank", "location": "Toronto, Canada", "postal_code": "M5H 1H1"}
+]
+
+
 ANNOTATIONS_AND_CRIMES = ["Cybercrime", "Human Smuggling", "Human Trafficking", "Illegal Possession Of Firearms",
                           "Cannabis Cultivation", "Fraud",
                           "Real Estate", "Benefit Fraud", "Evasion Of Social Insurance Payments",
@@ -61,6 +81,20 @@ ANNOTATIONS_AND_CRIMES = ["Cybercrime", "Human Smuggling", "Human Trafficking", 
 BANK_ACCOUNT_TYPES = ['Checking Account', 'Savings Account', 'Money Market Account',
                       'Certificate of Deposit', 'Individual Retirement Account', 'Credit Account']
 
+
+fake = Faker()
+PHONE_NUMBERS = []
+
+
+def generate_phone_numbers():
+    for i in range(50):
+        num = fake.phone_number()
+        if not num[0] == "+":
+            num = "+" + num
+        PHONE_NUMBERS.append(num)
+
+
+generate_phone_numbers()
 
 ###################################################
 ######### CAR SECTION #############################
@@ -308,13 +342,25 @@ def get_account_type():
     return random.choice(BANK_ACCOUNT_TYPES)
 
 
-def get_account_balance(min_amount, max_amount):
-    return random.randint(min_amount, max_amount)
+def get_account_balance():
+    amount_sec = random.randint(0, 10)
+    if(amount_sec >= 8):
+        return random.randint(20000, 3999999)
+    elif(2 < amount_sec < 5):
+        return random.randint(20000, 600000)
+    else:
+        return random.randint(10000, 20000)
 
+
+def get_bank_account_location():
+    selected_bank = random.choice(DUMMY_BANKS)
+    fixed_string = selected_bank["name"] + " - " + selected_bank["location"] + f"({selected_bank['postal_code']})[{random.choice(PHONE_NUMBERS)}]"
+    return fixed_string
 
 class bank_account:
     def __init__(self, ownership, bank_account_num):
         self.account_ownership = ownership
         self.account_identification = bank_account_num
-        self.balance = get_account_balance(min_amount=0, max_amount=999999)
+        self.balance = get_account_balance()
+        self.account_location = get_bank_account_location()
         self.account_type = get_account_type()
