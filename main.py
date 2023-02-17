@@ -121,14 +121,7 @@ def main():
 
         elif usr_sel.__contains__("e"):
             # Exit
-            print("Exiting...")
-            file = open(glob.settings_file_location, "a+")
-            file.write(f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
-                       f"[{datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] (EXITING...)\n"
-                       f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n")
-            file.close()
-            exit(0)
-
+            glob.graceful_exit()
 
 
 

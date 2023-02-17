@@ -75,15 +75,19 @@ def realism_simulation():
         if usr_sel.__contains__("1"):
             pass
         if usr_sel.__contains__("2"):
+            src.headers.tab_down()
+            src.headers.styled_coloured_print_centered(text="Full simulation of activities and logic started... ")
+            time.sleep(1)
+            print()
+            src.headers.styled_coloured_print_centered(text="To stop the simulation do not use ctrl-c, please press `ENTER` to gracefully stop.", instant=True)
+            time.sleep(5)
+
             # Full simulation --> Transactions, crime, car trade, property etc.
             # Create a thread for the money transaction
             money_transaction_thread = threading.Thread(target=money_transaction)
             money_transaction_thread.start()
 
             while True:
-                src.headers.tab_down()
-                src.headers.styled_coloured_print_centered(text="Full simulation of activities and logic started... "
-                                                                "Press enter to cancel.")
                 src.headers.enter_to_continue()
                 break
             # Stop the thread here
