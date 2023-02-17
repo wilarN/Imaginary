@@ -10,7 +10,7 @@ A simulation program in python that simulates:
 - pip install names
 - pip install pystyle
 - pip install faker
-<<<<<<< Updated upstream
+- pip install markovify
 
 
 OBS! NONE OF THE STUFF IN THIS PROGRAM USES REAL ACCOUNTS OR IDENTITIES, EVERYTHING IS GENERATED WITHIN THE CODE AND HAS TO CORRELATION TO REALITY. DO NOT USE THIS PROGRAM FOR MALICIOUS USE.

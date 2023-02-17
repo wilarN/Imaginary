@@ -31,6 +31,7 @@ mydb = myclient["imaginaryMaster"]
 mycol = mydb["people"]
 mycolVehicle = mydb["vehicles"]
 mycolBank = mydb["banking"]
+mycolPhone = mydb["phones"]
 dbCurs = mycol.find({})
 
 
