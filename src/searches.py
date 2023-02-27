@@ -1,6 +1,7 @@
 import re
 
 from src.headers import *
+import src.globals as glob
 
 def get_formatted_list(items):
     for item in items:
@@ -8,7 +9,7 @@ def get_formatted_list(items):
 
 def search():
     global mycol
-    mycol = mydb["people"]
+    mycol = glob.mydb["people"]
     global dbCurs
     clear()
     styled_coloured_print_centered(text="""
@@ -147,7 +148,7 @@ def search():
 
 
 def vehicle_search():
-    mycol = mydb["vehicles"]
+    mycol = glob.mydb["vehicles"]
     global dbCurs
     clear()
     styled_coloured_print_centered(text="""

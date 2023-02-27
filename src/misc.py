@@ -4,12 +4,11 @@ import string
 import uuid
 
 import names
-import random
 import datetime
 
-import src.generate
-from src.headers import *
+from headers import *
 from faker import Faker
+import globals as glob
 
 NATIONALITIES = ['Afghan', 'Albanian', 'Algerian', 'American', 'Andorran', 'Angolan', 'Antiguans', 'Argentinean',
                  'Armenian', 'Australian', 'Austrian', 'Azerbaijani', 'Bahamian', 'Bahraini', 'Bangladeshi',
@@ -297,6 +296,45 @@ def get_bank_accounts(f_name, l_name):
     return accounts
 
 
+def get_already_existing_phone_numbers(num_to_check):
+    existing_customer = glob.mycolPhone.find_one({"phone_numbers": {"$in": [num_to_check]}})
+    if existing_customer is not None:
+        if len(existing_customer) > 0:
+            # Already exists
+            return True
+        else:
+            # Unique
+            return False
+    else:
+        # Unique
+        return False
+
+
+def get_phone_number(self):
+    chance = random.randint(0, 10)
+    # 50 / 50 Chance kinda-
+    if chance >= 5:
+        while True:
+            # Get phone number
+            num = fake.phone_number()
+            if not num[0] == "+":
+                num = "+" + num
+
+            if get_already_existing_phone_numbers(num):
+                pass
+            else:
+                # Use generate phone number and insert into the phone database and add connection between person and number.
+                if num.__contains__("x"):
+                    num = num.split("x")[0]
+                if num.__contains__("."):
+                    num.replace(".", "-")
+                phone_number = phone(owner=self.first_name+" "+self.last_name, number=num)
+                glob.mycolPhone.insert_one(phone_number.__dict__)
+                return num
+    else:
+        return False
+
+
 class personMaster:
     def __init__(self):
         self.sex = get_random_sex()
@@ -316,7 +354,13 @@ class personMaster:
             self.cars = []
         else:
             self.cars = [potential_car]
+
         self.bank_accounts = get_bank_accounts(f_name=self.first_name, l_name=self.last_name)
+        potential_phone = get_phone_number(self)
+        if not potential_phone:
+            self.phone_numbers = []
+        else:
+            self.phone_numbers = [potential_phone]
 
     def fix_bank_account_numbers_for_insertion(self):
         new_list = []
@@ -364,3 +408,9 @@ class bank_account:
         self.balance = get_account_balance()
         self.account_location = get_bank_account_location()
         self.account_type = get_account_type()
+
+
+class phone:
+    def __init__(self, owner, number):
+        self.ownership = owner
+        self.registered_number = number
