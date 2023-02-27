@@ -1,9 +1,9 @@
 from datetime import datetime
 
-import src.searches
+from src_files import searches, generate, simulation
+from src_files.headers import *
+import src_files.globals as glob
 
-from src.headers import *
-import src.globals
 
 """
 IMPORTANT NOTICE: This program is provided for educational and experimental purposes only. The creator of this 
@@ -28,7 +28,7 @@ def list_people():
 
 def get_statistics(selection: int):
     if selection == 1:
-        total_in_database = src.globals.mydb.command("count", "people")
+        total_in_database = src_files.globals.mydb.command("count", "people")
         return total_in_database
 
 
@@ -76,11 +76,11 @@ def type_of_generating():
         usr_sel = usr_sel.lower().strip(" ")
         if usr_sel.__contains__("p"):
             # ID Gen
-            generate_people()
+            generate.generate_people()
 
         elif usr_sel.__contains__("v"):
             # Vehicle gen
-            generate_vehicle()
+            generate.generate_vehicle()
 
         elif usr_sel.lower().strip(" ") == "e":
             break
@@ -113,7 +113,7 @@ def main():
 
         elif usr_sel.__contains__("sim"):
             # List
-            realism_simulation()
+            simulation.realism_simulation()
             enter_to_continue()
 
         elif usr_sel.__contains__("s"):
@@ -135,6 +135,7 @@ def generate_log_dir_files():
 
 
 if __name__ == '__main__':
+
     change_windowSize()
     generate_log_dir_files()
     main()
