@@ -12,7 +12,7 @@ def pre_init():
 
 def simulate_comms():
     text = pre_init()
-    from src.simulation import stop_event, head, glob, choice, log_transaction
+    from simulation import stop_event, head, glob, choice, log_transaction
     # Build the Markov chain model
     text_model = markovify.Text(text)
 

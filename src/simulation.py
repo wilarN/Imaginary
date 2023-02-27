@@ -1,9 +1,9 @@
-import src.headers as head
+import headers as head
 import threading
-import src.globals as glob
+import globals as glob
 from random import choice
-from src.logging import *
-from src.virt_messages import simulate_comms
+from logging import *
+from virt_messages import simulate_comms
 from time import sleep
 
 
@@ -92,7 +92,6 @@ def realism_simulation():
             money_transaction_thread.join()
             stop_event.clear()
             break
-
 
         if usr_sel.__contains__("2"):
             head.tab_down()

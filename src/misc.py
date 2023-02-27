@@ -4,13 +4,11 @@ import string
 import uuid
 
 import names
-import random
 import datetime
 
-import src.generate
-from src.headers import *
+from headers import *
 from faker import Faker
-import src.globals as glob
+import globals as glob
 
 NATIONALITIES = ['Afghan', 'Albanian', 'Algerian', 'American', 'Andorran', 'Angolan', 'Antiguans', 'Argentinean',
                  'Armenian', 'Australian', 'Austrian', 'Azerbaijani', 'Bahamian', 'Bahraini', 'Bangladeshi',
