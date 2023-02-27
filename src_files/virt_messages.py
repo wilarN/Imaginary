@@ -4,7 +4,7 @@ from time import sleep
 
 def pre_init():
     # Load the input text file for the "model" or whatever.
-    file = open("src/data/text_data/WizardsOfEldoria.txt", 'r', errors='ignore')
+    file = open("src_files/data/text_data/WizardsOfEldoria.txt", 'r', errors='ignore')
     text = file.read()
     file.close()
     return text

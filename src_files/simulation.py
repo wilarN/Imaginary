@@ -1,9 +1,9 @@
-import headers as head
+import src_files.headers as head
 import threading
-import globals as glob
-from random import choice
-from logging import *
-from virt_messages import simulate_comms
+import src_files.globals as glob
+import random
+from src_files.logging import *
+from src_files.virt_messages import simulate_comms
 from time import sleep
 
 
@@ -19,11 +19,11 @@ def money_transaction():
         sender = customer_list[0]
         receiver = customer_list[1]
 
-        sender_account = choice(sender["bank_accounts"])
+        sender_account = random.choice(sender["bank_accounts"])
         # amount = 100  # Change this to the desired transaction amount
         amount = head.random.randint(100, 100000)
 
-        receiver_account = choice(receiver["bank_accounts"])
+        receiver_account = random.choice(receiver["bank_accounts"])
 
         if sender_account["balance"] >= amount:
             glob.mycol.update_one({"_id": sender["_id"]},
@@ -33,7 +33,7 @@ def money_transaction():
             glob.mycol.update_one({"_id": receiver["_id"]},
                                   {"$inc": {"bank_accounts.$[elem].balance": amount}}, array_filters=[
                     {"elem.account_identification": receiver_account["account_identification"]}])
-            # head.styled_coloured_print_centered(text=f"\n[TRANSACTION SUCCESSFUL] [[{sender_account['account_ownership']}]({sender_account['account_identification']}) >- [{amount} {head.random.choice(currencies)}] -> [{receiver_account['account_ownership']}]({receiver_account['account_identification']})]", instant=True, colour="green")
+            # head.styled_coloured_print_centered(text=f"\n[TRANSACTION SUCCESSFUL] [[{sender_account['account_ownership']}]({sender_account['account_identification']}) >- [{amount} {head.random.random.choice(currencies)}] -> [{receiver_account['account_ownership']}]({receiver_account['account_identification']})]", instant=True, colour="green")
             log_transaction(successful=True, sender=sender_account, reciever=receiver_account, amount=amount)
         else:
             # head.styled_coloured_print_centered(text=f"\n[TRANSACTION FAILED] {sender_account['account_ownership']}'s account ({sender_account['account_identification']}) has insufficient balance to transfer {amount}", instant=True, colour="orange")

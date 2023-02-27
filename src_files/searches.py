@@ -1,11 +1,16 @@
-import re
 
-from src.headers import *
-import src.globals as glob
+
+# from headers import *
+# import globals as glob
+import src_files.generate, src_files.simulation
+from src_files.headers import *
+import src_files.globals as glob
+
 
 def get_formatted_list(items):
     for item in items:
         print(f"[{item}], ", end="")
+
 
 def search():
     global mycol

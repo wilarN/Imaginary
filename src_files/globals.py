@@ -8,6 +8,7 @@ global myclient
 address = "localhost"
 port = "27017"
 
+
 def graceful_exit():
     # Exit
     print("Exiting...")

@@ -2,12 +2,12 @@ import time
 import pymongo
 import os
 import pystyle as ps
-from src import searches
-import src.misc
-from src.generate import *
-from src.simulation import realism_simulation
+from src_files import searches
+import src_files.misc
+
+from src_files.simulation import realism_simulation
 import random
-import src.globals
+import src_files.globals
 
 
 def tab_down():

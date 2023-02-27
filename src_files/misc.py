@@ -6,9 +6,10 @@ import uuid
 import names
 import datetime
 
-from headers import *
+import src_files.headers as head
 from faker import Faker
-import globals as glob
+import src_files.globals as glob
+import src_files.generate as gen
 
 NATIONALITIES = ['Afghan', 'Albanian', 'Algerian', 'American', 'Andorran', 'Angolan', 'Antiguans', 'Argentinean',
                  'Armenian', 'Australian', 'Austrian', 'Azerbaijani', 'Bahamian', 'Bahraini', 'Bangladeshi',
@@ -99,33 +100,33 @@ generate_phone_numbers()
 ######### CAR SECTION #############################
 ###################################################
 
-global_car_data_path = os.path.join(os.path.dirname(__file__), 'data\\')
+global_car_data_path = head.os.path.join(head.os.path.dirname(__file__), 'data\\')
 
 CAR_FILES = []
 
-for path in os.listdir(global_car_data_path):
+for path in head.os.listdir(global_car_data_path):
     # check if current path is a file
-    if os.path.isfile(os.path.join(global_car_data_path, path)):
-        CAR_FILES.append(os.path.join(os.path.dirname(__file__), 'data\\' + path))
-    # print(os.path.join(os.path.dirname(__file__), 'data\\'+path))
+    if head.os.path.isfile (head.os.path.join(global_car_data_path, path)):
+        CAR_FILES.append (head.os.path.join (head.os.path.dirname(__file__), 'data\\' + path))
+    # print (head.os.path.join (head.os.path.dirname(__file__), 'data\\'+path))
 
 
 # input()
 
 def get_car_data():
     # print(global_car_data_path)
-    selected_file = CAR_FILES[random.randint(0, len(CAR_FILES) - 1)]
+    selected_file = CAR_FILES[head.random.randint(0, len(CAR_FILES) - 1)]
     with open(f"{selected_file}", 'r') as file:
         reader = csv.reader(file)
         reader = list(reader)
 
-        return_value = reader[random.randint(0, len(reader) - 1)]
+        return_value = reader[head.random.randint(0, len(reader) - 1)]
     file.close()
     return return_value
 
 
 def get_random_car_colour():
-    return CAR_COLOURS[random.randint(0, len(CAR_COLOURS) - 1)]
+    return CAR_COLOURS[head.random.randint(0, len(CAR_COLOURS) - 1)]
 
 
 def get_random_annotations():
@@ -134,24 +135,24 @@ def get_random_annotations():
 
 def get_random_car_plate(car_object=None):
     letters = string.ascii_uppercase
-    first_section = ''.join(random.choice(letters) for i in range(3))
+    first_section = ''.join(head.random.choice(letters) for i in range(3))
     if car_object is not None:
         if int(car_object.year) >= 2017:
             # 16 februari 2017 tog regeringen beslut om att Transportstyrelsen ska få tilldela registreringsnummer där
             # det sista tecknet blir alfanumeriskt
             second_section = ''
             for i in range(2):
-                second_section = second_section + str(random.randint(0, 9))
-            second_section = second_section + random.choice(letters)
+                second_section = second_section + str(head.random.randint(0, 9))
+            second_section = second_section + head.random.choice(letters)
         else:
             second_section = ''
             for i in range(3):
-                second_section = second_section + str(random.randint(0, 9))
+                second_section = second_section + str(head.random.randint(0, 9))
     else:
         second_section = ''
         for i in range(2):
-            second_section = second_section + str(random.randint(0, 9))
-        second_section = second_section + random.choice(letters)
+            second_section = second_section + str(head.random.randint(0, 9))
+        second_section = second_section + head.random.choice(letters)
 
     return first_section + "-" + second_section
 
@@ -188,19 +189,19 @@ class carMaster:
 
 
 def get_random_height():
-    return random.randint(130, 205)
+    return head.random.randint(130, 205)
 
 
 def get_random_nationality():
-    return NATIONALITIES[random.randint(0, len(NATIONALITIES) - 1)]
+    return NATIONALITIES[head.random.randint(0, len(NATIONALITIES) - 1)]
 
 
 def get_random_age():
-    return random.randint(18, 100)
+    return head.random.randint(18, 100)
 
 
 def get_random_eye_colour():
-    return EYE_COLOURS[random.randint(0, len(EYE_COLOURS) - 1)]
+    return EYE_COLOURS[head.random.randint(0, len(EYE_COLOURS) - 1)]
 
 
 def luhn(n):
@@ -210,18 +211,18 @@ def luhn(n):
 
 def generate_identification_number(years_old: int, gender, length: int = 8):
     # letters = string.digits
-    rand_month = random.randint(1, 13)
+    rand_month = head.random.randint(1, 13)
     if len(str(rand_month)) == 1:
         rand_month = "0" + str(rand_month)
-    rand_day = random.randint(1, 31)
+    rand_day = head.random.randint(1, 31)
     if len(str(rand_day)) == 1:
         rand_day = "0" + str(rand_day)
 
-    born_place = random.randint(0, 99)
+    born_place = head.random.randint(0, 99)
     if len(str(born_place)) == 1:
         born_place = "0" + str(born_place)
 
-    cant_bother_with_luhn_number = random.randint(1, 9)
+    cant_bother_with_luhn_number = head.random.randint(1, 9)
 
     # C'mon I'm far too tired to do this the right way alright don't judge me.
     # Anyway, this works for now even though it's utterly fucking retarded.
@@ -229,7 +230,7 @@ def generate_identification_number(years_old: int, gender, length: int = 8):
     if gender == "Male":
         # Male
         while True:
-            gender_num = random.randrange(1, 9)
+            gender_num = head.random.randrange(1, 9)
             if gender_num % 2 == 0:
                 pass
             else:
@@ -237,33 +238,33 @@ def generate_identification_number(years_old: int, gender, length: int = 8):
     else:
         # Female
         while True:
-            gender_num = random.randrange(1, 9)
+            gender_num = head.random.randrange(1, 9)
             if gender_num % 2 == 0:
                 break
             else:
                 pass
 
-        # gender_num = random.randrange(1, 9, 2)
+        # gender_num = head.random.randrange(1, 9, 2)
 
-    # rand_string = ''.join(random.choice(letters) for i in range(length))
+    # rand_string = ''.join(head.random.choice(letters) for i in range(length))
     return ''.join(
         str((datetime.datetime.now().year - years_old)) + str(rand_month) + str(rand_day) + "-" + str(born_place) + str(
             gender_num) + str(cant_bother_with_luhn_number))
 
 
 def get_random_sex():
-    return SEX[random.randint(0, 1)]
+    return SEX[head.random.randint(0, 1)]
 
 
 def get_car(person_in_question):
-    chance = random.randint(0, 10)
+    chance = head.random.randint(0, 10)
     # 50 / 50 Chance kinda-
     if chance >= 5:
         # Create car with plate and return plate
 
         owned_plate = get_random_car_plate()
         print(owned_plate)
-        generated_car = src.generate.generate_vehicle(specific_plate=str(owned_plate),
+        generated_car = gen.generate_vehicle(specific_plate=str(owned_plate),
                                                       ownership=f"{person_in_question.first_name} {person_in_question.last_name}")
         return owned_plate
     else:
@@ -274,10 +275,10 @@ def get_car(person_in_question):
 def get_record_and_annotations():
     temp_total_records = []
     for i in range(3):
-        chance = random.randint(0, 10)
+        chance = head.random.randint(0, 10)
         if chance <= 3:
             # Get the record from the list for this particular person.
-            temp_total_records.append(random.choice(ANNOTATIONS_AND_CRIMES))
+            temp_total_records.append(head.random.choice(ANNOTATIONS_AND_CRIMES))
         else:
             # No record for this person.
             pass
@@ -286,10 +287,10 @@ def get_record_and_annotations():
 
 def get_bank_accounts(f_name, l_name):
     accounts = []
-    account_num = random.randint(1, 4)
+    account_num = head.random.randint(1, 4)
     for i in range(account_num):
         generated_account_num = generate_account_number(account_owner=str(f_name + l_name))
-        accounts.append(src.misc.bank_account(ownership=f_name + " " + l_name, bank_account_num=generated_account_num))
+        accounts.append(bank_account(ownership=f_name + " " + l_name, bank_account_num=generated_account_num))
     for i in accounts:
         print(i.account_ownership)
 
@@ -311,7 +312,7 @@ def get_already_existing_phone_numbers(num_to_check):
 
 
 def get_phone_number(self):
-    chance = random.randint(0, 10)
+    chance = head.random.randint(0, 10)
     # 50 / 50 Chance kinda-
     if chance >= 5:
         while True:
@@ -383,22 +384,22 @@ def generate_account_number(account_owner):
 
 
 def get_account_type():
-    return random.choice(BANK_ACCOUNT_TYPES)
+    return head.random.choice(BANK_ACCOUNT_TYPES)
 
 
 def get_account_balance():
-    amount_sec = random.randint(0, 10)
+    amount_sec = head.random.randint(0, 10)
     if(amount_sec >= 8):
-        return random.randint(20000, 3999999)
+        return head.random.randint(20000, 3999999)
     elif(2 < amount_sec < 5):
-        return random.randint(20000, 600000)
+        return head.random.randint(20000, 600000)
     else:
-        return random.randint(10000, 20000)
+        return head.random.randint(10000, 20000)
 
 
 def get_bank_account_location():
-    selected_bank = random.choice(DUMMY_BANKS)
-    fixed_string = selected_bank["name"] + " - " + selected_bank["location"] + f"({selected_bank['postal_code']})[{random.choice(PHONE_NUMBERS)}]"
+    selected_bank = head.random.choice(DUMMY_BANKS)
+    fixed_string = selected_bank["name"] + " - " + selected_bank["location"] + f"({selected_bank['postal_code']})[{head.random.choice(PHONE_NUMBERS)}]"
     return fixed_string
 
 class bank_account:

@@ -1,24 +1,23 @@
 import json
 
 from pymongo import MongoClient
-import src.globals as glob
-from src.headers import *
-import src.searches
+import src_files.globals as glob
+from src_files.headers import *
+import src_files.searches
 import pymongo
 global mycol
 global mycolVehicle
 global mycolBank
 
-
 def generate_people():
     while True:
-        src.headers.tab_down()
+        tab_down()
         usr_sel = input(" Amount of people to generate(integer) >> ")
         try:
             usr_sel = int(usr_sel)
 
             for person in range(0, usr_sel):
-                person = src.misc.personMaster()
+                person = src_files.misc.personMaster()
                 person_dict = person.__dict__
                 person_dict["bank_accounts"] = [account.__dict__ for account in person.bank_accounts]
                 person_name_full = str(person.first_name + " " + person.last_name)
@@ -32,7 +31,7 @@ def generate_people():
             print(e)
             print("Please enter a valid positive, integer number...")
             pass
-    src.headers.time.sleep(2)
+    time.sleep(2)
 
 
 def generate_vehicle(specific_plate=None, ownership=None):
@@ -44,7 +43,7 @@ def generate_vehicle(specific_plate=None, ownership=None):
                 usr_sel = int(usr_sel)
 
                 for vehicle in range(0, usr_sel):
-                    vehicle = src.misc.carMaster()
+                    vehicle = src_files.misc.carMaster()
                     glob.mycolVehicle.insert_one(vehicle.__dict__)
                 print(
                     f"Generated '{usr_sel}' vehicles and successfully inserted those to the register and external "
@@ -55,7 +54,7 @@ def generate_vehicle(specific_plate=None, ownership=None):
                 print("Please enter a valid positive, integer number...")
         time.sleep(2)
     else:
-        vehicle = src.misc.carMaster(spec_plate=specific_plate, owner=ownership)
+        vehicle = src_files.misc.carMaster(spec_plate=specific_plate, owner=ownership)
         glob.mycolVehicle.insert_one(vehicle.__dict__)
         return vehicle
 
