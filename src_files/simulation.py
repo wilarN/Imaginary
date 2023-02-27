@@ -75,21 +75,21 @@ def realism_simulation():
         usr_sel = usr_sel.lower().strip(" ")
         if usr_sel.__contains__("1"):
             head.tab_down()
-            head.styled_coloured_print_centered(text="Simulation of phone-message person to person communication started... ")
+            head.styled_coloured_print_centered(text="Simulation of phone-message person to person communication started... ", instant=True)
             sleep(1)
             print()
             head.styled_coloured_print_centered(text="To stop the simulation do not use ctrl-c, please press `ENTER` to gracefully stop.", instant=True)
-            sleep(5)
+            sleep(1)
             # Create a thread for the virtual messaging
-            money_transaction_thread = threading.Thread(target=simulate_comms)
-            money_transaction_thread.start()
+            simulate_comms_thread = threading.Thread(target=simulate_comms)
+            simulate_comms_thread.start()
 
             while True:
                 head.enter_to_continue()
                 break
             # Stop the thread here
             stop_event.set()
-            money_transaction_thread.join()
+            simulate_comms_thread.join()
             stop_event.clear()
             break
 
