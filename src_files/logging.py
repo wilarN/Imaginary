@@ -17,3 +17,14 @@ def log_transaction(sender, reciever, amount, successful: bool = True):
             text=dyn_text,
             instant=True, colour="orange")
     head.write_to_file(text_to_write=f"[{datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] {dyn_text}\n", typeOfWrite="a", path_to_file=glob.settings_file_location)
+
+
+def log_message_communication(sender, reciever, message, successful: bool = True):
+    dyn_text = f"[MESSAGE SENT] [{sender['registered_number']} {sender['ownership']}] >> ({reciever['registered_number']} {reciever['ownership']})"
+    head.styled_coloured_print_centered(
+        text=dyn_text,
+        instant=True, colour="green")
+
+    message_dyn = head.styled_coloured_print_centered(text=f" -- ({message})\n\n", instant=True, colour="orange")
+
+    head.write_to_file(text_to_write=f"[{datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] {dyn_text} {message_dyn}\n", typeOfWrite="a", path_to_file=glob.settings_file_location)
