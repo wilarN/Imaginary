@@ -5,15 +5,15 @@ import os
 
 # Open the JSON file and extract the "body" field from each comment
 messages = []
-dir_path = os.path.dirname(os.path.realpath(__file__))
-with open(f'{dir_path}/data/text_data/RC_2008-09') as f:
-    for line in f:
-        comment = json.loads(line)
-        if 'body' in comment:
-            messages.append(comment['body'])
-
-# Print the first 10 messages
-print(messages[:10])
+# dir_path = os.path.dirname(os.path.realpath(__file__))
+# with open(f'{dir_path}/data/text_data/RC_2008-09') as f:
+#     for line in f:
+#         comment = json.loads(line)
+#         if 'body' in comment:
+#             messages.append(comment['body'])
+#
+# # Print the first 10 messages
+# print(messages[:10])
 
 
 def pre_init():
