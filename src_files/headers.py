@@ -33,7 +33,7 @@ def enter_to_continue():
     input("Press enter to continue...")
 
 
-def styled_coloured_print_centered(text, cent=True, colour=None, instant=False):
+def styled_coloured_print_centered(text, cent=False, colour=None, instant=False):
     if colour is not None:
         col = colour
     else:
