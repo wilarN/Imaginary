@@ -35,6 +35,7 @@ def get_statistics(selection: int):
 def type_of_search_selection():
     while True:
         clear()
+        styled_coloured_print_centered(text=logo_ascii, colour="red", instant=True)
         styled_coloured_print_centered(text=
                                        f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
                                        f"-       P/p(Identity Register)              -\n"
@@ -63,6 +64,7 @@ def type_of_search_selection():
 def type_of_generating():
     while True:
         clear()
+        styled_coloured_print_centered(text=logo_ascii, colour="red", instant=True)
         styled_coloured_print_centered(text=
                                        f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
                                        f"-              P/p(Identity Gen)            -\n"
@@ -93,6 +95,7 @@ def main():
     clear()
     while True:
         clear()
+        styled_coloured_print_centered(text=logo_ascii, colour="red", instant=True)
         styled_coloured_print_centered(text=
                                        f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
                                        f"-       G/g(Generate Data) - (Admin)        -\n"
