@@ -1,4 +1,7 @@
 # Imaginary
+
+https://www.williamjsson.xyz/blog_updates/updates.html#imaginary-section
+
 A simulation program in python that simulates:
 - People(Identities)
 - Cars(Owned by the people generated)
