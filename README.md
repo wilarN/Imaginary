@@ -8,6 +8,11 @@ A simulation program in python that simulates:
 - Dummy Simulated Banking accounts(None of these connected to any kind of reality)
 - Simulation mode(Simulates stuff happening in the real world --> MWT. Some action)
 
+## Pregenerated Samples( 2023-03-23 ): 
+- People    --> https://www.williamjsson.xyz/ext/datasets/people.csv
+- Phones    --> https://www.williamjsson.xyz/ext/datasets/phones.csv
+- Vehicles --> https://www.williamjsson.xyz/ext/datasets/vehicles.csv
+
 <span style="color: red;"> IF YOU HAVE ISSUES RUNNING IT WITH THE "WINDOWS COMMAND PROMPT" TRY USING THE NORMAL CMD OR POWERSHELL.</span> <br>(MIGHT ONLY BE AN ISSUE IN WINDOWS 11)<br>
 
 # Req (Not updated, Can't bother for now)
