@@ -13,8 +13,6 @@ A simulation program in python that simulates:
 - Phones    --> https://www.williamjsson.xyz/ext/datasets/phones.csv // 11.0k Documents
 - Vehicles --> https://www.williamjsson.xyz/ext/datasets/vehicles.csv // 10.9k Documents
 
-<span style="color: red;"> IF YOU HAVE ISSUES RUNNING IT WITH THE "WINDOWS COMMAND PROMPT" TRY USING THE NORMAL CMD OR POWERSHELL.</span> <br>(MIGHT ONLY BE AN ISSUE IN WINDOWS 11)<br>
-
 # Req (Not updated, Can't bother for now)
 - pip install names
 - pip install pystyle
