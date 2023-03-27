@@ -122,6 +122,7 @@ def search():
                 dbCurs = mycol.find(filter=filter)
         elif usr_sel.lower().strip(" ") == "7":
             # Annotations and record search
+            print(ANNOTATIONS_AND_CRIMES)
             usr_sel = input(" Crime // Annotation >> ")
             usr_sel = usr_sel.strip(" ").capitalize()
             if usr_sel.lower().strip(" ") == "e":
@@ -141,6 +142,7 @@ def search():
 
         with open("./db_search/db_search.txt", "w") as f:
             f.write("----------------------------------------------------------------\n")
+
             for i in dbCurs:
                 styled_coloured_print_centered(text=f"""
     [Government Name]: {i.get('first_name')} {i.get('last_name')}\n
