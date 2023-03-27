@@ -14,7 +14,6 @@ def money_transaction():
         # Get two random customers from the database
         customers = glob.mycol.aggregate([{"$sample": {"size": 2}}])
 
-        # Perform transaction between the two customers
         customer_list = list(customers)
         sender = customer_list[0]
         receiver = customer_list[1]
@@ -79,7 +78,7 @@ def realism_simulation():
             sleep(1)
             print()
             head.styled_coloured_print_centered(text="To stop the simulation do not use ctrl-c, please press `ENTER` to gracefully stop.", instant=True)
-            sleep(5)
+            sleep(1)
             # Create a thread for the virtual messaging
             money_transaction_thread = threading.Thread(target=simulate_comms)
             money_transaction_thread.start()

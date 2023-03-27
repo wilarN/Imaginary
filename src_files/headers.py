@@ -33,7 +33,7 @@ def tab_down():
 
 def enter_to_continue():
     print("", flush=True)
-    input("Press enter to continue...")
+    input("Press enter to continue...\n")
 
 
 def styled_coloured_print_centered(text, cent=False, colour=None, instant=False):

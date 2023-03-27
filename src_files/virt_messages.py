@@ -1,5 +1,7 @@
 import markovify
 from time import sleep
+from src_files.misc import names
+from src_files.globals import mycol
 import json
 import os
 
@@ -18,23 +20,35 @@ messages = []
 
 def pre_init():
     # Load the input text file for the "model" or whatever.
-    file = open("src_files/data/text_data/WizardsOfEldoria.txt", 'r', errors='ignore')
+    file = open("src_files/data/text_data/Genz_convo.txt", 'r', errors='ignore')
     text = file.read()
     file.close()
     return text
 
 
 def simulate_comms():
-    # text = pre_init()
-    text = messages
+    people = mycol.aggregate([{"$sample": {"size": 2}}])
+    customer_list = list(people)
+
+    participants = []
+    for i in [customer_list[0], customer_list[1]]:
+        participants.append(i)
+
+    text = pre_init()
+    # text = messages
     from src_files.simulation import stop_event, head, glob, random, log_transaction
     # Build the Markov chain model
     text_model = markovify.Text(text)
 
     while not stop_event.is_set():
-        sleep(head.random.uniform(0, 1))
-
-        # Generate 5 random sentences
-        for i in range(5):
-            sentence = text_model.make_short_sentence(min_chars=20, max_chars=30)
-            print(sentence)
+        prev_message = ""
+        sleep(head.random.uniform(1, 3))
+        sent = text_model.make_short_sentence(max_chars=50)
+        if sent is not None:
+            if sent != prev_message:
+                prev_message = sent
+                person = random.choice(participants)
+                if len(person['phone_numbers']) < 1:
+                    print(f"[ {person['first_name']} {person['last_name']}, [WEB-CLIENT] ]: {sent}")
+                else:
+                    print(f"[ {person['first_name']} {person['last_name']}, {person['phone_numbers']} ]: {sent}")
