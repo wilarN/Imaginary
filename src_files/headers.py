@@ -24,7 +24,7 @@ logo_ascii = """
 8888888 888  888  888 "Y888888  "Y88888 888 888  888 "Y888888 888      "Y88888 
                                     888                                    888 
                                Y8b d88P                               Y8b d88P 
-                                "Y88P"                                 "Y88P"  
+                                "Y88P"                                 "Y88P"      [  ~$ ©William. Johnsson - 2023  ]
 """
 
 def tab_down():
