@@ -1,9 +1,12 @@
+import platform
+import subprocess
 import time
 import pymongo
 import os
 import pystyle as ps
 from src_files import searches
 import src_files.misc
+import logging
 
 from src_files.simulation import realism_simulation
 import random
@@ -97,6 +100,28 @@ def write_to_file(text_to_write, path_to_file, typeOfWrite):
     except Exception as e:
         print(e)
         enter_to_continue()
+
+def yes_no(text):
+    usr_answ = input(f"{text} (y/n) >> ").strip(" ")
+    if usr_answ.__contains__("y"):
+        return True
+    else:
+        return False
+
+def open_file_in_editor(file_path):
+    # Get the operating system
+    os_name = platform.system()
+
+    # Determine the command to open the file in the default editor
+    if os_name == 'Windows':
+        command = ['cmd', '/c', 'start', '', file_path]
+    elif os_name == 'Darwin':  # Mac OS
+        command = ['open', file_path]
+    else:  # Assume Linux or other Unix-based OS
+        command = ['xdg-open', file_path]
+
+    # Run the command
+    subprocess.run(command, check=True)
 
 def save_results_to_file(list_of_items):
     usr_res = input("Save results to file?(y/n) (Enter to continue...)")

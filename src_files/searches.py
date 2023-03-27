@@ -5,6 +5,7 @@
 import src_files.generate, src_files.simulation
 from src_files.headers import *
 import src_files.globals as glob
+from src_files.logging import log_db_search_to_file
 
 
 def get_formatted_list(items):
@@ -134,21 +135,42 @@ def search():
 
         tab_down()
         line()
-        for i in dbCurs:
-            styled_coloured_print_centered(text=f"""
-[Government Name]: {i.get('first_name')} {i.get('last_name')}\n
-  - [Gender]: {i.get('sex')}
-  - [Age]: {i.get('age')} y/o
-  - [Height]: {i.get('height')}cm
-  - [Nationality]: {i.get('nationality')}
-  - [Personal Identification Number]: ({i.get('personal_identification_number')})
-  - [Records & Annotations]:
-        {i.get('record_and_annotations')}
-  - [Cars]:
-        {i.get('cars')}
-                """, instant=True, colour="yellow", cent=False)
-            line()
-        # save_results_to_file(dbCurs.__dict__)
+
+        if not os.path.exists("./db_search"):
+            os.mkdir("./db_search")
+
+        with open("./db_search/db_search.txt", "w") as f:
+            f.write("----------------------------------------------------------------\n")
+            for i in dbCurs:
+                styled_coloured_print_centered(text=f"""
+    [Government Name]: {i.get('first_name')} {i.get('last_name')}\n
+      - [Gender]: {i.get('sex')}
+      - [Age]: {i.get('age')} y/o
+      - [Height]: {i.get('height')}cm
+      - [Nationality]: {i.get('nationality')}
+      - [Personal Identification Number]: ({i.get('personal_identification_number')})
+      - [Records & Annotations]:
+            {i.get('record_and_annotations')}
+      - [Cars]:
+            {i.get('cars')}
+                    """, instant=True, colour="yellow", cent=False)
+                f.write(f"[Government Name]: {i.get('first_name')} {i.get('last_name')}\n"
+                        f"- [Gender]: {i.get('sex')}\n"
+                        f"- [Age]: {i.get('age')} y/o\n"
+                        f"- [Height]: {i.get('height')}cm\n"
+                        f"- [Nationality]: {i.get('nationality')}\n"
+                        f"- [Personal Identification Number]: ({i.get('personal_identification_number')})\n"
+                        f"- [Records & Annotations]:\n"
+                        f"{i.get('record_and_annotations')}\n"
+                        f"- [Cars]:\n"
+                        f"{i.get('cars')}\n"
+                        "----------------------------------------------------------------\n")
+                line()
+        if yes_no("Open output file?"):
+            try:
+                open_file_in_editor("./db_search/db_search.txt")
+            except Exception as e:
+                print(e)
         enter_to_continue()
 
 
