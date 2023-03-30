@@ -1,5 +1,6 @@
 import csv
 import hashlib
+import random
 import string
 import uuid
 
@@ -78,6 +79,20 @@ ANNOTATIONS_AND_CRIMES = ["Cybercrime", "Human Smuggling", "Human Trafficking", 
                           "Drug Trafficking / Distribution",
                           "Vandalism", "Wire Fraud", "Identity Theft", "Homicide", "Hate Crimes", "Harassment"]
 
+
+# CRIME_PROBABILITY = {
+# # [ AGE AND UP : PROBABILITY 0.0 - 1.0 ]
+#     0 : 0.0,
+#     18: 0.4,
+#     25: 0.5,
+#     35: 0.3,
+#     45: 0.25,
+#     55: 0.2,
+#     65: 0.15,
+#     75: 0.1
+# }
+
+
 BANK_ACCOUNT_TYPES = ['Checking Account', 'Savings Account', 'Money Market Account',
                       'Certificate of Deposit', 'Individual Retirement Account', 'Credit Account']
 
@@ -127,10 +142,6 @@ def get_car_data():
 
 def get_random_car_colour():
     return CAR_COLOURS[head.random.randint(0, len(CAR_COLOURS) - 1)]
-
-
-def get_random_annotations():
-    pass
 
 
 def get_random_car_plate(car_object=None):
@@ -272,18 +283,49 @@ def get_car(person_in_question):
         return False
 
 
-def get_record_and_annotations():
+def get_record_and_annotations(age_person):
     temp_total_records = []
-    for i in range(3):
-        chance = head.random.randint(0, 10)
-        if chance <= 3:
-            # Get the record from the list for this particular person.
-            temp_total_records.append(head.random.choice(ANNOTATIONS_AND_CRIMES))
-        else:
-            # No record for this person.
-            pass
-    return temp_total_records
 
+    if 18 > age_person > 0:
+        prob = 0.0
+    elif 25 > age_person > 18:
+        prob = 0.4
+    elif 35 > age_person > 25:
+        prob = 0.5
+    elif 45 > age_person > 35:
+        prob = 0.3
+    elif 55 > age_person > 45:
+        prob = 0.25
+    elif 65 > age_person > 55:
+        prob = 0.2
+    elif 75 > age_person > 65:
+        prob = 0.15
+    elif 100 > age_person > 75:
+        prob = 0.1
+    else:
+        prob = 0.01
+
+    if head.random.uniform(0.0, 1) >= prob:
+        # age_group = 0
+        # for i in range(len(CRIME_PROBABILITY)+1):
+        #     for group in CRIME_PROBABILITY:
+        #         if CRIME_PROBABILITY[i+1] > age_person < CRIME_PROBABILITY[i]:
+        #             age_group = group
+        #             break
+
+
+
+        for i in range(3):
+            chance = head.random.randint(0, 10)
+            if chance <= 3:
+                # Get the record from the list for this particular person.
+                temp_total_records.append(head.random.choice(ANNOTATIONS_AND_CRIMES))
+            else:
+                # No record for this person.
+                pass
+        return temp_total_records
+    else:
+        return temp_total_records
 
 def get_bank_accounts(f_name, l_name):
     accounts = []
@@ -348,7 +390,7 @@ class personMaster:
         self.age = get_random_age()
         self.height = get_random_height()
         self.eye_colour = get_random_eye_colour()
-        self.record_and_annotations = get_record_and_annotations()
+        self.record_and_annotations = get_record_and_annotations(age_person=self.age)
         self.personal_identification_number = generate_identification_number(years_old=self.age, gender=self.sex)
         potential_car = get_car(self)
         if not potential_car:
