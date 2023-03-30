@@ -305,7 +305,8 @@ def get_record_and_annotations(age_person):
     else:
         prob = 0.01
 
-    if head.random.uniform(0.0, 1) >= prob:
+    if head.random.uniform(0.0, 1.0) <= prob:
+
         # age_group = 0
         # for i in range(len(CRIME_PROBABILITY)+1):
         #     for group in CRIME_PROBABILITY:
