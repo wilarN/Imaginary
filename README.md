@@ -1,4 +1,9 @@
 # Imaginary
+[ OBS! You will need to have a mongodb database up and running for it to function. Then change the:
+address = "localhost"
+port = "27017"
+In globals.py accordingly.
+]
 
 https://www.williamjsson.xyz/blog_updates/updates.html#imaginary-section
 
