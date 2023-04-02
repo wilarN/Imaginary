@@ -1,3 +1,4 @@
+import bisect
 import csv
 import hashlib
 import random
@@ -96,6 +97,20 @@ JOBS = ['Software Developer', 'Physician',
         'Lawyer', 'Social Worker', 'Software Applications Developer',
         'Market Researcher', 'Computer Programmer', 'Computer and Information Research Scientist',
         'Graphic Designer', 'Management Accountant', 'Environmental Engineer']
+
+EDUCATION = ["Primary school", "Secondary school", "Vocational education", "Associate's degree",
+                 "Bachelor's degree in Arts", "Bachelor's degree in Science",
+                 "Bachelor's degree in Engineering", "Bachelor's degree in Business",
+                 "Bachelor's degree in Education", "Bachelor's degree in Nursing",
+                 "Master's degree in Arts", "Master's degree in Science",
+                 "Master's degree in Engineering", "Master's degree in Business",
+                 "Master's degree in Education", "Master's degree in Nursing",
+                 "Doctoral degree"]
+
+
+AGE_RANGES = [0, 18, 25, 35, 45, 55, 65, 75, 100]
+PROBABILITIES = [0.0, 0.4, 0.5, 0.3, 0.25, 0.2, 0.15, 0.1, 0.01]
+
 
 # CRIME_PROBABILITY = {
 # # [ AGE AND UP : PROBABILITY 0.0 - 1.0 ]
@@ -301,35 +316,11 @@ def get_car(person_in_question):
 
 def get_record_and_annotations(age_person):
     temp_total_records = []
-
-    if 18 > age_person > 0:
-        prob = 0.0
-    elif 25 > age_person > 18:
-        prob = 0.4
-    elif 35 > age_person > 25:
-        prob = 0.5
-    elif 45 > age_person > 35:
-        prob = 0.3
-    elif 55 > age_person > 45:
-        prob = 0.25
-    elif 65 > age_person > 55:
-        prob = 0.2
-    elif 75 > age_person > 65:
-        prob = 0.15
-    elif 100 > age_person > 75:
-        prob = 0.1
-    else:
-        prob = 0.01
+    prob_index = bisect.bisect_right(AGE_RANGES, age_person) - 1
+    prob = PROBABILITIES[prob_index]
 
     if head.random.uniform(0.0, 1.0) <= prob:
-
-        # age_group = 0
-        # for i in range(len(CRIME_PROBABILITY)+1):
-        #     for group in CRIME_PROBABILITY:
-        #         if CRIME_PROBABILITY[i+1] > age_person < CRIME_PROBABILITY[i]:
-        #             age_group = group
-        #             break
-
+        # Generate records based on probability for this age range.
         for i in range(3):
             chance = head.random.randint(0, 10)
             if chance <= 3:
@@ -372,6 +363,13 @@ def get_already_existing_phone_numbers(num_to_check):
 def get_random_job(self):
     if head.random.uniform(0.6, 0.9) >= 0.6:
         return random.choice(JOBS)
+    else:
+        return ""
+
+
+def get_random_education():
+    if head.random.uniform(0.6, 0.9) >= 0.6:
+        return random.choice(EDUCATION)
     else:
         return ""
 
@@ -420,9 +418,8 @@ class personMaster:
             self.cars = []
         else:
             self.cars = [potential_car]
-
         self.job = get_random_job(self)
-
+        self.education = get_random_education()
         self.bank_accounts = get_bank_accounts(f_name=self.first_name, l_name=self.last_name)
         potential_phone = get_phone_number(self)
         if not potential_phone:
