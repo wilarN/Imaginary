@@ -89,6 +89,55 @@ def type_of_generating():
         else:
             pass
 
+def drop_database():
+    while True:
+        clear()
+        styled_coloured_print_centered(text=logo_ascii, colour="red", instant=True)
+        styled_coloured_print_centered(text=
+                                       f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
+                                       f"-              [ DROP DATABASE ]            -\n"
+                                       f"+   THIS ACTION IS UNREVERTABLE AND CANNOT  +\n"
+                                       f"-   BE UNDONE. THIS WILL DROP ALL THE DATA  -\n"
+                                       f"+   STORED IN THE DATABASE.                 +\n"
+                                       f"-              PROCEED? (y/n)               -\n"
+                                       f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+", instant=True, colour="orange")
+        tab_down()
+        usr_sel = input(" >> ")
+        usr_sel = usr_sel.lower().strip(" ")
+        if usr_sel.__contains__("y"):
+            # DROP DB
+            try:
+                glob.myclient.drop_database("imaginaryMaster")
+                clear()
+                styled_coloured_print_centered(text=logo_ascii, colour="red", instant=True)
+                styled_coloured_print_centered(text=
+                                               f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
+                                               f"-                                           -\n"
+                                               f"+    [ DATABASE DROPPED WITHOUT ERRORS ]    +\n"
+                                               f"-                                           -\n"
+                                               f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+", instant=True,
+                                               colour="green")
+            except Exception as e:
+                clear()
+                print(e)
+                styled_coloured_print_centered(text=logo_ascii, colour="red", instant=True)
+                styled_coloured_print_centered(text=
+                                               f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
+                                               f"-                                           -\n"
+                                               f"+        [ DATABASE DROPPED FAILED ]        +\n"
+                                               f"-                                           -\n"
+                                               f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+", instant=True,
+                                               colour="red")
+            tab_down()
+            enter_to_continue()
+            break
+        elif usr_sel.__contains__("n"):
+            # RETURN TO MENU
+            break
+        else:
+            pass
+
+
 
 def main():
     global dbCurs
@@ -101,7 +150,7 @@ def main():
                                        f"-       G/g(Generate Data) - (Admin)        -\n"
                                        f"+       S/s(Search) - (General)             +\n"
                                        f"-       SIM/sim(Simulation) - (DB_Heavy)    -\n"
-                                       f"+                                           +\n"
+                                       f"+       D/d(Drop Database) - (UNREVERTABLE) +\n"
                                        f"-                                           -\n"
                                        f"+          [ E/e(Exit) ]                    +\n"
                                        f"-                                           -\n"
@@ -121,6 +170,9 @@ def main():
 
         elif usr_sel.__contains__("s"):
             type_of_search_selection()
+
+        elif usr_sel.__contains__("d"):
+            drop_database()
 
         elif usr_sel.__contains__("e"):
             # Exit
