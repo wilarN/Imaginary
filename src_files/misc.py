@@ -66,7 +66,6 @@ DUMMY_BANKS = [
     {"name": "Scotiabank", "location": "Toronto, Canada", "postal_code": "M5H 1H1"}
 ]
 
-
 ANNOTATIONS_AND_CRIMES = ["Cybercrime", "Human Smuggling", "Human Trafficking", "Illegal Possession Of Firearms",
                           "Cannabis Cultivation", "Fraud",
                           "Real Estate", "Benefit Fraud", "Evasion Of Social Insurance Payments",
@@ -79,6 +78,24 @@ ANNOTATIONS_AND_CRIMES = ["Cybercrime", "Human Smuggling", "Human Trafficking", 
                           "Drug Trafficking / Distribution",
                           "Vandalism", "Wire Fraud", "Identity Theft", "Homicide", "Hate Crimes", "Harassment"]
 
+JOBS = ['Software Developer', 'Physician',
+        'Information Security Analyst', 'Data Scientist', 'IT Manager',
+        'Statistician', 'Marketing Manager', 'Financial Manager', 'Database Administrator',
+        'Physical Therapist', 'Operations Manager', 'Nurse Practitioner',
+        'Speech-Language Pathologist', 'Psychologist', 'Web Developer',
+        'Accountant', 'Occupational Therapist', 'Civil Engineer',
+        'Human Resources Manager', 'Sales Manager', 'Mechanical Engineer',
+        'Industrial Engineer', 'Management Analyst', 'Electrical Engineer',
+        'Market Research Analyst', 'Business Operations Manager',
+        'Financial Analyst', 'Medical and Health Services Manager',
+        'Construction Manager', 'Diagnostic Medical Sonographer', 'Dentist',
+        'Pharmacist', 'Physician Assistant', 'Computer Systems Analyst',
+        'Software Quality Assurance Engineer', 'Technical Writer',
+        'Physical Therapist Assistant', 'IT Security Specialist',
+        'Computer Network Architect', 'Public Relations Specialist',
+        'Lawyer', 'Social Worker', 'Software Applications Developer',
+        'Market Researcher', 'Computer Programmer', 'Computer and Information Research Scientist',
+        'Graphic Designer', 'Management Accountant', 'Environmental Engineer']
 
 # CRIME_PROBABILITY = {
 # # [ AGE AND UP : PROBABILITY 0.0 - 1.0 ]
@@ -95,7 +112,6 @@ ANNOTATIONS_AND_CRIMES = ["Cybercrime", "Human Smuggling", "Human Trafficking", 
 
 BANK_ACCOUNT_TYPES = ['Checking Account', 'Savings Account', 'Money Market Account',
                       'Certificate of Deposit', 'Individual Retirement Account', 'Credit Account']
-
 
 fake = Faker()
 PHONE_NUMBERS = []
@@ -121,8 +137,8 @@ CAR_FILES = []
 
 for path in head.os.listdir(global_car_data_path):
     # check if current path is a file
-    if head.os.path.isfile (head.os.path.join(global_car_data_path, path)):
-        CAR_FILES.append (head.os.path.join (head.os.path.dirname(__file__), 'data\\' + path))
+    if head.os.path.isfile(head.os.path.join(global_car_data_path, path)):
+        CAR_FILES.append(head.os.path.join(head.os.path.dirname(__file__), 'data\\' + path))
     # print (head.os.path.join (head.os.path.dirname(__file__), 'data\\'+path))
 
 
@@ -276,7 +292,7 @@ def get_car(person_in_question):
         owned_plate = get_random_car_plate()
         print(owned_plate)
         generated_car = gen.generate_vehicle(specific_plate=str(owned_plate),
-                                                      ownership=f"{person_in_question.first_name} {person_in_question.last_name}")
+                                             ownership=f"{person_in_question.first_name} {person_in_question.last_name}")
         return owned_plate
     else:
         # No car.
@@ -314,8 +330,6 @@ def get_record_and_annotations(age_person):
         #             age_group = group
         #             break
 
-
-
         for i in range(3):
             chance = head.random.randint(0, 10)
             if chance <= 3:
@@ -327,6 +341,7 @@ def get_record_and_annotations(age_person):
         return temp_total_records
     else:
         return temp_total_records
+
 
 def get_bank_accounts(f_name, l_name):
     accounts = []
@@ -354,6 +369,13 @@ def get_already_existing_phone_numbers(num_to_check):
         return False
 
 
+def get_random_job(self):
+    if head.random.uniform(0.6, 0.9) >= 0.6:
+        return random.choice(JOBS)
+    else:
+        return ""
+
+
 def get_phone_number(self):
     chance = head.random.randint(0, 10)
     # 50 / 50 Chance kinda-
@@ -372,7 +394,7 @@ def get_phone_number(self):
                     num = num.split("x")[0]
                 if num.__contains__("."):
                     num.replace(".", "-")
-                phone_number = phone(owner=self.first_name+" "+self.last_name, number=num)
+                phone_number = phone(owner=self.first_name + " " + self.last_name, number=num)
                 glob.mycolPhone.insert_one(phone_number.__dict__)
                 return num
     else:
@@ -399,6 +421,8 @@ class personMaster:
         else:
             self.cars = [potential_car]
 
+        self.job = get_random_job(self)
+
         self.bank_accounts = get_bank_accounts(f_name=self.first_name, l_name=self.last_name)
         potential_phone = get_phone_number(self)
         if not potential_phone:
@@ -416,7 +440,6 @@ class personMaster:
         print(self.__dict__)
 
 
-
 ###################################################
 ######### BANK SECTION     ########################
 ###################################################
@@ -432,9 +455,9 @@ def get_account_type():
 
 def get_account_balance():
     amount_sec = head.random.randint(0, 10)
-    if(amount_sec >= 8):
+    if (amount_sec >= 8):
         return head.random.randint(20000, 3999999)
-    elif(2 < amount_sec < 5):
+    elif (2 < amount_sec < 5):
         return head.random.randint(20000, 600000)
     else:
         return head.random.randint(10000, 20000)
@@ -442,8 +465,10 @@ def get_account_balance():
 
 def get_bank_account_location():
     selected_bank = head.random.choice(DUMMY_BANKS)
-    fixed_string = selected_bank["name"] + " - " + selected_bank["location"] + f"({selected_bank['postal_code']})[{head.random.choice(PHONE_NUMBERS)}]"
+    fixed_string = selected_bank["name"] + " - " + selected_bank[
+        "location"] + f"({selected_bank['postal_code']})[{head.random.choice(PHONE_NUMBERS)}]"
     return fixed_string
+
 
 class bank_account:
     def __init__(self, ownership, bank_account_num):

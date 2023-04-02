@@ -51,7 +51,7 @@ stop_event = threading.Event()
 def realism_simulation():
     head.styled_coloured_print_centered(text="""
     ##############################################################################
-    # All of the following simulations will affect and modify the stored data    #                      #
+    # All of the following simulations will affect and modify the stored data    #
     # including database records of identities and ownerships of cars etc.       #
     # Please proceed with caution.                                               #
     ##############################################################################
@@ -61,12 +61,12 @@ def realism_simulation():
         head.clear()
         head.styled_coloured_print_centered(text=
                                                    f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
-                                                   f"-       [1]- Phone Simulation               -\n"
-                                                   f"+       [2]- Full Simulation                +\n"
+                                                   f"-           [1]- Phone Simulation           -\n"
+                                                   f"+           [2]- Bank Simulation            +\n"
                                                    f"-                                           -\n"
                                                    f"+                                           +\n"
                                                    f"-                                           -\n"
-                                                   f"+          [ E/e(Exit) ]                    +\n"
+                                                   f"+               [ E/e(Exit) ]               +\n"
                                                    f"-                                           -\n"
                                                    f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n", instant=True)
         head.tab_down()
