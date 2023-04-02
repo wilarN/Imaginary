@@ -528,6 +528,15 @@ def get_random_education():
         return ""
 
 
+def get_relationship_status(self):
+    if self.age >= 18:
+        if head.random.random() < 0.65:
+            return head.random.choice(["Married", "In a relationship"])
+        else:
+            return "Single"
+    else:
+        return ""
+
 def get_phone_number(self):
     chance = head.random.randint(0, 10)
     # 50 / 50 Chance kinda-
@@ -574,6 +583,7 @@ class personMaster:
             self.cars = [potential_car]
         self.job = get_random_job(self)
         self.education = get_random_education()
+        self.relationship_status = get_relationship_status(self)
         self.bank_accounts = get_bank_accounts(f_name=self.first_name, l_name=self.last_name)
         potential_phone = get_phone_number(self)
         if not potential_phone:
