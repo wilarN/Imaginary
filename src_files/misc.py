@@ -107,6 +107,136 @@ EDUCATION = ["Primary school", "Secondary school", "Vocational education", "Asso
                  "Master's degree in Education", "Master's degree in Nursing",
                  "Doctoral degree"]
 
+MEDICAL_CONDITIONS = CONDITIONS = [
+    "High blood pressure",
+    "Type 2 diabetes",
+    "Asthma",
+    "Depression",
+    "Anxiety",
+    "Arthritis",
+    "Cancer",
+    "Heart disease",
+    "Stroke",
+    "Obesity",
+    "Alzheimer's disease",
+    "Parkinson's disease",
+    "Multiple sclerosis",
+    "HIV/AIDS",
+    "Hepatitis B",
+    "Hepatitis C",
+    "Tuberculosis",
+    "Malaria",
+    "Influenza",
+    "COVID-19",
+    "Osteoporosis",
+    "Eczema",
+    "Psoriasis",
+    "Cystic fibrosis",
+    "Epilepsy",
+    "Autism spectrum disorder",
+    "Bipolar disorder",
+    "Schizophrenia",
+    "Borderline personality disorder",
+    "Attention-deficit/hyperactivity disorder (ADHD)",
+    "Obsessive-compulsive disorder (OCD)",
+    "Post-traumatic stress disorder (PTSD)",
+    "Chronic obstructive pulmonary disease (COPD)",
+    "Endometriosis",
+    "Polycystic ovary syndrome (PCOS)",
+    "Fibromyalgia",
+    "Chronic fatigue syndrome (CFS)",
+    "Interstitial cystitis/bladder pain syndrome",
+    "Inflammatory bowel disease (IBD)",
+    "Crohn's disease",
+    "Ulcerative colitis",
+    "Irritable bowel syndrome (IBS)",
+    "Gastroesophageal reflux disease (GERD)",
+    "Chronic kidney disease (CKD)",
+    "Chronic liver disease",
+    "Glaucoma",
+    "Cataracts",
+    "Macular degeneration",
+    "Color blindness",
+    "Deafness",
+    "Tinnitus",
+    "Migraines",
+    "Cluster headaches",
+    "Chronic pain",
+    "Sleep apnea",
+    "Insomnia",
+    "Narcolepsy",
+    "Restless legs syndrome (RLS)",
+    "Obstructive sleep apnea (OSA)",
+    "Periodontitis",
+    "Gingivitis",
+    "Hypothyroidism",
+    "Hyperthyroidism",
+    "Addison's disease",
+    "Cushing's syndrome",
+    "Diabetic neuropathy",
+    "Gout",
+    "Huntington's disease",
+    "Myasthenia gravis",
+    "Pancreatitis",
+    "Peripheral neuropathy",
+    "Raynaud's disease",
+    "Sarcoidosis",
+    "Sickle cell anemia",
+    "Thyroid cancer",
+    "Endocrine disorders",
+    "Autoimmune disorders",
+    "Allergies",
+    "Skin cancer",
+    "Melanoma",
+    "Basal cell carcinoma",
+    "Squamous cell carcinoma",
+    "Breast cancer",
+    "Ovarian cancer",
+    "Cervical cancer",
+    "Uterine cancer",
+    "Prostate cancer",
+    "Testicular cancer",
+    "Lung cancer",
+    "Colon cancer",
+    "Rectal cancer",
+    "Pancreatic cancer",
+    "Liver cancer",
+    "Kidney cancer",
+    "Bladder cancer",
+    "Leukemia",
+    "Lymphoma",
+    "Multiple myeloma",
+    "Myelodysplastic syndromes",
+    "Pancreatic insufficiency",
+    "Hypoglycemia",
+    "Hyperglycemia",
+    "Diabetic retinopathy",
+    "Diabetic nephropathy",
+    "Diabetic foot"]
+
+MEDICAL_NOTES = [
+    "Patient reports mild pain in the affected area.",
+    "Patient is experiencing fatigue and loss of appetite.",
+    "Patient reports feeling anxious and depressed.",
+    "Patient has a history of allergies to penicillin.",
+    "Patient reports difficulty sleeping due to pain.",
+    "Patient reports improvement in symptoms since last visit.",
+    "Patient has a family history of heart disease.",
+    "Patient reports no side effects from medication.",
+    "Patient has been noncompliant with treatment regimen.",
+    "Patient reports no improvement in symptoms since last visit.",
+    "Patient has a history of smoking and alcohol use.",
+    "Patient is concerned about the cost of treatment.",
+    "Patient reports experiencing nausea and vomiting.",
+    "Patient has a history of diabetes.",
+    "Patient reports feeling more fatigued than usual.",
+    "Patient reports feeling better overall.",
+    "Patient reports experiencing dizziness and lightheadedness.",
+    "Patient has a history of high blood pressure.",
+    "Patient reports difficulty concentrating and memory problems.",
+    "Patient reports feeling more irritable and anxious than usual."
+]
+
 
 AGE_RANGES = [0, 18, 25, 35, 45, 55, 65, 75, 100]
 PROBABILITIES = [0.0, 0.4, 0.5, 0.3, 0.25, 0.2, 0.15, 0.1, 0.01]
@@ -345,6 +475,30 @@ def get_bank_accounts(f_name, l_name):
 
     return accounts
 
+def get_random_date(start_date, end_date):
+    start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
+    end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d')
+    time_diff = (end_date - start_date).days
+    random_days = head.random.randint(0, time_diff)
+    random_date = start_date + datetime.timedelta(days=random_days)
+    return random_date.strftime('%Y-%m-%d')
+
+def get_medical_record():
+    final_record = []
+    length = head.random.randint(0, 4)
+    if length > 0:
+        for i in range(length):
+            date = get_random_date("1950-01-01", "2023-04-02")
+            condition = head.random.choice(MEDICAL_CONDITIONS)
+            notes = head.random.choice(MEDICAL_NOTES)
+            treated_by = f"Dr. {names.get_full_name()}"
+            final_record.append({
+                "date": date,
+                "condition": condition,
+                "notes": notes,
+                "treated_by": treated_by
+            })
+    return final_record
 
 def get_already_existing_phone_numbers(num_to_check):
     existing_customer = glob.mycolPhone.find_one({"phone_numbers": {"$in": [num_to_check]}})
@@ -426,6 +580,9 @@ class personMaster:
             self.phone_numbers = []
         else:
             self.phone_numbers = [potential_phone]
+
+        self.medical_record = get_medical_record()
+
 
     def fix_bank_account_numbers_for_insertion(self):
         new_list = []
