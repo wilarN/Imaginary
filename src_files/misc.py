@@ -78,6 +78,183 @@ ANNOTATIONS_AND_CRIMES = ["Cybercrime", "Human Smuggling", "Human Trafficking", 
                           "Drug Trafficking / Distribution",
                           "Vandalism", "Wire Fraud", "Identity Theft", "Homicide", "Hate Crimes", "Harassment"]
 
+<<<<<<< Updated upstream
+=======
+JOBS = ['Software Developer', 'Physician',
+        'Information Security Analyst', 'Data Scientist', 'IT Manager',
+        'Statistician', 'Marketing Manager', 'Financial Manager', 'Database Administrator',
+        'Physical Therapist', 'Operations Manager', 'Nurse Practitioner',
+        'Speech-Language Pathologist', 'Psychologist', 'Web Developer',
+        'Accountant', 'Occupational Therapist', 'Civil Engineer',
+        'Human Resources Manager', 'Sales Manager', 'Mechanical Engineer',
+        'Industrial Engineer', 'Management Analyst', 'Electrical Engineer',
+        'Market Research Analyst', 'Business Operations Manager',
+        'Financial Analyst', 'Medical and Health Services Manager',
+        'Construction Manager', 'Diagnostic Medical Sonographer', 'Dentist',
+        'Pharmacist', 'Physician Assistant', 'Computer Systems Analyst',
+        'Software Quality Assurance Engineer', 'Technical Writer',
+        'Physical Therapist Assistant', 'IT Security Specialist',
+        'Computer Network Architect', 'Public Relations Specialist',
+        'Lawyer', 'Social Worker', 'Software Applications Developer',
+        'Market Researcher', 'Computer Programmer', 'Computer and Information Research Scientist',
+        'Graphic Designer', 'Management Accountant', 'Environmental Engineer']
+
+EDUCATION = ["Primary school", "Secondary school", "Vocational education", "Associate's degree",
+             "Bachelor's degree in Arts", "Bachelor's degree in Science",
+             "Bachelor's degree in Engineering", "Bachelor's degree in Business",
+             "Bachelor's degree in Education", "Bachelor's degree in Nursing",
+             "Master's degree in Arts", "Master's degree in Science",
+             "Master's degree in Engineering", "Master's degree in Business",
+             "Master's degree in Education", "Master's degree in Nursing",
+             "Doctoral degree"]
+
+MEDICAL_CONDITIONS = CONDITIONS = [
+    "High blood pressure",
+    "Type 2 diabetes",
+    "Asthma",
+    "Depression",
+    "Anxiety",
+    "Arthritis",
+    "Cancer",
+    "Heart disease",
+    "Stroke",
+    "Obesity",
+    "Alzheimer's disease",
+    "Parkinson's disease",
+    "Multiple sclerosis",
+    "HIV/AIDS",
+    "Hepatitis B",
+    "Hepatitis C",
+    "Tuberculosis",
+    "Malaria",
+    "Influenza",
+    "COVID-19",
+    "Osteoporosis",
+    "Eczema",
+    "Psoriasis",
+    "Cystic fibrosis",
+    "Epilepsy",
+    "Autism spectrum disorder",
+    "Bipolar disorder",
+    "Schizophrenia",
+    "Borderline personality disorder",
+    "Attention-deficit/hyperactivity disorder (ADHD)",
+    "Obsessive-compulsive disorder (OCD)",
+    "Post-traumatic stress disorder (PTSD)",
+    "Chronic obstructive pulmonary disease (COPD)",
+    "Endometriosis",
+    "Polycystic ovary syndrome (PCOS)",
+    "Fibromyalgia",
+    "Chronic fatigue syndrome (CFS)",
+    "Interstitial cystitis/bladder pain syndrome",
+    "Inflammatory bowel disease (IBD)",
+    "Crohn's disease",
+    "Ulcerative colitis",
+    "Irritable bowel syndrome (IBS)",
+    "Gastroesophageal reflux disease (GERD)",
+    "Chronic kidney disease (CKD)",
+    "Chronic liver disease",
+    "Glaucoma",
+    "Cataracts",
+    "Macular degeneration",
+    "Color blindness",
+    "Deafness",
+    "Tinnitus",
+    "Migraines",
+    "Cluster headaches",
+    "Chronic pain",
+    "Sleep apnea",
+    "Insomnia",
+    "Narcolepsy",
+    "Restless legs syndrome (RLS)",
+    "Obstructive sleep apnea (OSA)",
+    "Periodontitis",
+    "Gingivitis",
+    "Hypothyroidism",
+    "Hyperthyroidism",
+    "Addison's disease",
+    "Cushing's syndrome",
+    "Diabetic neuropathy",
+    "Gout",
+    "Huntington's disease",
+    "Myasthenia gravis",
+    "Pancreatitis",
+    "Peripheral neuropathy",
+    "Raynaud's disease",
+    "Sarcoidosis",
+    "Sickle cell anemia",
+    "Thyroid cancer",
+    "Endocrine disorders",
+    "Autoimmune disorders",
+    "Allergies",
+    "Skin cancer",
+    "Melanoma",
+    "Basal cell carcinoma",
+    "Squamous cell carcinoma",
+    "Breast cancer",
+    "Ovarian cancer",
+    "Cervical cancer",
+    "Uterine cancer",
+    "Prostate cancer",
+    "Testicular cancer",
+    "Lung cancer",
+    "Colon cancer",
+    "Rectal cancer",
+    "Pancreatic cancer",
+    "Liver cancer",
+    "Kidney cancer",
+    "Bladder cancer",
+    "Leukemia",
+    "Lymphoma",
+    "Multiple myeloma",
+    "Myelodysplastic syndromes",
+    "Pancreatic insufficiency",
+    "Hypoglycemia",
+    "Hyperglycemia",
+    "Diabetic retinopathy",
+    "Diabetic nephropathy",
+    "Diabetic foot"]
+
+MEDICAL_NOTES = [
+    "Patient reports mild pain in the affected area.",
+    "Patient is experiencing fatigue and loss of appetite.",
+    "Patient reports feeling anxious and depressed.",
+    "Patient has a history of allergies to penicillin.",
+    "Patient reports difficulty sleeping due to pain.",
+    "Patient reports improvement in symptoms since last visit.",
+    "Patient has a family history of heart disease.",
+    "Patient reports no side effects from medication.",
+    "Patient has been noncompliant with treatment regimen.",
+    "Patient reports no improvement in symptoms since last visit.",
+    "Patient has a history of smoking and alcohol use.",
+    "Patient is concerned about the cost of treatment.",
+    "Patient reports experiencing nausea and vomiting.",
+    "Patient has a history of diabetes.",
+    "Patient reports feeling more fatigued than usual.",
+    "Patient reports feeling better overall.",
+    "Patient reports experiencing dizziness and lightheadedness.",
+    "Patient has a history of high blood pressure.",
+    "Patient reports difficulty concentrating and memory problems.",
+    "Patient reports feeling more irritable and anxious than usual."
+]
+
+AGE_RANGES = [0, 18, 25, 35, 45, 55, 65, 75, 100]
+PROBABILITIES = [0.0, 0.4, 0.5, 0.3, 0.25, 0.2, 0.15, 0.1, 0.01]
+
+# CRIME_PROBABILITY = {
+# # [ AGE AND UP : PROBABILITY 0.0 - 1.0 ]
+#     0 : 0.0,
+#     18: 0.4,
+#     25: 0.5,
+#     35: 0.3,
+#     45: 0.25,
+#     55: 0.2,
+#     65: 0.15,
+#     75: 0.1
+# }
+
+
+>>>>>>> Stashed changes
 BANK_ACCOUNT_TYPES = ['Checking Account', 'Savings Account', 'Money Market Account',
                       'Certificate of Deposit', 'Individual Retirement Account', 'Credit Account']
 
@@ -296,6 +473,36 @@ def get_bank_accounts(f_name, l_name):
 
     return accounts
 
+<<<<<<< Updated upstream
+=======
+
+def get_random_date(start_date, end_date):
+    start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
+    end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d')
+    time_diff = (end_date - start_date).days
+    random_days = head.random.randint(0, time_diff)
+    random_date = start_date + datetime.timedelta(days=random_days)
+    return random_date.strftime('%Y-%m-%d')
+
+
+def get_medical_record():
+    final_record = []
+    length = head.random.randint(0, 4)
+    if length > 0:
+        for i in range(length):
+            date = get_random_date("1950-01-01", "2023-04-02")
+            condition = head.random.choice(MEDICAL_CONDITIONS)
+            notes = head.random.choice(MEDICAL_NOTES)
+            treated_by = f"Dr. {names.get_full_name()}"
+            final_record.append({
+                "date": date,
+                "condition": condition,
+                "notes": notes,
+                "treated_by": treated_by
+            })
+    return final_record
+>>>>>>> Stashed changes
+
 
 def get_already_existing_phone_numbers(num_to_check):
     existing_customer = glob.mycolPhone.find_one({"phone_numbers": {"$in": [num_to_check]}})
@@ -311,6 +518,33 @@ def get_already_existing_phone_numbers(num_to_check):
         return False
 
 
+<<<<<<< Updated upstream
+=======
+def get_random_job(self):
+    if head.random.uniform(0.6, 0.9) >= 0.6:
+        return random.choice(JOBS)
+    else:
+        return ""
+
+
+def get_random_education():
+    if head.random.uniform(0.6, 0.9) >= 0.6:
+        return random.choice(EDUCATION)
+    else:
+        return ""
+
+
+def get_relationship_status(self):
+    if self.age >= 18:
+        if head.random.random() < 0.65:
+            return head.random.choice(["Married", "In a relationship"])
+        else:
+            return "Single"
+    else:
+        return ""
+
+
+>>>>>>> Stashed changes
 def get_phone_number(self):
     chance = head.random.randint(0, 10)
     # 50 / 50 Chance kinda-
@@ -363,6 +597,11 @@ class personMaster:
         else:
             self.phone_numbers = [potential_phone]
 
+<<<<<<< Updated upstream
+=======
+        self.medical_record = get_medical_record()
+
+>>>>>>> Stashed changes
     def fix_bank_account_numbers_for_insertion(self):
         new_list = []
         for account in self.bank_accounts:
