@@ -160,22 +160,24 @@ def main():
         usr_sel = input(" >> ")
         usr_sel = usr_sel.lower().strip(" ")
         if usr_sel.__contains__("g"):
-            # Generate
+            # Generate Data // IDs - Vehicles
             type_of_generating()
 
         elif usr_sel.__contains__("sim"):
-            # List
+            # Simulate Events
             simulation.realism_simulation()
             enter_to_continue()
 
         elif usr_sel.__contains__("s"):
+            # Search the database. // Interna Slagningar.
             type_of_search_selection()
 
         elif usr_sel.__contains__("d"):
+            # Drop database // Delete all data.
             drop_database()
 
         elif usr_sel.__contains__("e"):
-            # Exit
+            # Exit // Quit
             glob.graceful_exit()
 
 

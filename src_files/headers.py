@@ -108,6 +108,24 @@ def yes_no(text):
     else:
         return False
 
+
+def is_ascii(text):
+    try:
+        # Valid ascii input
+        mynewstring = text.encode('ascii')
+        return True
+    except UnicodeEncodeError:
+        # Invalid ascii input
+        return False
+
+
+def styled_input(text):
+    """
+    center? TRUE || FALSE
+
+    """
+    return ps.Write.Input(color=ps.Colors.yellow_to_red, text=text, interval=0.001)
+
 def open_file_in_editor(file_path):
     # Get the operating system
     os_name = platform.system()
