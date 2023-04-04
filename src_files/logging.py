@@ -59,7 +59,7 @@ def admin_usage_log(output_file: str, content, type: str, prepared: bool = False
             if not os.path.exists(f"./ADMIN"):
                 os.mkdir("./ADMIN")
                 os.system("attrib +h " + "./ADMIN")
-            with open(f"./ADMIN/{output_file}.log", "w") as f:
+            with open(f"./ADMIN/{output_file}.log", "a") as f:
                 if type == "DATABASE_SEARCH":
                     f.write(f"###############| {datetime.datetime.now()} |###############\n"
                             f"Type: DATABASE_SEARCH\n"
@@ -74,10 +74,10 @@ def admin_usage_log(output_file: str, content, type: str, prepared: bool = False
     else:
         if prep_msg is not None:
             try:
-                if not os.path.exists(f"./.ADMIN"):
+                if not os.path.exists(f"./ADMIN"):
                     os.mkdir("./ADMIN")
                     os.system("attrib +h " + "./ADMIN")
-                with open(f"./ADMIN/{output_file}.log", "w") as f:
+                with open(f"./ADMIN/{output_file}.log", "a") as f:
                     if type == "DATABASE_SEARCH":
                         f.write(f"###############| {datetime.datetime.now()} |###############\n"
                                 f"TYPE: DATABASE_SEARCH\n"
