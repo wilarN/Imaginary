@@ -237,6 +237,59 @@ MEDICAL_NOTES = [
     "Patient reports feeling more irritable and anxious than usual."
 ]
 
+TRAFFIC_VIOLATIONS = [
+    "Speeding",
+    "Running red light",
+    "Illegal parking",
+    "Driving under the influence",
+    "Driving without a license",
+    "Reckless driving",
+    "Driving without insurance",
+    "Failure to yield",
+    "Texting while driving",
+    "Using a handheld phone while driving",
+    "Tailgating",
+    "Improper lane change",
+    "Failure to obey traffic signals",
+    "Failure to stop at a stop sign",
+    "Failure to wear a seatbelt",
+    "Driving too slowly",
+    "Driving too fast for conditions",
+    "Improper passing",
+    "Making an improper turn",
+    "Following too closely",
+    "Driving in a bike lane",
+    "Driving on the wrong side of the road",
+    "Driving with a suspended license",
+    "Driving a vehicle with expired registration",
+    "Parking in a handicapped spot without a permit",
+    "Illegal U-turn",
+    "Driving a vehicle with expired tags",
+    "Driving on a sidewalk",
+    "Failing to signal when turning",
+    "Failure to dim headlights",
+    "Driving the wrong way on a one-way street",
+    "Failure to yield to pedestrians",
+    "Driving a vehicle that emits excessive smoke or fumes",
+    "Using high-beam headlights within 500 feet of an oncoming vehicle",
+    "Driving without headlights on",
+    "Driving in a carpool lane when not permitted",
+    "Driving with a broken taillight",
+    "Driving with an obscured license plate",
+    "Driving in a prohibited area",
+    "Driving without a front license plate",
+    "Driving without a rearview mirror",
+    "Driving with a cracked windshield",
+    "Driving in a no-passing zone",
+    "Driving with a broken headlight",
+    "Driving in a construction zone",
+    "Driving without a side mirror",
+    "Driving with excessively loud music",
+    "Driving a vehicle that leaks oil or other fluids",
+    "Failure to maintain control of a vehicle",
+    "Driving with worn-out or bald tires"
+]
+
 
 AGE_RANGES = [0, 18, 25, 35, 45, 55, 65, 75, 100]
 PROBABILITIES = [0.0, 0.4, 0.5, 0.3, 0.25, 0.2, 0.15, 0.1, 0.01]
@@ -328,6 +381,15 @@ def get_random_car_plate(car_object=None):
 
     return first_section + "-" + second_section
 
+def get_car_annotations():
+    final = []
+    if random.randint(0, 10) > 7:
+        length = head.random.randint(0, 4)
+        if length > 0:
+            for i in range(length):
+                final.append(random.choice(TRAFFIC_VIOLATIONS))
+    return final
+
 
 class carMaster:
     def __init__(self, owner=None, spec_plate=None):
@@ -336,7 +398,7 @@ class carMaster:
         self.manufacturer = data[2]
         self.colour = get_random_car_colour()
         self.year = data[0]
-        self.annotations = None
+        self.annotations = get_car_annotations()
         self.car_body = data[3]
         if spec_plate is None:
             self.plate = get_random_car_plate(self)
