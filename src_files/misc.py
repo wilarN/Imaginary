@@ -12,7 +12,7 @@ import src_files.headers as head
 from faker import Faker
 import src_files.globals as glob
 import src_files.generate as gen
-test
+
 NATIONALITIES = ['Afghan', 'Albanian', 'Algerian', 'American', 'Andorran', 'Angolan', 'Antiguans', 'Argentinean',
                  'Armenian', 'Australian', 'Austrian', 'Azerbaijani', 'Bahamian', 'Bahraini', 'Bangladeshi',
                  'Barbadian', 'Barbudans', 'Batswana', 'Belarusian', 'Belgian', 'Belizean', 'Beninese', 'Bhutanese',
@@ -380,6 +380,7 @@ def get_random_car_plate(car_object=None):
         second_section = second_section + head.random.choice(letters)
 
     return first_section + "-" + second_section
+
 
 def get_car_annotations():
     final = []
