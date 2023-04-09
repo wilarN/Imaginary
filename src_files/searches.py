@@ -163,6 +163,7 @@ def search():
 
             for i in dbCurs:
                 styled_coloured_print_centered(text=f"""
+    FOUND IN DNA DATABASE: {match_dna(i.get('dna_sequence'))}\n
     [Government Name]: {i.get('first_name')} {i.get('last_name')}\n
       - [Gender]: {i.get('sex')}
       - [Age]: {i.get('age')} y/o
@@ -174,7 +175,8 @@ def search():
       - [Cars]:
             {i.get('cars')}
                     """, instant=True, colour="yellow", cent=False)
-                f.write(f"[Government Name]: {i.get('first_name')} {i.get('last_name')}\n"
+                f.write(f"FOUND IN DNA DATABASE: {match_dna(i.get('dna_sequence'))}\n"
+                        f"[Government Name]: {i.get('first_name')} {i.get('last_name')}\n"
                         f"- [Gender]: {i.get('sex')}\n"
                         f"- [Age]: {i.get('age')} y/o\n"
                         f"- [Height]: {i.get('height')}cm\n"

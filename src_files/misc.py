@@ -644,6 +644,8 @@ class personMaster:
         if len(self.record_and_annotations) > 0:
             # Has criminal record
             self.dna_sequence = generate_dna_seq()
+        else:
+            self.dna_sequence = ""
 
         self.personal_identification_number = generate_identification_number(years_old=self.age, gender=self.sex)
         potential_car = get_car(self)

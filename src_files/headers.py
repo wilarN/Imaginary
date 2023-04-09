@@ -10,7 +10,7 @@ import logging
 from src_files.misc import ANNOTATIONS_AND_CRIMES
 from src_files.simulation import realism_simulation
 import random
-import src_files.globals
+from src_files.globals import mycolDNA
 
 
 logo_ascii = """
@@ -155,6 +155,13 @@ def save_results_to_file(list_of_items):
 
 def line():
     print("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+")
+
+
+def match_dna(input_seq):
+    if mycolDNA.find_one({"DNA_SEQUENCE": f"{input_seq}"}):
+        return True
+    else:
+        return False
 
 
 def clear():
