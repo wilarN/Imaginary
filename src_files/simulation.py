@@ -14,7 +14,6 @@ def money_transaction():
         # Get two random customers from the database
         customers = glob.mycol.aggregate([{"$sample": {"size": 2}}])
 
-        # Perform transaction between the two customers
         customer_list = list(customers)
         sender = customer_list[0]
         receiver = customer_list[1]
@@ -94,7 +93,7 @@ stop_event = threading.Event()
 def realism_simulation():
     head.styled_coloured_print_centered(text="""
     ##############################################################################
-    # All of the following simulations will affect and modify the stored data    #                      #
+    # All of the following simulations will affect and modify the stored data    #
     # including database records of identities and ownerships of cars etc.       #
     # Please proceed with caution.                                               #
     ##############################################################################
@@ -103,42 +102,28 @@ def realism_simulation():
     while True:
         head.clear()
         head.styled_coloured_print_centered(text=
-<<<<<<< Updated upstream
+
                                                    f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
-                                                   f"-       [1]- Phone Simulation               -\n"
-                                                   f"+       [2]- Full Simulation                +\n"
+                                                   f"-           [1]- Phone Simulation           -\n"
+                                                   f"+           [2]- Bank Simulation            +\n"
                                                    f"-                                           -\n"
                                                    f"+                                           +\n"
                                                    f"-                                           -\n"
-                                                   f"+          [ E/e(Exit) ]                    +\n"
+                                                   f"+               [ E/e(Exit) ]               +\n"
                                                    f"-                                           -\n"
                                                    f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n", instant=True)
-=======
-                                            f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
-                                            f"-           [1]- Phone Simulation           -\n"
-                                            f"+           [2]- Bank Simulation            +\n"
-                                            f"-           [3]- Relationship Scrambler     -\n"
-                                            f"+                                           +\n"
-                                            f"-                                           -\n"
-                                            f"+               [ E/e(Exit) ]               +\n"
-                                            f"-                                           -\n"
-                                            f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n", instant=True)
->>>>>>> Stashed changes
+
         head.tab_down()
         usr_sel = input(" >> ")
         usr_sel = usr_sel.lower().strip(" ")
         if usr_sel.__contains__("1"):
             head.tab_down()
-<<<<<<< Updated upstream
+
             head.styled_coloured_print_centered(text="Simulation of phone-message person to person communication started... ", instant=True)
-=======
-            head.styled_coloured_print_centered(
-                text="Simulation of phone-message person to person communication started... ")
->>>>>>> Stashed changes
+
             sleep(1)
             print()
-            head.styled_coloured_print_centered(
-                text="To stop the simulation do not use ctrl-c, please press `ENTER` to gracefully stop.", instant=True)
+            head.styled_coloured_print_centered(text="To stop the simulation do not use ctrl-c, please press `ENTER` to gracefully stop.", instant=True)
             sleep(1)
             # Create a thread for the virtual messaging
             simulate_comms_thread = threading.Thread(target=simulate_comms)

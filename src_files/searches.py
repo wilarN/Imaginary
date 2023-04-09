@@ -5,6 +5,7 @@
 import src_files.generate, src_files.simulation
 from src_files.headers import *
 import src_files.globals as glob
+from src_files.logging import log_db_search_to_file, log_reason_for_search, admin_usage_log
 
 
 def get_formatted_list(items):
@@ -30,10 +31,16 @@ def search():
     ##############################################################################
     """, instant=True, colour="yellow")
     enter_to_continue()
+    clear()
 
     while True:
         clear()
         tab_down()
+
+        reason = log_reason_for_search(prepared=True)
+        if not reason:
+            break
+            
         styled_coloured_print_centered(text=f"+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
                                             f"-  |   Identity Search  | -\n"
                                             f"+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
@@ -56,10 +63,13 @@ def search():
                                             f"+-+-+-+-+-+-+-+-+-+-+-+-+-+", instant=True, colour="blue")
         tab_down()
         usr_sel = input(" >> ")
+        type_of_search = None
+
         if usr_sel.lower().strip(" ") == "e":
             break
         elif usr_sel.lower().strip(" ") == "1":
             # First_name Search
+            type_of_search = "FNAME"
             usr_sel = input(" Name >> ")
             usr_sel = usr_sel.strip(" ").capitalize()
             if usr_sel.lower().strip(" ") == "e":
@@ -70,6 +80,7 @@ def search():
 
         elif usr_sel.lower().strip(" ") == "2":
             # Last_name search
+            type_of_search = "LNAME"
             usr_sel = input(" Surname >> ")
             usr_sel = usr_sel.strip(" ").capitalize()
             if usr_sel.lower().strip(" ") == "e":
@@ -80,6 +91,7 @@ def search():
 
         elif usr_sel.lower().strip(" ") == "3":
             # Personal Identification Number search
+            type_of_search = "PIDN(PersonalIDNum)"
             usr_sel = input(" Personal Identification Number (ex. 19990101-9984) >> ")
             usr_sel = usr_sel.strip(" ").capitalize()
             if usr_sel.lower().strip(" ") == "e":
@@ -90,6 +102,7 @@ def search():
 
         elif usr_sel.lower().strip(" ") == "4":
             # Eye Colour Search
+            type_of_search = "EYECOL"
             usr_sel = input(" Eye Colour >> ")
             usr_sel = usr_sel.strip(" ").capitalize()
             if usr_sel.lower().strip(" ") == "e":
@@ -100,6 +113,7 @@ def search():
 
         elif usr_sel.lower().strip(" ") == "5":
             # Height Search
+            type_of_search = "HEIGHT"
             print("[Currently under maintenance, No results will be returned. Please check back later or contact the "
                   "administration for further "
                   "instructions...]")
@@ -112,6 +126,7 @@ def search():
 
         elif usr_sel.lower().strip(" ") == "6":
             # Nationality search
+            type_of_search = "NATIONALITY"
             usr_sel = input(" Nationality >> ")
             usr_sel = usr_sel.strip(" ").capitalize()
             if usr_sel.lower().strip(" ") == "e":
@@ -121,6 +136,8 @@ def search():
                 dbCurs = mycol.find(filter=filter)
         elif usr_sel.lower().strip(" ") == "7":
             # Annotations and record search
+            type_of_search = "ANNOTATIONRECORD"
+            print(ANNOTATIONS_AND_CRIMES)
             usr_sel = input(" Crime // Annotation >> ")
             usr_sel = usr_sel.strip(" ").capitalize()
             if usr_sel.lower().strip(" ") == "e":
@@ -132,23 +149,48 @@ def search():
         else:
             break
 
+        admin_usage_log(output_file="PDBSearchLog", content=reason,
+                        type="DATABASE_SEARCH", prepared=True, prep_msg=[usr_sel, str(type_of_search)])
+
         tab_down()
         line()
-        for i in dbCurs:
-            styled_coloured_print_centered(text=f"""
-[Government Name]: {i.get('first_name')} {i.get('last_name')}\n
-  - [Gender]: {i.get('sex')}
-  - [Age]: {i.get('age')} y/o
-  - [Height]: {i.get('height')}cm
-  - [Nationality]: {i.get('nationality')}
-  - [Personal Identification Number]: ({i.get('personal_identification_number')})
-  - [Records & Annotations]:
-        {i.get('record_and_annotations')}
-  - [Cars]:
-        {i.get('cars')}
-                """, instant=True, colour="yellow", cent=False)
-            line()
-        # save_results_to_file(dbCurs.__dict__)
+
+        if not os.path.exists("./db_search"):
+            os.mkdir("./db_search")
+
+        with open("./db_search/db_search.txt", "w") as f:
+            f.write("----------------------------------------------------------------\n")
+
+            for i in dbCurs:
+                styled_coloured_print_centered(text=f"""
+    [Government Name]: {i.get('first_name')} {i.get('last_name')}\n
+      - [Gender]: {i.get('sex')}
+      - [Age]: {i.get('age')} y/o
+      - [Height]: {i.get('height')}cm
+      - [Nationality]: {i.get('nationality')}
+      - [Personal Identification Number]: ({i.get('personal_identification_number')})
+      - [Records & Annotations]:
+            {i.get('record_and_annotations')}
+      - [Cars]:
+            {i.get('cars')}
+                    """, instant=True, colour="yellow", cent=False)
+                f.write(f"[Government Name]: {i.get('first_name')} {i.get('last_name')}\n"
+                        f"- [Gender]: {i.get('sex')}\n"
+                        f"- [Age]: {i.get('age')} y/o\n"
+                        f"- [Height]: {i.get('height')}cm\n"
+                        f"- [Nationality]: {i.get('nationality')}\n"
+                        f"- [Personal Identification Number]: ({i.get('personal_identification_number')})\n"
+                        f"- [Records & Annotations]:\n"
+                        f"{i.get('record_and_annotations')}\n"
+                        f"- [Cars]:\n"
+                        f"{i.get('cars')}\n"
+                        "----------------------------------------------------------------\n")
+                line()
+        if yes_no("Open output file?"):
+            try:
+                open_file_in_editor("./db_search/db_search.txt")
+            except Exception as e:
+                print(e)
         enter_to_continue()
 
 

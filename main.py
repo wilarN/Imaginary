@@ -19,6 +19,7 @@ def change_windowSize():
     cmd = "mode con: cols=230 lines=50"
     os.system(cmd)
 
+
 def list_people():
     # List all people
     for document in dbCurs:
@@ -35,6 +36,7 @@ def get_statistics(selection: int):
 def type_of_search_selection():
     while True:
         clear()
+        styled_coloured_print_centered(text=logo_ascii, colour="red", instant=True)
         styled_coloured_print_centered(text=
                                        f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
                                        f"-       P/p(Identity Register)              -\n"
@@ -63,6 +65,7 @@ def type_of_search_selection():
 def type_of_generating():
     while True:
         clear()
+        styled_coloured_print_centered(text=logo_ascii, colour="red", instant=True)
         styled_coloured_print_centered(text=
                                        f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
                                        f"-              P/p(Identity Gen)            -\n"
@@ -87,18 +90,68 @@ def type_of_generating():
         else:
             pass
 
+def drop_database():
+    while True:
+        clear()
+        styled_coloured_print_centered(text=logo_ascii, colour="red", instant=True)
+        styled_coloured_print_centered(text=
+                                       f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
+                                       f"-              [ DROP DATABASE ]            -\n"
+                                       f"+   THIS ACTION IS UNREVERTABLE AND CANNOT  +\n"
+                                       f"-   BE UNDONE. THIS WILL DROP ALL THE DATA  -\n"
+                                       f"+   STORED IN THE DATABASE.                 +\n"
+                                       f"-              PROCEED? (y/n)               -\n"
+                                       f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+", instant=True, colour="orange")
+        tab_down()
+        usr_sel = input(" >> ")
+        usr_sel = usr_sel.lower().strip(" ")
+        if usr_sel.__contains__("y"):
+            # DROP DB
+            try:
+                glob.myclient.drop_database("imaginaryMaster")
+                clear()
+                styled_coloured_print_centered(text=logo_ascii, colour="red", instant=True)
+                styled_coloured_print_centered(text=
+                                               f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
+                                               f"-                                           -\n"
+                                               f"+    [ DATABASE DROPPED WITHOUT ERRORS ]    +\n"
+                                               f"-                                           -\n"
+                                               f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+", instant=True,
+                                               colour="green")
+            except Exception as e:
+                clear()
+                print(e)
+                styled_coloured_print_centered(text=logo_ascii, colour="red", instant=True)
+                styled_coloured_print_centered(text=
+                                               f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
+                                               f"-                                           -\n"
+                                               f"+        [ DATABASE DROPPED FAILED ]        +\n"
+                                               f"-                                           -\n"
+                                               f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+", instant=True,
+                                               colour="red")
+            tab_down()
+            enter_to_continue()
+            break
+        elif usr_sel.__contains__("n"):
+            # RETURN TO MENU
+            break
+        else:
+            pass
+
+
 
 def main():
     global dbCurs
     clear()
     while True:
         clear()
+        styled_coloured_print_centered(text=logo_ascii, colour="red", instant=True)
         styled_coloured_print_centered(text=
                                        f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
                                        f"-       G/g(Generate Data) - (Admin)        -\n"
                                        f"+       S/s(Search) - (General)             +\n"
                                        f"-       SIM/sim(Simulation) - (DB_Heavy)    -\n"
-                                       f"+                                           +\n"
+                                       f"+       D/d(Drop Database) - (UNREVERTABLE) +\n"
                                        f"-                                           -\n"
                                        f"+          [ E/e(Exit) ]                    +\n"
                                        f"-                                           -\n"
@@ -108,19 +161,24 @@ def main():
         usr_sel = input(" >> ")
         usr_sel = usr_sel.lower().strip(" ")
         if usr_sel.__contains__("g"):
-            # Generate
+            # Generate Data // IDs - Vehicles
             type_of_generating()
 
         elif usr_sel.__contains__("sim"):
-            # List
+            # Simulate Events
             simulation.realism_simulation()
             enter_to_continue()
 
         elif usr_sel.__contains__("s"):
+            # Search the database. // Interna Slagningar.
             type_of_search_selection()
 
+        elif usr_sel.__contains__("d"):
+            # Drop database // Delete all data.
+            drop_database()
+
         elif usr_sel.__contains__("e"):
-            # Exit
+            # Exit // Quit
             glob.graceful_exit()
 
 

@@ -1,5 +1,7 @@
+import bisect
 import csv
 import hashlib
+import random
 import string
 import uuid
 
@@ -65,7 +67,6 @@ DUMMY_BANKS = [
     {"name": "Scotiabank", "location": "Toronto, Canada", "postal_code": "M5H 1H1"}
 ]
 
-
 ANNOTATIONS_AND_CRIMES = ["Cybercrime", "Human Smuggling", "Human Trafficking", "Illegal Possession Of Firearms",
                           "Cannabis Cultivation", "Fraud",
                           "Real Estate", "Benefit Fraud", "Evasion Of Social Insurance Payments",
@@ -78,8 +79,6 @@ ANNOTATIONS_AND_CRIMES = ["Cybercrime", "Human Smuggling", "Human Trafficking", 
                           "Drug Trafficking / Distribution",
                           "Vandalism", "Wire Fraud", "Identity Theft", "Homicide", "Hate Crimes", "Harassment"]
 
-<<<<<<< Updated upstream
-=======
 JOBS = ['Software Developer', 'Physician',
         'Information Security Analyst', 'Data Scientist', 'IT Manager',
         'Statistician', 'Marketing Manager', 'Financial Manager', 'Database Administrator',
@@ -100,13 +99,13 @@ JOBS = ['Software Developer', 'Physician',
         'Graphic Designer', 'Management Accountant', 'Environmental Engineer']
 
 EDUCATION = ["Primary school", "Secondary school", "Vocational education", "Associate's degree",
-             "Bachelor's degree in Arts", "Bachelor's degree in Science",
-             "Bachelor's degree in Engineering", "Bachelor's degree in Business",
-             "Bachelor's degree in Education", "Bachelor's degree in Nursing",
-             "Master's degree in Arts", "Master's degree in Science",
-             "Master's degree in Engineering", "Master's degree in Business",
-             "Master's degree in Education", "Master's degree in Nursing",
-             "Doctoral degree"]
+                 "Bachelor's degree in Arts", "Bachelor's degree in Science",
+                 "Bachelor's degree in Engineering", "Bachelor's degree in Business",
+                 "Bachelor's degree in Education", "Bachelor's degree in Nursing",
+                 "Master's degree in Arts", "Master's degree in Science",
+                 "Master's degree in Engineering", "Master's degree in Business",
+                 "Master's degree in Education", "Master's degree in Nursing",
+                 "Doctoral degree"]
 
 MEDICAL_CONDITIONS = CONDITIONS = [
     "High blood pressure",
@@ -238,8 +237,63 @@ MEDICAL_NOTES = [
     "Patient reports feeling more irritable and anxious than usual."
 ]
 
+TRAFFIC_VIOLATIONS = [
+    "Speeding",
+    "Running red light",
+    "Illegal parking",
+    "Driving under the influence",
+    "Driving without a license",
+    "Reckless driving",
+    "Driving without insurance",
+    "Failure to yield",
+    "Texting while driving",
+    "Using a handheld phone while driving",
+    "Tailgating",
+    "Improper lane change",
+    "Failure to obey traffic signals",
+    "Failure to stop at a stop sign",
+    "Failure to wear a seatbelt",
+    "Driving too slowly",
+    "Driving too fast for conditions",
+    "Improper passing",
+    "Making an improper turn",
+    "Following too closely",
+    "Driving in a bike lane",
+    "Driving on the wrong side of the road",
+    "Driving with a suspended license",
+    "Driving a vehicle with expired registration",
+    "Parking in a handicapped spot without a permit",
+    "Illegal U-turn",
+    "Driving a vehicle with expired tags",
+    "Driving on a sidewalk",
+    "Failing to signal when turning",
+    "Failure to dim headlights",
+    "Driving the wrong way on a one-way street",
+    "Failure to yield to pedestrians",
+    "Driving a vehicle that emits excessive smoke or fumes",
+    "Using high-beam headlights within 500 feet of an oncoming vehicle",
+    "Driving without headlights on",
+    "Driving in a carpool lane when not permitted",
+    "Driving with a broken taillight",
+    "Driving with an obscured license plate",
+    "Driving in a prohibited area",
+    "Driving without a front license plate",
+    "Driving without a rearview mirror",
+    "Driving with a cracked windshield",
+    "Driving in a no-passing zone",
+    "Driving with a broken headlight",
+    "Driving in a construction zone",
+    "Driving without a side mirror",
+    "Driving with excessively loud music",
+    "Driving a vehicle that leaks oil or other fluids",
+    "Failure to maintain control of a vehicle",
+    "Driving with worn-out or bald tires"
+]
+
+
 AGE_RANGES = [0, 18, 25, 35, 45, 55, 65, 75, 100]
 PROBABILITIES = [0.0, 0.4, 0.5, 0.3, 0.25, 0.2, 0.15, 0.1, 0.01]
+
 
 # CRIME_PROBABILITY = {
 # # [ AGE AND UP : PROBABILITY 0.0 - 1.0 ]
@@ -254,10 +308,8 @@ PROBABILITIES = [0.0, 0.4, 0.5, 0.3, 0.25, 0.2, 0.15, 0.1, 0.01]
 # }
 
 
->>>>>>> Stashed changes
 BANK_ACCOUNT_TYPES = ['Checking Account', 'Savings Account', 'Money Market Account',
                       'Certificate of Deposit', 'Individual Retirement Account', 'Credit Account']
-
 
 fake = Faker()
 PHONE_NUMBERS = []
@@ -283,8 +335,8 @@ CAR_FILES = []
 
 for path in head.os.listdir(global_car_data_path):
     # check if current path is a file
-    if head.os.path.isfile (head.os.path.join(global_car_data_path, path)):
-        CAR_FILES.append (head.os.path.join (head.os.path.dirname(__file__), 'data\\' + path))
+    if head.os.path.isfile(head.os.path.join(global_car_data_path, path)):
+        CAR_FILES.append(head.os.path.join(head.os.path.dirname(__file__), 'data\\' + path))
     # print (head.os.path.join (head.os.path.dirname(__file__), 'data\\'+path))
 
 
@@ -304,10 +356,6 @@ def get_car_data():
 
 def get_random_car_colour():
     return CAR_COLOURS[head.random.randint(0, len(CAR_COLOURS) - 1)]
-
-
-def get_random_annotations():
-    pass
 
 
 def get_random_car_plate(car_object=None):
@@ -334,6 +382,16 @@ def get_random_car_plate(car_object=None):
     return first_section + "-" + second_section
 
 
+def get_car_annotations():
+    final = []
+    if random.randint(0, 10) > 7:
+        length = head.random.randint(0, 4)
+        if length > 0:
+            for i in range(length):
+                final.append(random.choice(TRAFFIC_VIOLATIONS))
+    return final
+
+
 class carMaster:
     def __init__(self, owner=None, spec_plate=None):
         data = get_car_data()
@@ -341,7 +399,7 @@ class carMaster:
         self.manufacturer = data[2]
         self.colour = get_random_car_colour()
         self.year = data[0]
-        self.annotations = None
+        self.annotations = get_car_annotations()
         self.car_body = data[3]
         if spec_plate is None:
             self.plate = get_random_car_plate(self)
@@ -442,24 +500,31 @@ def get_car(person_in_question):
         owned_plate = get_random_car_plate()
         print(owned_plate)
         generated_car = gen.generate_vehicle(specific_plate=str(owned_plate),
-                                                      ownership=f"{person_in_question.first_name} {person_in_question.last_name}")
+                                             ownership=f"{person_in_question.first_name} {person_in_question.last_name}")
         return owned_plate
     else:
         # No car.
         return False
 
 
-def get_record_and_annotations():
+def get_record_and_annotations(age_person):
     temp_total_records = []
-    for i in range(3):
-        chance = head.random.randint(0, 10)
-        if chance <= 3:
-            # Get the record from the list for this particular person.
-            temp_total_records.append(head.random.choice(ANNOTATIONS_AND_CRIMES))
-        else:
-            # No record for this person.
-            pass
-    return temp_total_records
+    prob_index = bisect.bisect_right(AGE_RANGES, age_person) - 1
+    prob = PROBABILITIES[prob_index]
+
+    if head.random.uniform(0.0, 1.0) <= prob:
+        # Generate records based on probability for this age range.
+        for i in range(3):
+            chance = head.random.randint(0, 10)
+            if chance <= 3:
+                # Get the record from the list for this particular person.
+                temp_total_records.append(head.random.choice(ANNOTATIONS_AND_CRIMES))
+            else:
+                # No record for this person.
+                pass
+        return temp_total_records
+    else:
+        return temp_total_records
 
 
 def get_bank_accounts(f_name, l_name):
@@ -473,8 +538,6 @@ def get_bank_accounts(f_name, l_name):
 
     return accounts
 
-<<<<<<< Updated upstream
-=======
 
 def get_random_date(start_date, end_date):
     start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
@@ -501,7 +564,6 @@ def get_medical_record():
                 "treated_by": treated_by
             })
     return final_record
->>>>>>> Stashed changes
 
 
 def get_already_existing_phone_numbers(num_to_check):
@@ -518,8 +580,6 @@ def get_already_existing_phone_numbers(num_to_check):
         return False
 
 
-<<<<<<< Updated upstream
-=======
 def get_random_job(self):
     if head.random.uniform(0.6, 0.9) >= 0.6:
         return random.choice(JOBS)
@@ -544,7 +604,6 @@ def get_relationship_status(self):
         return ""
 
 
->>>>>>> Stashed changes
 def get_phone_number(self):
     chance = head.random.randint(0, 10)
     # 50 / 50 Chance kinda-
@@ -563,7 +622,7 @@ def get_phone_number(self):
                     num = num.split("x")[0]
                 if num.__contains__("."):
                     num.replace(".", "-")
-                phone_number = phone(owner=self.first_name+" "+self.last_name, number=num)
+                phone_number = phone(owner=self.first_name + " " + self.last_name, number=num)
                 glob.mycolPhone.insert_one(phone_number.__dict__)
                 return num
     else:
@@ -582,14 +641,16 @@ class personMaster:
         self.age = get_random_age()
         self.height = get_random_height()
         self.eye_colour = get_random_eye_colour()
-        self.record_and_annotations = get_record_and_annotations()
+        self.record_and_annotations = get_record_and_annotations(age_person=self.age)
         self.personal_identification_number = generate_identification_number(years_old=self.age, gender=self.sex)
         potential_car = get_car(self)
         if not potential_car:
             self.cars = []
         else:
             self.cars = [potential_car]
-
+        self.job = get_random_job(self)
+        self.education = get_random_education()
+        self.relationship_status = get_relationship_status(self)
         self.bank_accounts = get_bank_accounts(f_name=self.first_name, l_name=self.last_name)
         potential_phone = get_phone_number(self)
         if not potential_phone:
@@ -597,11 +658,9 @@ class personMaster:
         else:
             self.phone_numbers = [potential_phone]
 
-<<<<<<< Updated upstream
-=======
         self.medical_record = get_medical_record()
 
->>>>>>> Stashed changes
+
     def fix_bank_account_numbers_for_insertion(self):
         new_list = []
         for account in self.bank_accounts:
@@ -610,7 +669,6 @@ class personMaster:
 
     def print_information(self):
         print(self.__dict__)
-
 
 
 ###################################################
@@ -628,9 +686,9 @@ def get_account_type():
 
 def get_account_balance():
     amount_sec = head.random.randint(0, 10)
-    if(amount_sec >= 8):
+    if (amount_sec >= 8):
         return head.random.randint(20000, 3999999)
-    elif(2 < amount_sec < 5):
+    elif (2 < amount_sec < 5):
         return head.random.randint(20000, 600000)
     else:
         return head.random.randint(10000, 20000)
@@ -638,8 +696,10 @@ def get_account_balance():
 
 def get_bank_account_location():
     selected_bank = head.random.choice(DUMMY_BANKS)
-    fixed_string = selected_bank["name"] + " - " + selected_bank["location"] + f"({selected_bank['postal_code']})[{head.random.choice(PHONE_NUMBERS)}]"
+    fixed_string = selected_bank["name"] + " - " + selected_bank[
+        "location"] + f"({selected_bank['postal_code']})[{head.random.choice(PHONE_NUMBERS)}]"
     return fixed_string
+
 
 class bank_account:
     def __init__(self, ownership, bank_account_num):
