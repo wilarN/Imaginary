@@ -38,7 +38,9 @@ def search():
         tab_down()
 
         reason = log_reason_for_search(prepared=True)
-
+        if not reason:
+            break
+            
         styled_coloured_print_centered(text=f"+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
                                             f"-  |   Identity Search  | -\n"
                                             f"+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"

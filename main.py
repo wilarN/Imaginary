@@ -19,6 +19,7 @@ def change_windowSize():
     cmd = "mode con: cols=230 lines=50"
     os.system(cmd)
 
+
 def list_people():
     # List all people
     for document in dbCurs:

@@ -33,12 +33,15 @@ def log_reason_for_search(prepared):
     ####################################################################################
     #       To make a search in the database you will have to provide a reason.        #
     #       This is to prevent unnecessary and non-legitimate searches to be made.     #
+    #                             (Q/E to go back)                                     #
     ####################################################################################
     """, instant=True, colour="orange")
     head.styled_coloured_print_centered(text=f"\n\nReason for search: ", instant=True, colour="blue")
     while True:
         reason = head.styled_input(" >> ")
-        if head.is_ascii(reason):
+        if reason.lower() == "e" or reason.lower() == "q":
+            return False # Cancel search.
+        elif head.is_ascii(reason):
             # Valid input
             try:
                 if prepared:
