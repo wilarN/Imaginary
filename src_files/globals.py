@@ -28,11 +28,12 @@ except Exception as e:
     time.sleep(2)
     graceful_exit()
 
-mydb = myclient["imaginaryMaster"]
-mycol = mydb["people"]
-mycolVehicle = mydb["vehicles"]
-mycolBank = mydb["banking"]
-mycolPhone = mydb["phones"]
+mydb = myclient["imaginaryMaster"] # DB
+mycol = mydb["people"] # Main PDB
+mycolVehicle = mydb["vehicles"] # Cars
+mycolBank = mydb["banking"] # Banking
+mycolPhone = mydb["phones"] # Phone numbers
+mycolDNA = mydb["dna"] # Dna matches
 dbCurs = mycol.find({})
 
 

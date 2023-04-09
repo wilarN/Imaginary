@@ -9,6 +9,7 @@ global mycol
 global mycolVehicle
 global mycolBank
 
+
 def generate_people():
     while True:
         tab_down()

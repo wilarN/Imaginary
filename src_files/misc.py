@@ -99,13 +99,13 @@ JOBS = ['Software Developer', 'Physician',
         'Graphic Designer', 'Management Accountant', 'Environmental Engineer']
 
 EDUCATION = ["Primary school", "Secondary school", "Vocational education", "Associate's degree",
-                 "Bachelor's degree in Arts", "Bachelor's degree in Science",
-                 "Bachelor's degree in Engineering", "Bachelor's degree in Business",
-                 "Bachelor's degree in Education", "Bachelor's degree in Nursing",
-                 "Master's degree in Arts", "Master's degree in Science",
-                 "Master's degree in Engineering", "Master's degree in Business",
-                 "Master's degree in Education", "Master's degree in Nursing",
-                 "Doctoral degree"]
+             "Bachelor's degree in Arts", "Bachelor's degree in Science",
+             "Bachelor's degree in Engineering", "Bachelor's degree in Business",
+             "Bachelor's degree in Education", "Bachelor's degree in Nursing",
+             "Master's degree in Arts", "Master's degree in Science",
+             "Master's degree in Engineering", "Master's degree in Business",
+             "Master's degree in Education", "Master's degree in Nursing",
+             "Doctoral degree"]
 
 MEDICAL_CONDITIONS = CONDITIONS = [
     "High blood pressure",
@@ -290,10 +290,8 @@ TRAFFIC_VIOLATIONS = [
     "Driving with worn-out or bald tires"
 ]
 
-
 AGE_RANGES = [0, 18, 25, 35, 45, 55, 65, 75, 100]
 PROBABILITIES = [0.0, 0.4, 0.5, 0.3, 0.25, 0.2, 0.15, 0.1, 0.01]
-
 
 # CRIME_PROBABILITY = {
 # # [ AGE AND UP : PROBABILITY 0.0 - 1.0 ]
@@ -642,6 +640,13 @@ class personMaster:
         self.height = get_random_height()
         self.eye_colour = get_random_eye_colour()
         self.record_and_annotations = get_record_and_annotations(age_person=self.age)
+
+        if len(self.record_and_annotations) > 0:
+            # Has criminal record
+            self.dna_sequence = generate_dna_seq()
+        else:
+            self.dna_sequence = ""
+
         self.personal_identification_number = generate_identification_number(years_old=self.age, gender=self.sex)
         potential_car = get_car(self)
         if not potential_car:
@@ -659,7 +664,6 @@ class personMaster:
             self.phone_numbers = [potential_phone]
 
         self.medical_record = get_medical_record()
-
 
     def fix_bank_account_numbers_for_insertion(self):
         new_list = []
@@ -714,3 +718,27 @@ class phone:
     def __init__(self, owner, number):
         self.ownership = owner
         self.registered_number = number
+
+
+###################################################
+######### DNA RECORD SECTION  #####################
+###################################################
+
+def generate_dna_seq():
+    try:
+        seq = DNAMaster()
+        glob.mycolDNA.insert_one(seq.__dict__)
+        return seq.DNA_SEQUENCE
+    except Exception as e:
+        print(e)
+        return ""
+
+
+def get_dna_sequence(length):
+    nucleotides = ['A', 'T', 'G', 'C']
+    return ''.join(random.choice(nucleotides) for i in range(length))
+
+
+class DNAMaster:
+    def __init__(self):
+        self.DNA_SEQUENCE = get_dna_sequence(length=50)
