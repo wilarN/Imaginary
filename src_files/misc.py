@@ -538,6 +538,7 @@ def get_bank_accounts(f_name, l_name):
 
     return accounts
 
+
 def get_random_date(start_date, end_date):
     start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
     end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d')
@@ -545,6 +546,7 @@ def get_random_date(start_date, end_date):
     random_days = head.random.randint(0, time_diff)
     random_date = start_date + datetime.timedelta(days=random_days)
     return random_date.strftime('%Y-%m-%d')
+
 
 def get_medical_record():
     final_record = []
@@ -562,6 +564,7 @@ def get_medical_record():
                 "treated_by": treated_by
             })
     return final_record
+
 
 def get_already_existing_phone_numbers(num_to_check):
     existing_customer = glob.mycolPhone.find_one({"phone_numbers": {"$in": [num_to_check]}})
@@ -599,6 +602,7 @@ def get_relationship_status(self):
             return "Single"
     else:
         return ""
+
 
 def get_phone_number(self):
     chance = head.random.randint(0, 10)
