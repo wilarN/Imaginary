@@ -28,6 +28,7 @@ logo_ascii = """
 [ EXPERIMENTAL BRANCH ]
 """
 
+
 def tab_down():
     print()
 
@@ -102,6 +103,7 @@ def write_to_file(text_to_write, path_to_file, typeOfWrite):
         print(e)
         enter_to_continue()
 
+
 def yes_no(text):
     usr_answ = input(f"{text} (y/n) >> ").strip(" ")
     if usr_answ.__contains__("y"):
@@ -123,9 +125,9 @@ def is_ascii(text):
 def styled_input(text):
     """
     center? TRUE || FALSE
-
     """
     return ps.Write.Input(color=ps.Colors.yellow_to_red, text=text, interval=0.001)
+
 
 def open_file_in_editor(file_path):
     # Get the operating system
@@ -142,6 +144,7 @@ def open_file_in_editor(file_path):
     # Run the command
     subprocess.run(command, check=True)
 
+
 def save_results_to_file(list_of_items):
     usr_res = input("Save results to file?(y/n) (Enter to continue...)")
     if usr_res.strip(" ").lower() == "y":
@@ -152,6 +155,7 @@ def save_results_to_file(list_of_items):
             write_to_file(text_to_write=str(item), path_to_file=("./output/"+"latest_logged.txt"), typeOfWrite="w+")
     else:
         pass
+
 
 def line():
     print("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+")

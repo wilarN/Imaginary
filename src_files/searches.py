@@ -335,3 +335,12 @@ def vehicle_search():
 """, instant=True, colour="yellow", cent=False)
             line()
         enter_to_continue()
+
+
+def dna_search():
+    """
+    Searches the dna register for a match.
+    """
+    
+
+

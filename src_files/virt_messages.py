@@ -1,3 +1,4 @@
+
 import markovify
 from time import sleep
 from src_files.misc import names
@@ -5,7 +6,6 @@ from src_files.globals import mycol
 import json
 
 # Creates some issues
-from convokit import Corpus, download
 import os
 
 # Open the JSON file and extract the "body" field from each comment
