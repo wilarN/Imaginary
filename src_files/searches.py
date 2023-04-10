@@ -338,9 +338,31 @@ def vehicle_search():
 
 
 def dna_search():
-    """
-    Searches the dna register for a match.
-    """
-    
+    mycol = glob.mycolDNA
+    global dbCurs
+
+    while True:
+        clear()
+        tab_down()
+        styled_coloured_print_centered(text="#########################\n"
+                                            "#     DNA REGISTER:     #\n"
+                                            "#     [ E/e(Exit) ]     #\n"
+                                            "#########################\n")
+        usr_sel = input(" DNA SEQUENCE >> ")
+        if usr_sel.lower().strip(" ") == "e":
+            break
+
+        else:
+            filter = {'DNA_SEQUENCE': {'$regex': f".*{usr_sel}.*"}}
+            dbCurs = mycol.find(filter=filter)
+
+        tab_down()
+        line()
+        for i in dbCurs:
+            styled_coloured_print_centered(text=
+                   f"""DNA_SEQ_MATCH: {i.get('DNA_SEQUENCE')} [ Match: TRUE ]\n""", instant=True, colour="blue", cent=False)
+        line()
+        enter_to_continue()
+
 
 
