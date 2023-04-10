@@ -41,6 +41,8 @@ def type_of_search_selection():
                                        f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
                                        f"-       P/p(Identity Register)              -\n"
                                        f"+       V/v(Vehicle Register)               +\n"
+                                       f"-       D/d(DNA Database)                   -\n"
+                                       f"+                                           +\n"
                                        f"-                                           -\n"
                                        f"+          [ E/e(Exit) ]                    +\n"
                                        f"-                                           -\n"
@@ -55,6 +57,10 @@ def type_of_search_selection():
         elif usr_sel.__contains__("v"):
             # Vehicle search
             searches.vehicle_search()
+
+        elif usr_sel.__contains__("d"):
+            # Search the DNA register.
+            searches.dna_search()
 
         elif usr_sel.lower().strip(" ") == "e":
             break
