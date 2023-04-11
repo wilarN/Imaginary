@@ -44,14 +44,15 @@ def log_reason_for_search(prepared):
             return False # Cancel search.
         elif head.is_ascii(reason):
             # Valid input
-            try:
-                if prepared:
-                    return reason
-                else:
-                    admin_usage_log(output_file="PDBSearchLog", content=reason, type="DATABASE_SEARCH")
-            except Exception as e:
-                print(e)
-            break
+            if reason != "":
+                try:
+                    if prepared:
+                        return reason
+                    else:
+                        admin_usage_log(output_file="PDBSearchLog", content=reason, type="DATABASE_SEARCH")
+                except Exception as e:
+                    print(e)
+                break
         else:
             # Invalid input
             head.styled_coloured_print_centered(text="Invalid input, please try again.", colour="red", instant=True)
