@@ -1,9 +1,11 @@
 from datetime import datetime
 
+# GUI
+import customtkinter
+from PIL import Image
 from src_files import searches, generate, simulation
 from src_files.headers import *
 import src_files.globals as glob
-
 
 """
 IMPORTANT NOTICE: This program is provided for educational and experimental purposes only. The creator of this 
@@ -96,6 +98,7 @@ def type_of_generating():
         else:
             pass
 
+
 def drop_database():
     while True:
         clear()
@@ -145,7 +148,6 @@ def drop_database():
             pass
 
 
-
 def main():
     global dbCurs
     clear()
@@ -188,8 +190,6 @@ def main():
             glob.graceful_exit()
 
 
-
-
 def generate_log_dir_files():
     file = open(glob.settings_file_location, "a+")
     file.write(f"+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
@@ -199,7 +199,28 @@ def generate_log_dir_files():
 
 
 if __name__ == '__main__':
-
-    change_windowSize()
     generate_log_dir_files()
-    main()
+
+    customtkinter.set_appearance_mode("dark")
+    customtkinter.set_default_color_theme("blue")
+
+    root = customtkinter.CTk()
+    root.geometry("800x500")
+
+    frame = customtkinter.CTkFrame(master=root)
+    frame.pack(fill="both", expand=True)
+
+    label = customtkinter.CTkLabel(master=frame, text="Imaginary", width=100, height=80, font=("Roboto", 50))
+    label.pack()
+
+    generate_data_btn = customtkinter.CTkButton(master=frame, text="Generate Data", width=200, height=80,
+                                                fg_color="black")
+    generate_data_btn.pack(padx=20, pady=10)
+    simulate_data = customtkinter.CTkButton(master=frame, text="Simulate", width=200, height=80, fg_color="black")
+    simulate_data.pack(padx=20, pady=10)
+
+    check = customtkinter.CTkCheckBox(master=frame, text="Master check")
+    check.pack(padx=20, pady=20)
+
+    root.mainloop()
+    # main()
