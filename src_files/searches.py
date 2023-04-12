@@ -5,7 +5,7 @@
 import src_files.generate, src_files.simulation
 from src_files.headers import *
 import src_files.globals as glob
-from src_files.logging import log_db_search_to_file
+from src_files.logging import log_db_search_to_file, log_reason_for_search, admin_usage_log
 
 
 def get_formatted_list(items):
@@ -31,10 +31,16 @@ def search():
     ##############################################################################
     """, instant=True, colour="yellow")
     enter_to_continue()
+    clear()
 
     while True:
         clear()
         tab_down()
+
+        reason = log_reason_for_search(prepared=True)
+        if not reason:
+            break
+            
         styled_coloured_print_centered(text=f"+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
                                             f"-  |   Identity Search  | -\n"
                                             f"+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
@@ -57,10 +63,13 @@ def search():
                                             f"+-+-+-+-+-+-+-+-+-+-+-+-+-+", instant=True, colour="blue")
         tab_down()
         usr_sel = input(" >> ")
+        type_of_search = None
+
         if usr_sel.lower().strip(" ") == "e":
             break
         elif usr_sel.lower().strip(" ") == "1":
             # First_name Search
+            type_of_search = "FNAME"
             usr_sel = input(" Name >> ")
             usr_sel = usr_sel.strip(" ").capitalize()
             if usr_sel.lower().strip(" ") == "e":
@@ -71,6 +80,7 @@ def search():
 
         elif usr_sel.lower().strip(" ") == "2":
             # Last_name search
+            type_of_search = "LNAME"
             usr_sel = input(" Surname >> ")
             usr_sel = usr_sel.strip(" ").capitalize()
             if usr_sel.lower().strip(" ") == "e":
@@ -81,6 +91,7 @@ def search():
 
         elif usr_sel.lower().strip(" ") == "3":
             # Personal Identification Number search
+            type_of_search = "PIDN(PersonalIDNum)"
             usr_sel = input(" Personal Identification Number (ex. 19990101-9984) >> ")
             usr_sel = usr_sel.strip(" ").capitalize()
             if usr_sel.lower().strip(" ") == "e":
@@ -91,6 +102,7 @@ def search():
 
         elif usr_sel.lower().strip(" ") == "4":
             # Eye Colour Search
+            type_of_search = "EYECOL"
             usr_sel = input(" Eye Colour >> ")
             usr_sel = usr_sel.strip(" ").capitalize()
             if usr_sel.lower().strip(" ") == "e":
@@ -101,6 +113,7 @@ def search():
 
         elif usr_sel.lower().strip(" ") == "5":
             # Height Search
+            type_of_search = "HEIGHT"
             print("[Currently under maintenance, No results will be returned. Please check back later or contact the "
                   "administration for further "
                   "instructions...]")
@@ -113,6 +126,7 @@ def search():
 
         elif usr_sel.lower().strip(" ") == "6":
             # Nationality search
+            type_of_search = "NATIONALITY"
             usr_sel = input(" Nationality >> ")
             usr_sel = usr_sel.strip(" ").capitalize()
             if usr_sel.lower().strip(" ") == "e":
@@ -122,6 +136,7 @@ def search():
                 dbCurs = mycol.find(filter=filter)
         elif usr_sel.lower().strip(" ") == "7":
             # Annotations and record search
+            type_of_search = "ANNOTATIONRECORD"
             print(ANNOTATIONS_AND_CRIMES)
             usr_sel = input(" Crime // Annotation >> ")
             usr_sel = usr_sel.strip(" ").capitalize()
@@ -134,6 +149,9 @@ def search():
         else:
             break
 
+        admin_usage_log(output_file="PDBSearchLog", content=reason,
+                        type="DATABASE_SEARCH", prepared=True, prep_msg=[usr_sel, str(type_of_search)])
+
         tab_down()
         line()
 
@@ -145,6 +163,7 @@ def search():
 
             for i in dbCurs:
                 styled_coloured_print_centered(text=f"""
+    FOUND IN DNA DATABASE: {match_dna(i.get('dna_sequence'))}\n
     [Government Name]: {i.get('first_name')} {i.get('last_name')}\n
       - [Gender]: {i.get('sex')}
       - [Age]: {i.get('age')} y/o
@@ -156,7 +175,8 @@ def search():
       - [Cars]:
             {i.get('cars')}
                     """, instant=True, colour="yellow", cent=False)
-                f.write(f"[Government Name]: {i.get('first_name')} {i.get('last_name')}\n"
+                f.write(f"FOUND IN DNA DATABASE: {match_dna(i.get('dna_sequence'))}\n"
+                        f"[Government Name]: {i.get('first_name')} {i.get('last_name')}\n"
                         f"- [Gender]: {i.get('sex')}\n"
                         f"- [Age]: {i.get('age')} y/o\n"
                         f"- [Height]: {i.get('height')}cm\n"
@@ -315,3 +335,34 @@ def vehicle_search():
 """, instant=True, colour="yellow", cent=False)
             line()
         enter_to_continue()
+
+
+def dna_search():
+    mycol = glob.mycolDNA
+    global dbCurs
+
+    while True:
+        clear()
+        tab_down()
+        styled_coloured_print_centered(text="#########################\n"
+                                            "#     DNA REGISTER:     #\n"
+                                            "#     [ E/e(Exit) ]     #\n"
+                                            "#########################\n")
+        usr_sel = input(" DNA SEQUENCE >> ")
+        if usr_sel.lower().strip(" ") == "e":
+            break
+
+        else:
+            filter = {'DNA_SEQUENCE': {'$regex': f".*{usr_sel}.*"}}
+            dbCurs = mycol.find(filter=filter)
+
+        tab_down()
+        line()
+        for i in dbCurs:
+            styled_coloured_print_centered(text=
+                   f"""DNA_SEQ_MATCH: {i.get('DNA_SEQUENCE')} [ Match: TRUE ]\n""", instant=True, colour="blue", cent=False)
+        line()
+        enter_to_continue()
+
+
+

@@ -1,8 +1,11 @@
+
 import markovify
 from time import sleep
 from src_files.misc import names
 from src_files.globals import mycol
 import json
+
+# Creates some issues
 import os
 
 # Open the JSON file and extract the "body" field from each comment
@@ -18,9 +21,29 @@ messages = []
 # print(messages[:10])
 
 
+
 def pre_init():
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    with open(f'{dir_path}/data/text_data/RC_2008-09') as f:
+        batch_size = 500
+        while True:
+            lines = f.readlines(batch_size)
+            if not lines:
+                break
+            for line in lines:
+                comment = json.loads(line)
+                if 'body' in comment:
+                    messages.append(comment['body'])
+
+    # Print the first 10 messages
+    # print(messages[:10])
+    return messages
+
+
+def pre_init_story():
     # Load the input text file for the "model" or whatever.
     file = open("src_files/data/text_data/Genz_convo.txt", 'r', errors='ignore')
+
     text = file.read()
     file.close()
     return text
@@ -39,7 +62,7 @@ def simulate_comms():
     from src_files.simulation import stop_event, head, glob, random, log_transaction
     # Build the Markov chain model
     text_model = markovify.Text(text)
-
+    # print("Starting simulation...")
     while not stop_event.is_set():
         prev_message = ""
         sleep(head.random.uniform(1, 3))

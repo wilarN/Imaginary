@@ -10,7 +10,7 @@ import logging
 from src_files.misc import ANNOTATIONS_AND_CRIMES
 from src_files.simulation import realism_simulation
 import random
-import src_files.globals
+from src_files.globals import mycolDNA
 
 
 logo_ascii = """
@@ -25,7 +25,9 @@ logo_ascii = """
                                     888                                    888 
                                Y8b d88P                               Y8b d88P 
                                 "Y88P"                                 "Y88P"      [  ~$ ©William. Johnsson - 2023  ]
+[ EXPERIMENTAL BRANCH ]
 """
+
 
 def tab_down():
     print()
@@ -101,12 +103,31 @@ def write_to_file(text_to_write, path_to_file, typeOfWrite):
         print(e)
         enter_to_continue()
 
+
 def yes_no(text):
     usr_answ = input(f"{text} (y/n) >> ").strip(" ")
     if usr_answ.__contains__("y"):
         return True
     else:
         return False
+
+
+def is_ascii(text):
+    try:
+        # Valid ascii input
+        mynewstring = text.encode('ascii')
+        return True
+    except UnicodeEncodeError:
+        # Invalid ascii input
+        return False
+
+
+def styled_input(text):
+    """
+    center? TRUE || FALSE
+    """
+    return ps.Write.Input(color=ps.Colors.yellow_to_red, text=text, interval=0.001)
+
 
 def open_file_in_editor(file_path):
     # Get the operating system
@@ -123,6 +144,7 @@ def open_file_in_editor(file_path):
     # Run the command
     subprocess.run(command, check=True)
 
+
 def save_results_to_file(list_of_items):
     usr_res = input("Save results to file?(y/n) (Enter to continue...)")
     if usr_res.strip(" ").lower() == "y":
@@ -134,8 +156,16 @@ def save_results_to_file(list_of_items):
     else:
         pass
 
+
 def line():
     print("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+")
+
+
+def match_dna(input_seq):
+    if mycolDNA.find_one({"DNA_SEQUENCE": f"{input_seq}"}):
+        return True
+    else:
+        return False
 
 
 def clear():

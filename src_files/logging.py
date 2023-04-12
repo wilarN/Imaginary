@@ -23,8 +23,78 @@ def log_transaction(sender, reciever, amount, successful: bool = True):
         head.styled_coloured_print_centered(
             text=dyn_text,
             instant=True, colour="orange")
+
     head.write_to_file(text_to_write=f"[{datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] {dyn_text}\n",
                        typeOfWrite="a", path_to_file=glob.settings_file_location)
+
+
+def log_reason_for_search(prepared):
+    # Prevent the use of unnecessary searches without a specified reason.
+    head.styled_coloured_print_centered(text="""
+    ####################################################################################
+    #       To make a search in the database you will have to provide a reason.        #
+    #       This is to prevent unnecessary and non-legitimate searches to be made.     #
+    #                             (Q/E to go back)                                     #
+    ####################################################################################
+    """, instant=True, colour="orange")
+    head.styled_coloured_print_centered(text=f"\n\nReason for search: ", instant=True, colour="blue")
+    while True:
+        reason = head.styled_input(" >> ")
+        if reason.lower() == "e" or reason.lower() == "q":
+            return False # Cancel search.
+        elif head.is_ascii(reason):
+            # Valid input
+            try:
+                if prepared:
+                    return reason
+                else:
+                    admin_usage_log(output_file="PDBSearchLog", content=reason, type="DATABASE_SEARCH")
+            except Exception as e:
+                print(e)
+            break
+        else:
+            # Invalid input
+            head.styled_coloured_print_centered(text="Invalid input, please try again.", colour="red", instant=True)
+
+
+def admin_usage_log(output_file: str, content, type: str, prepared: bool = False, prep_msg=None):
+    if not prepared:
+        try:
+            if not os.path.exists(f"./ADMIN"):
+                os.mkdir("./ADMIN")
+                os.system("attrib +h " + "./ADMIN")
+            with open(f"./ADMIN/{output_file}.log", "a") as f:
+                if type == "DATABASE_SEARCH":
+                    f.write(f"###############| {datetime.datetime.now()} |###############\n"
+                            f"Type: DATABASE_SEARCH\n"
+                            f"Reason: {content}\n"
+                            f"###########################################################\n")
+                else:
+                    f.write(f"###############| {datetime.datetime.now()} |###############\n"
+                            f"Content: {content}\n"
+                            f"###########################################################\n")
+        except Exception as e:
+            print(e)
+    else:
+        if prep_msg is not None:
+            try:
+                if not os.path.exists(f"./ADMIN"):
+                    os.mkdir("./ADMIN")
+                    os.system("attrib +h " + "./ADMIN")
+                with open(f"./ADMIN/{output_file}.log", "a") as f:
+                    if type == "DATABASE_SEARCH":
+                        f.write(f"###############| {datetime.datetime.now()} |###############\n"
+                                f"TYPE: DATABASE_SEARCH\n"
+                                f"REASON: {content}\n"
+                                f"SEARCH:{prep_msg[0]}\n"
+                                f"WHERE: {prep_msg[1]}\n"
+                                f"###########################################################\n")
+                    else:
+                        f.write(f"###############| {datetime.datetime.now()} |###############\n"
+                                f"Content: {content}\n"
+                                f"###########################################################\n")
+            except Exception as e:
+                print(e)
 
 
 def log_db_search_to_file(all_results):
@@ -49,3 +119,16 @@ def log_db_search_to_file(all_results):
             f.write("AFTER\n")
     except Exception as e:
         print(e)
+        
+    head.write_to_file(text_to_write=f"[{datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] {dyn_text}\n", typeOfWrite="a", path_to_file=glob.settings_file_location)
+
+
+def log_message_communication(sender, reciever, message, successful: bool = True):
+    dyn_text = f"[MESSAGE SENT] [{sender['registered_number']} {sender['ownership']}] >> ({reciever['registered_number']} {reciever['ownership']})"
+    head.styled_coloured_print_centered(
+        text=dyn_text,
+        instant=True, colour="green")
+
+    message_dyn = head.styled_coloured_print_centered(text=f" -- ({message})\n\n", instant=True, colour="orange")
+
+    head.write_to_file(text_to_write=f"[{datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')}] {dyn_text} {message_dyn}\n", typeOfWrite="a", path_to_file=glob.settings_file_location)
