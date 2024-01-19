@@ -5,7 +5,7 @@ port = "27017"
 In globals.py accordingly.
 ]
 
-https://www.williamjsson.xyz/blog_updates/updates.html#imaginary-section
+[domain-no-longer-in-use]/blog_updates/updates.html#imaginary-section
 
 A simulation program in python that simulates:
 - People(Identities)
@@ -14,9 +14,9 @@ A simulation program in python that simulates:
 - Simulation mode(Simulates stuff happening in the real world --> MWT. Some action)
 
 ## Pregenerated Samples( 2023-03-23 >> 42k Total )
-- People    --> https://www.williamjsson.xyz/ext/datasets/people.csv // 20.0k Documents
-- Phones    --> https://www.williamjsson.xyz/ext/datasets/phones.csv // 11.0k Documents
-- Vehicles --> https://www.williamjsson.xyz/ext/datasets/vehicles.csv // 10.9k Documents
+- People    --> [domain-no-longer-in-use]/ext/datasets/people.csv // 20.0k Documents
+- Phones    --> [domain-no-longer-in-use]/ext/datasets/phones.csv // 11.0k Documents
+- Vehicles -->  [domain-no-longer-in-use]/ext/datasets/vehicles.csv // 10.9k Documents
 
 # Req (Not updated, Can't bother for now)
 - pip install names
